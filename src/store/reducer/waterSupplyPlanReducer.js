@@ -12,16 +12,9 @@ export const waterSupplyPlanReducer = (state = _state, action) => {
                   return state;
             }
             case UPDATE_WATER_DATA: {
-                  // return {
-                  //       ...state,
-                  //       waterData: [...state.waterData, 1, 2, 3]
-                  // }
-                  console.log("进入更新");
-                  state.userInfo.userName = "123"
-                  state.waterPrice.one = '1'
-                  state.waterData = action.payLoad
-                  return state
-                  // state.waterData = [...action.payLoad];
+                  console.log('进入修改');
+                  state.age = 100
+                  return state;
             }
             default:
                   return state;

@@ -1,4 +1,4 @@
-import { store } from "..";
+import store from "..";
 import { LOGIN } from "../actionTypes/userActionType";
 
 const userAction = {

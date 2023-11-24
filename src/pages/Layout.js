@@ -1,7 +1,8 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import SideBar from '../components/SideBar';
-// import Dashboard from './Dashboard';
+import Dashboard from './Dashboard'
+import WaterSupplyPlan from './WaterSupplyPlan'
 // import NotFound from './NotFound';
 
 class LayOut extends React.Component {
@@ -12,7 +13,8 @@ class LayOut extends React.Component {
                               <SideBar />
                         </div>
                         <div className='content'>
-                              <Outlet/>
+                              <Route path="/" component={WaterSupplyPlan} />
+                              <Route path="/dash" component={Dashboard} />
                         </div>
                   </div>
             )

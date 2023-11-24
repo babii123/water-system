@@ -1,4 +1,5 @@
 const state = {
+      age: 1,
       info: {
             age: 20,
             sex: '男',
@@ -6,19 +7,11 @@ const state = {
       },
       userInfo: {
             userId: '',
-            userName: '',
+            userName: '111',
             email: '',
             role: '',
       },
       waterPrice: {},
-      waterData: [123444],
+      waterData: [{ key: 1, id: 1, address: '234', storage: '12', cost: '1' }],
 }
 export default state;
-// const state = {
-//       info: {
-//             age: 20,
-//             sex: '男',
-//             money: 10000
-//       }
-// }
-// export default state

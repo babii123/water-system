@@ -17,7 +17,7 @@ const items = [
       {
             type: 'divider',
       },
-      getItem('水资源', 'sub4'),
+      getItem('水资源', 'sub4', <SettingOutlined/>),
       getItem('水量', 'grp'),
 ];
 const SideBar = () => {

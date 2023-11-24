@@ -1,4 +1,4 @@
-import { store } from ".."
+import store from ".."
 import { GET_WATER_DATA, GET_WATER_PRICE, UPDATE_WATER_DATA, UPDATE_WATER_PRICE } from "../actionTypes/waterSupplyPlanActionType"
 
 const waterSupplyPlanAction = {

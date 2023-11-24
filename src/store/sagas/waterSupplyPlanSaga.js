@@ -1,6 +1,6 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { GET_WATER_DATA, GET_WATER_PRICE, UPDATE_WATER_DATA, UPDATE_WATER_PRICE } from "../actionTypes/waterSupplyPlanActionType";
-import { getWaterData, getWaterPrice } from "../../api";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { GET_WATER_DATA, UPDATE_WATER_DATA } from "../actionTypes/waterSupplyPlanActionType";
+import { getWaterData } from "../../api";
 
 function* waterSupplyPlanSaga() {
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
-import { actions } from '../store';
+import { Button, Form, Input } from 'antd';
+import actions from '../store/actions';
 const onFinish = (values) => {
       console.log('Success:', values);
       // action 登录请求
