@@ -5,6 +5,10 @@ export const userReducer = (state = _state, action) => {
       switch (action.type) {
             case LOGIN:
                   return Object.assign({}, {}, action);
+            case 'addAge':
+                  state.age += 1;
+                  console.log('reducer addAge', state);
+                  return state;
             case 'logOut':
                   console.log('logout');
                   state.age += 1;

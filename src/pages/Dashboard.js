@@ -1,20 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { store, state, actions } from '../store'
-// import { Link } from 'react-router-dom'
+import userAction from '../store/actions/userAction';
 
 class Dashboard extends React.Component {
       handleClick = () => {
-            // actions.addAge();
+            // userAction.addAge();
+            this.props.addAge()
       }
 
       render() {
             return (
                   <>
-                        {this.state.age}
+                        {this.props.age}
                         <button onClick={this.handleClick}>点击</button>
                   </>
             )
       }
 };
-export default Dashboard;
+export default connect(
+      (state) => {
+            console.log('ddd',state)
+            return { age: state.userReducer.age }
+      },
+      (dispatch) => {
+            return {
+                  addAge: (payLoad)=>{
+                        console.log('addAge');
+                        dispatch({
+                              type: 'addAge',
+                              payLoad
+                        })
+                  }
+            }
+      }
+) (Dashboard);

@@ -13,7 +13,7 @@ class LayOut extends React.Component {
                               <SideBar />
                         </div>
                         <div className='content'>
-                              <Route path="/" component={WaterSupplyPlan} />
+                              <Route path="/" exact component={WaterSupplyPlan} />
                               <Route path="/dash" component={Dashboard} />
                         </div>
                   </div>

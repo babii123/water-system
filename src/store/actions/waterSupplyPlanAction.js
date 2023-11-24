@@ -2,29 +2,29 @@ import store from ".."
 import { GET_WATER_DATA, GET_WATER_PRICE, UPDATE_WATER_DATA, UPDATE_WATER_PRICE } from "../actionTypes/waterSupplyPlanActionType"
 
 const waterSupplyPlanAction = {
-      getWaterPrice() {
-            store.dispatch({
+      getWaterPrice(payLoad) {
+            return {
                   type: GET_WATER_PRICE,
-                  payLoad: ''
-            })
+                  payLoad
+            }
       },
-      getWaterData() {
-            store.dispatch({
+      getWaterData(payLoad) {
+            return {
                   type: GET_WATER_DATA,
-                  payLoad: ''
-            })
+                  payLoad
+            }
       },
       updateWaterPrice(payLoad) {
-            store.dispatch({
+            return {
                   type: UPDATE_WATER_PRICE,
                   payLoad
-            })
+            }
       },
       updateWaterData(payLoad) {
-            store.dispatch({
+            return {
                   type: UPDATE_WATER_DATA,
                   payLoad
-            })
+            }
       }
 }
 

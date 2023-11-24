@@ -17,6 +17,14 @@ const userAction = {
                         payLoad
                   }
             )
+      },
+      addAge(payLoad){
+            store.dispatch(
+                  {
+                        type: 'addAge',
+                        payLoad
+                  }
+            )
       }
 }
 

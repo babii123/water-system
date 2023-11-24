@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import { connect } from 'react-redux'
 import waterSupplyPlanAction from '../store/actions/waterSupplyPlanAction';
+import { dataSort } from '../utils/dataSort';
 
 const columns = [
       {
@@ -29,38 +30,37 @@ const columns = [
 
 class WaterDataTable extends React.Component {
       handleClick = () => {
-            this.props.getWaterData();
+            const newData = dataSort(this.props.data)
+            console.log('newData', newData);
+            this.props.updateWaterData(newData);
+      }
 
-            // actions.updateWaterData({ key: 2, id: 1, address: '234', storage: '12', cost: '1' });
-            // this.props.getWaterData();
-            // actions.getWaterData();
+      componentDidMount() {
+            this.props.getWaterData();
       }
 
       render() {
             return (
                   <>
-                        {this.props.age}
+                        <button onClick={this.handleClick}>点击根据储水量排序</button>
                         <Table columns={columns} dataSource={this.props.data} />
-                        <button onClick={this.handleClick}>点击</button>
                   </>
             )
       }
 };
 export default connect(
       (state) => {
-            console.log('xxx', state.userReducer.age);
+            console.log('WaterDataTable', state.waterSupplyPlanReducer);
             return {
-                  age: state.userReducer.age,
-                  data: state.userReducer.waterData,
-                  userInfo: state.userReducer.userInfo,
+                  data: state.waterSupplyPlanReducer.waterData,
             }
       }, (dispatch) => {
             return {
-                  getWaterData: (payLoad) => {
-                        dispatch({
-                              type: 'update_water_data',
-                              payLoad
-                        })
+                  getWaterData: () => {
+                        dispatch(waterSupplyPlanAction.getWaterData());
+                  },
+                  updateWaterData: (payLoad) => {
+                        dispatch(waterSupplyPlanAction.updateWaterData(payLoad));
                   }
             }
       }
