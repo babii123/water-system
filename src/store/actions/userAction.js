@@ -1,31 +1,18 @@
-import store from "..";
 import { LOGIN } from "../actionTypes/userActionType";
 
 const userAction = {
-      login(payLoad) {
-            store.dispatch(
-                  {
-                        type: LOGIN,
-                        payLoad
-                  }
-            )
-      },
-      logOut(payLoad) {
-            store.dispatch(
-                  {
-                        type: 'logOut',
-                        payLoad
-                  }
-            )
-      },
-      addAge(payLoad){
-            store.dispatch(
-                  {
-                        type: 'addAge',
-                        payLoad
-                  }
-            )
-      }
+	login(payLoad) {
+		return {
+			type: LOGIN,
+			payLoad
+		}
+	},
+	logOut(payLoad) {
+		return {
+			type: 'logOut',
+			payLoad
+		}
+	},
 }
 
 export default userAction;

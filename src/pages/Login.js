@@ -1,62 +1,21 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
-import actions from '../store/actions';
-const onFinish = (values) => {
-      console.log('Success:', values);
-      // action 登录请求
-      actions.login({...values})
-};
-const onFinishFailed = (errorInfo) => {
-      console.log('Failed:', errorInfo);
-};
-const Login = () => (
-      <Form
-            name="basic"
-            labelCol={{ span: 8, }}
-            wrapperCol={{ span: 16, }}
-            style={{
-                  maxWidth: 600,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-      >
-            <Form.Item
-                  label="Username"
-                  name="username"
-                  rules={[
-                        {
-                              required: true,
-                              message: 'Please input your username!',
-                        },
-                  ]}
-            >
-                  <Input />
-            </Form.Item>
+import '../styles/login.css'
+import LoginImg from '../assets/login-image.png'
+import LoginForm from '../components/LoginForm';
 
-            <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[
-                        {
-                              required: true,
-                              message: 'Please input your password!',
-                        },
-                  ]}
-            >
-                  <Input.Password />
-            </Form.Item>
+class Login extends React.Component {
+	render() {
+		return (
+			<div className='login-container'>
+				<div className='login-left'>
+					<img src={LoginImg} alt='login_page'/>
+				</div>
+				<div className='login-right'>
+					<LoginForm />
+				</div>
+			</div>
+		)
+	}
+}
 
-            <Form.Item
-                  wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                  }}
-            >
-                  <Button type="primary" htmlType="submit">
-                        Submit
-                  </Button>
-            </Form.Item>
-      </Form>
-);
 export default Login;

@@ -2,9 +2,9 @@ import { combineReducers } from "redux";
 import { userReducer } from './userReducer'
 import { waterSupplyPlanReducer } from "./waterSupplyPlanReducer";
 const reducer = combineReducers(
-      {
-            userReducer,
-            waterSupplyPlanReducer,
-      }
+	{
+		userInfo: userReducer,
+		water: waterSupplyPlanReducer,
+	}
 )
-export default reducer
+export default reducer;
