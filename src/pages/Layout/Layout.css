@@ -1,0 +1,58 @@
+.main-container {
+	margin-left: 256px;
+	margin-top: 55px;
+	padding: 10px;
+	background-color: rgb(242, 243, 245);
+}
+
+.sideBar {
+	position: fixed;
+	top: 0;
+	width: 256px;
+	height: 100%;
+	background-color: rgb(127, 168, 215);
+	overflow-y: auto;
+}
+
+.header {
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 256px;
+	padding: 10px;
+	width: calc(100% - 276px);
+	background-color: #fff;
+	box-shadow: 0 2px 8px #f2f3f5;
+}
+
+.content {
+	/* z-index: 1000; */
+	overflow: auto;
+	/* background-color: #fff; */
+}
+
+.title {
+	text-align: center;
+	box-sizing: content-box;
+	padding: 18px 10px;
+	background-color: rgb(1, 100, 156);
+	color: #fff;
+}
+
+.ant-menu-sub {
+	background-color: rgb(106, 140, 179) !important;
+}
+
+/* 头部布局 */
+.header-box {
+	display: flex;
+	justify-content: space-between;
+}
+
+.header-breadcrumb {
+	flex: 1;
+}
+
+.header-avatar {
+	flex: 1
+}

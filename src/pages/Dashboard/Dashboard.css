@@ -1,0 +1,61 @@
+.data-card {
+  position: relative;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.data-card-title {
+  position: absolute;
+  top: 10px;
+}
+
+.data-card-icon {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}
+
+.data-card-data {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.data-card-bgc1 {
+  background: linear-gradient(to bottom right, rgb(229, 72, 136), rgb(184, 85, 156));
+}
+
+.data-card-bgc2 {
+  background: linear-gradient(to bottom right, rgb(131, 92, 193), rgb(86, 72, 180));
+}
+
+.data-card-bgc3 {
+  background: linear-gradient(to bottom right, rgb(248, 186, 38), rgb(250, 130, 83));
+}
+
+.data-card-bgc4 {
+  background: linear-gradient(to bottom right, rgb(84, 202, 237), rgb(117, 158, 229));
+}
+
+.basic-info {
+  display: block;
+  margin-right: 5%;
+  padding: 20px;
+}
+
+.basic-info-box {
+  margin-bottom: 20px;
+}
+
+.basic-info-title {
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.basic-info-description {
+  color: #ccc;
+  font-size: 14px;
+}

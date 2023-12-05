@@ -1,0 +1,18 @@
+.price-update {
+  flex: 1;
+  min-height: 235px;
+  max-height: 235px;
+}
+
+.price-update-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 35px;
+  box-shadow: 0 0.5px 0 0 #dedcdc;
+}
+
+.price-update-content {
+  height: 200px;
+  overflow-y: auto;
+  font-size: 14px
+}
