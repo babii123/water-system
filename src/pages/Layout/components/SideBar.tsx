@@ -1,12 +1,15 @@
 import { createFromIconfontCN } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import '../Layout.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { ItemType } from 'antd/es/menu/hooks/useItems';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_4346841_f0nzrdap367.js',
+  scriptUrl: '//at.alicdn.com/t/c/font_4346841_dyrsmlbo016.js',
 });
 
 function getItem(
@@ -28,19 +31,44 @@ function getItem(
 
 const items: MenuProps['items'] = [
   getItem('工作台', 'dashboard', <IconFont type='icon-gongzuotai' />),
-  getItem('供水计划', 'water_plan', <IconFont type='icon-jihua' />, [
+  {
+    type: 'divider',
+  },
+  getItem('用户管理', 'user_manage', <IconFont type='icon-yonghuguanli' />),
+  getItem('个人中心', 'user_center', <IconFont type='icon-gerenzhongxin' />),
+  {
+    type: 'divider',
+  },
+  getItem('供水计划', 'water_plan/', <IconFont type='icon-jihua' />, [
     getItem('供水计划管理', 'water_plan'),
     getItem('水价表', 'water_price'),
   ]),
   {
     type: 'divider',
   },
-  getItem('水资源管理', 'water_type', <IconFont type='icon-ziyuan-xianxing' />),
+  getItem('水资源', 'water_resource/', <IconFont type='icon-ziyuan-xianxing' />, [
+    getItem('水资源管理', 'water_resource'),
+    getItem('水资源类型管理', 'water_type'),
+  ]),
   getItem('水量管理', 'water_storage', <IconFont type='icon-shuiliang' />),
   getItem('水质管理', 'water_quality', <IconFont type='icon-zhiliang-xianxing' />),
 ];
 
 const SideBar: React.FC = () => {
+
+  const [menuList, setMenuList] = useState<ItemType[] | undefined>();
+  const menuItems = useSelector((state: any) => {
+    return state.userInfo.menuItems
+  })
+
+  const location = useLocation()
+  const selectedKeys = location.pathname.slice(1)
+
+  useEffect(() => {
+    const filter_res = items.filter((item) => menuItems.includes(String(item?.key)))
+    setMenuList(filter_res)
+  }, [menuItems])
+
   const navigate = useNavigate()
   const onClick: MenuProps['onClick'] = (e) => {
     navigate(`/${e.key}`)
@@ -59,9 +87,10 @@ const SideBar: React.FC = () => {
           backgroundColor: 'rgb(127, 168, 215)'
         }}
         defaultSelectedKeys={['dashboard']}
-        defaultOpenKeys={['water_plan']}
+        selectedKeys={[selectedKeys]}
+        defaultOpenKeys={['water_plan/', 'water_resource/']}
         mode="inline"
-        items={items}
+        items={menuList}
       />
     </>
   );

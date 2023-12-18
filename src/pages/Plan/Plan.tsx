@@ -35,7 +35,7 @@ for (let i = 0; i < 46; i++) {
   });
 }
 
-const Plan: React.FC = () => {
+function Plan() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(false);
 

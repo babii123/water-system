@@ -1,91 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Popover, Space, Table, Tag } from 'antd';
+import { Button, Input, Popover, Space, Table } from 'antd';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../model/globalModel';
-import { deleteWaterType, deleteWaterTypeList } from '../../store/actions/waterTypeActions';
-import { WaterDataType } from '../../model/waterModel';
-import { deleteWater, deleteWaterByReason, getWaterListByAPI } from '../../store/actions/waterActions';
-import CreateWaterModel from './components/CreateWaterModel';
+import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../model/globalModel'
+import { useDispatch, useSelector } from 'react-redux';
+import { WaterTypeDataType } from '../../model/waterTypeModel';
+import { deleteWaterType, deleteWaterTypeList, getWaterTypeListByAPI } from '../../store/actions/waterTypeActions';
+import CreateModel from './components/CreateWaterTypeModel';
 
-const Water: React.FC = () => {
+function WaterType() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [controlModel, setControlModel] = useState<ControlModel>()
-  const [updateWater, setUpdateWater] = useState<WaterDataType>()
+  const [updateWaterType, setUpdateWaterType] = useState<WaterTypeDataType>()
   const [deleteVisible, setDeleteVisible] = useState<number>()
-
-  const columns: ColumnsType<WaterDataType> = [
+  const columns: ColumnsType<WaterTypeDataType> = [
     {
       key: 'id',
       title: 'ID',
       dataIndex: 'id',
-      width: 50
+      width: 70
     },
     {
       key: 'type',
       title: 'Type',
       dataIndex: 'type',
-      width: 150
-    },
-    {
-      key: 'waterName',
-      title: 'Water Name',
-      dataIndex: 'waterName',
-      width: 150
-    },
-    {
-      key: 'address',
-      title: 'Address',
-      dataIndex: 'address',
-      width: 150
+      width: 250
     },
     {
       key: 'description',
       title: 'Description',
       dataIndex: 'description',
-      width: 400
-    },
-    {
-      key: 'addTime',
-      title: 'Add Time',
-      dataIndex: 'addTime',
-      width: 120
-    },
-    {
-      key: 'addUser',
-      title: 'Add User',
-      dataIndex: 'addUser',
-      width: 150,
-      render: (_, record) => (
-        <Tag color='#f50' key={record.id}>
-          {record.addUser}
-        </Tag>
-      )
-    },
-    {
-      key: 'checkUser',
-      title: 'Check User',
-      dataIndex: 'checkUser',
-      width: 150,
-      render: (_, record) => (
-        <>
-          {
-            record.checkUser.map((item) => {
-              return <Tag color='#2db7f5' key={item}>
-                {item}
-              </Tag>
-            })
-          }
-        </>
-      )
+      width: 700
     },
     {
       title: 'Action',
       key: 'action',
-      fixed: 'right',
-      width: 200,
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => { openModel(record, UPDATE_MODEL) }}>Update</a>
@@ -96,7 +46,7 @@ const Water: React.FC = () => {
                 <span>Are you sure delete this user</span>
               </div>
               <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>No</Button>
-              <Button size='small' danger onClick={() => { _deleteWaterType(record.id, '') }}>Yes</Button>
+              <Button size='small' danger onClick={() => { _deleteWaterType(record.id) }}>Yes</Button>
             </>
           }
             trigger="focus"
@@ -111,34 +61,30 @@ const Water: React.FC = () => {
       ),
     },
   ];
+
   const changeDeleteVisible = (id: number) => {
     setDeleteVisible(id)
   }
+  
   const data = useSelector((state: any) => {
-    return state.water.waterList
+    return state.waterType.waterTypeList
   })
   const dispatch = useDispatch()
   const _getWaterTypeListByAPI = () => {
-    dispatch(getWaterListByAPI())
+    dispatch(getWaterTypeListByAPI())
   }
-  const _deleteWaterType = (id: number, delReason: string) => {
+  const _deleteWaterType = (id: number) => {
+    // console.log('_delete');
     setDeleteVisible(undefined)
-    dispatch(deleteWaterByReason(id, delReason))
+    dispatch(deleteWaterType(id))
   }
   const _deleteUserList = (idList: React.Key[]) => {
     dispatch(deleteWaterTypeList(idList))
   }
   useEffect(() => {
+    // console.log('触发');
     _getWaterTypeListByAPI()
   }, [])
-
-  const openModel = (record?: WaterDataType, editType?: string) => {
-    console.log(record);
-    if (record) {
-      setUpdateWater(record)
-    }
-    setControlModel({ visible: true, editType })
-  }
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -150,16 +96,31 @@ const Water: React.FC = () => {
     onChange: onSelectChange,
   };
 
+  const openModel = (record?: WaterTypeDataType, editType?: string) => {
+    console.log(record);
+    if (record) {
+      setUpdateWaterType(record)
+    }
+    setControlModel({ visible: true, editType })
+  }
+
+  const deleteUserSeleted = () => {
+    console.log('selected', selectedRowKeys);
+    _deleteUserList(selectedRowKeys)
+  }
+
   return (
     <div className='mycard'>
-      <CreateWaterModel
+      <CreateModel
         controlModel={controlModel}
         changeControl={setControlModel}
-        updateWaterInfo={updateWater} />
+        updateWaterTypeInfo={updateWaterType} />
       <Space style={{ marginBottom: 16 }}>
-        <span>区域</span>
+        <span className='searcher_title'>E-mail</span>
         <Input placeholder="Basic usage" />
-        <span>日期</span>
+        <span className='searcher_title'>Real Name</span>
+        <Input placeholder="Basic usage" />
+        <span className='searcher_title'>Phone</span>
         <Input placeholder="Basic usage" />
         <Button type="primary" icon={<SearchOutlined />}>
           搜索
@@ -170,10 +131,10 @@ const Water: React.FC = () => {
       </Space>
       <div style={{ marginBottom: 16 }}>
         <Space>
-          <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)}  icon={<PlusOutlined />}>
-            新增数据
+          <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)} icon={<PlusOutlined />}>
+            新增类型
           </Button>
-          <Button type="primary" icon={<DeleteFilled />} danger>
+          <Button type="primary" onClick={() => deleteUserSeleted()} icon={<DeleteFilled />} danger>
             批量删除
           </Button>
           <Button icon={<DownloadOutlined />}>
@@ -186,4 +147,4 @@ const Water: React.FC = () => {
   );
 };
 
-export default Water;
+export default WaterType;
