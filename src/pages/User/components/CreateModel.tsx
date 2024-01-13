@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
 import { Gender } from '../../../model/userInfoModel';
 import { createUser_API, updateUser_API } from '../../../services/userRequest';
-import { UserListDataType } from '../../../model/userInfoModel'
+import { UserTableType } from '../../../model/userInfoModel'
 import { useDispatch } from 'react-redux';
 import { createUser, getUserListByAPI, updateUser } from '../../../store/actions/userListActions';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
@@ -52,9 +52,19 @@ type FieldType = {
   roles: string[]
 };
 
-const CreateModel: React.FC<{ controlModel?: ControlModel, changeControl: Function, updateUserInfo?: UserListDataType }> = ({ controlModel, changeControl, updateUserInfo }) => {
-
-  // const [modalOpen, setModalOpen] = useState(visible);
+const CreateModel: React.FC<{
+  controlModel?: ControlModel,
+  changeControl: Function,
+  updateUserInfo?: UserTableType
+}> = ({ controlModel, changeControl, updateUserInfo }) => {
+  const [form] = Form.useForm()
+  useEffect(() => {
+    if (updateUserInfo) {
+      form.setFieldsValue(updateUserInfo)
+    } else {
+      form.resetFields()
+    }
+  }, [updateUserInfo])
   const [dateString, setDateString] = useState<string>()
   const handleDateChange = (date: any, dateString: string) => {
     setDateString(dateString)
@@ -77,17 +87,13 @@ const CreateModel: React.FC<{ controlModel?: ControlModel, changeControl: Functi
   }
 
   const onFinish = (values: FieldType) => {
-    console.log('Success:', values);
     console.log('Success1:', updateUserInfo);
-
     values.birthday = dateString
+    console.log('Success:', values);
     // 判断是否是更新
     if (updateUserInfo && values.roles) {
       // 判断是否需要修改了
-      if (updateUserInfo.accountName !== values.accountName || updateUserInfo.email !== values.email || updateUserInfo.phone !== values.phone || updateUserInfo.realName !== values.realName || updateUserInfo.sex !== values.sex ||
-        !(updateUserInfo.roles.length === values.roles?.length
-          && updateUserInfo.roles.every((v, i) => v === values.roles[i])
-        )) {
+      if (JSON.stringify(updateUserInfo) !== JSON.stringify(values)) {
         _updateUser(values, updateUserInfo.userId)
         changeControl({
           visible: false,
@@ -113,15 +119,17 @@ const CreateModel: React.FC<{ controlModel?: ControlModel, changeControl: Functi
         onCancel={() => changeControl({ visible: false, editType: controlModel?.editType })}
         width={750}
         footer={null}
+        forceRender
       >
         <Form
           {...formItemLayout}
           name="basic"
           style={{ maxWidth: 600 }}
-          initialValues={updateUserInfo}
+          // initialValues={updateUserInfo}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
+          form={form}
         >
           <Form.Item<FieldType>
             label="Real Name"

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { Button, Modal, Form, Input, Select } from 'antd';
 import { useDispatch } from 'react-redux';
-import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
-import TextArea from 'antd/es/input/TextArea';
-import { WaterTableType } from '../../../model/waterModel';
-import { createWater, updateWater } from '../../../store/actions/waterActions';
+import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
+import { WaterStorageTableType } from '../../../model/waterStorageModel';
+import { createWaterStorage, updateWaterStorage } from '../../../store/actions/waterStorageActions';
 import dayjs from 'dayjs';
 
 const formItemLayout = {
@@ -32,35 +31,37 @@ const tailFormItemLayout = {
 };
 
 type FieldType = {
-  type?: string
-  waterName?: string
-  address?: string
-  description?: string
+  resourceId?: string
+  addTime?: Date
   addUser?: string
-  checkUser?: string[]
+  detectTime?: Date
+  detectPeople?: string[]
+  supply?: number
+  storage?: number
 };
 
-const CreateWaterModel: React.FC<
+const CreateWaterStorageModel: React.FC<
   {
     controlModel?: ControlModel,
     changeControl: Function,
-    updateWaterInfo?: WaterTableType
+    updateWaterStorageInfo?: WaterStorageTableType
   }
 > = (
   {
     controlModel,
     changeControl,
-    updateWaterInfo
+    updateWaterStorageInfo
   }
 ) => {
     const [form] = Form.useForm()
     useEffect(() => {
-      if (updateWaterInfo) {
-        form.setFieldsValue(updateWaterInfo);
+      console.log(updateWaterStorageInfo);
+      if (updateWaterStorageInfo) {
+        form.setFieldsValue(updateWaterStorageInfo)
       } else {
         form.resetFields()
       }
-    }, [updateWaterInfo])
+    }, [updateWaterStorageInfo])
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
       changeControl({
@@ -70,25 +71,25 @@ const CreateWaterModel: React.FC<
     };
     const dispatch = useDispatch()
 
-    const _createWater = (water: any) => {
-      dispatch(createWater(water))
+    const _createWaterStorage = (waterStorage: any) => {
+      dispatch(createWaterStorage(waterStorage))
     }
-    const _updateWater = (water: any, id: number) => {
-      dispatch(updateWater(water, id))
+    const _updateWaterStorage = (water: any, id: number) => {
+      dispatch(updateWaterStorage(water, id))
     }
     const onFinish = (values: any) => {
-      console.log('Success:', updateWaterInfo);
-      if (updateWaterInfo) {
-        if (JSON.stringify(updateWaterInfo) !== JSON.stringify(values)) {
-          _updateWater(values, updateWaterInfo.id)
+      console.log('Success:', updateWaterStorageInfo);
+      if (updateWaterStorageInfo) {
+        if (JSON.stringify(updateWaterStorageInfo) !== JSON.stringify(values)) {
+          _updateWaterStorage(values, updateWaterStorageInfo.id)
           changeControl({
             visible: false,
             editType: controlModel?.editType
           })
         }
       } else {
-        values.addTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        _createWater(values)
+        values.addTime = dayjs().format('YYYY-MM-DD')
+        _createWaterStorage(values)
         changeControl({
           visible: false,
           editType: controlModel?.editType
@@ -98,7 +99,7 @@ const CreateWaterModel: React.FC<
     return (
       <>
         <Modal
-          title={controlModel?.editType === UPDATE_MODEL ? 'Update Water' : 'Create Water'}
+          title={controlModel?.editType === UPDATE_MODEL ? 'Update Water Storage' : 'Create Water Storage'}
           centered
           open={controlModel?.visible}
           onOk={() => changeControl({ visible: false, editType: controlModel?.editType })}
@@ -111,57 +112,32 @@ const CreateWaterModel: React.FC<
             {...formItemLayout}
             name="basic"
             style={{ maxWidth: 600 }}
-            // initialValues={updateWaterInfo}
+            // initialValues={updateWaterStorageInfo}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             form={form}
           >
             <Form.Item<FieldType>
-              label="Type"
-              name="type"
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              label="Resource ID"
+              name="resourceId"
             >
-              <Input />
+              <Input disabled />
               {/* 修改为选择框 */}
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Water Name"
-              name="waterName"
+              label="Detect Time"
+              name="detectTime"
               rules={[{ required: true, message: 'Please input your account name!' }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Address"
-              name="address"
+              label="Detect People"
+              name="detectPeople"
               rules={[{ required: true, message: 'Please input your phone number!' }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item<FieldType>
-              label="Description"
-              name="description"
-              rules={[{ required: true, message: 'Please input your description!' }]}
-            >
-              <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
-            </Form.Item>
-
-            <Form.Item<FieldType>
-              label="Add User"
-              name="addUser"
-              rules={[{ required: true, message: 'Please input your addUser!' }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item<FieldType>
-              label="Check User"
-              name="checkUser"
-              rules={[{ required: true, message: 'Please input your checkUser!' }]}
             >
               <Select
                 mode="tags"
@@ -170,15 +146,31 @@ const CreateWaterModel: React.FC<
               />
             </Form.Item>
 
+            <Form.Item<FieldType>
+              label="Supply"
+              name="supply"
+              rules={[{ required: true, message: 'Please input your description!' }]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item<FieldType>
+              label="Storage"
+              name="storage"
+              rules={[{ required: true, message: 'Please input your addUser!' }]}
+            >
+              <Input />
+            </Form.Item>
+
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
           </Form>
-        </Modal >
+        </Modal>
       </>
     );
   };
 
-export default CreateWaterModel;
+export default CreateWaterStorageModel;

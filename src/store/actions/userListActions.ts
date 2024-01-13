@@ -2,8 +2,8 @@
  * @description 用户管理列表
  */
 
-import { UserListDataType } from "../../model/userInfoModel"
-import { UPDATE_USER_LIST, GET_USER_LIST_BYAPI, DELETE_USER, DELETE_USER_LIST, CREATE_USER, UPDATE_USER } from "../actionTypes/userListActionTypes"
+import { UserTableType } from "../../model/userInfoModel"
+import { UPDATE_USER_LIST, GET_USER_LIST_BYAPI, DELETE_USER, DELETE_USER_LIST, CREATE_USER, UPDATE_USER, FIND_USER_BY_CONDITION } from "../actionTypes/userListActionTypes"
 
 export const getUserListByAPI = () => {
   return {
@@ -27,7 +27,7 @@ export const createUser = (userInfo: any) => {
   }
 }
 
-export const updateUserList = (userList: UserListDataType[]) => {
+export const updateUserList = (userList: UserTableType[]) => {
   return {
     type: UPDATE_USER_LIST,
     payLoad: userList
@@ -47,3 +47,13 @@ export const deleteUserList = (idList: any) => {
     idList
   }
 }
+
+// 按条件查找
+export const getUserListByCondition = (email?: string, realName?: string, phone?: string) => {
+  return {
+    type: FIND_USER_BY_CONDITION,
+    email,
+    realName,
+    phone
+  }
+} 

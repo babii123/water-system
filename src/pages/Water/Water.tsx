@@ -1,22 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Popover, Space, Table, Tag } from 'antd';
+import { Button, Input, Popover, Space, Table, Tag, Tooltip } from 'antd';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../model/globalModel';
-import { deleteWaterType, deleteWaterTypeList } from '../../store/actions/waterTypeActions';
-import { WaterDataType } from '../../model/waterModel';
-import { deleteWater, deleteWaterByReason, getWaterListByAPI } from '../../store/actions/waterActions';
+import { CREATE_MODEL, ControlModel, UPDATE_MODEL, ONLY, MULTI } from '../../model/globalModel';
+import { deleteWaterTypeList } from '../../store/actions/waterTypeActions';
+import { WaterTableType } from '../../model/waterModel';
+import { deleteWaterByReason, getWaterListByAPI } from '../../store/actions/waterActions';
 import CreateWaterModel from './components/CreateWaterModel';
+import DeleteWaterModel from './components/DeleteWaterModel';
+import CreateWaterQualityModel from '../Quality/components/CreateWaterQualityModel';
+import CreateWaterStorageModel from '../Storage/components/CreateWaterStorageModel';
+import { WaterQualityTableType } from '../../model/waterQualityModel';
+import { WaterStorageTableType } from '../../model/waterStorageModel';
 
 const Water: React.FC = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [controlModel, setControlModel] = useState<ControlModel>()
-  const [updateWater, setUpdateWater] = useState<WaterDataType>()
+  const [controlModel_quality, setControlModelQ] = useState<ControlModel>()
+  const [controlModel_storage, setControlModelS] = useState<ControlModel>()
+  const [updateWater, setUpdateWater] = useState<WaterTableType>()
+  const [updateWaterQuality, setUpdateWaterQ] = useState<WaterQualityTableType>()
+  const [updateWaterStorage, setUpdateWaterS] = useState<WaterStorageTableType>()
   const [deleteVisible, setDeleteVisible] = useState<number>()
+  const [deleteModel, setDeleteModel] = useState<boolean>()
+  const [deleteValue, setDeleteValue] = useState<{ value: any, type: string }>()
 
-  const columns: ColumnsType<WaterDataType> = [
+  const columns: ColumnsType<WaterTableType> = [
     {
       key: 'id',
       title: 'ID',
@@ -85,10 +96,10 @@ const Water: React.FC = () => {
       title: 'Action',
       key: 'action',
       fixed: 'right',
-      width: 200,
+      width: 350,
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => { openModel(record, UPDATE_MODEL) }}>Update</a>
+          <a onClick={() => openModel(record, UPDATE_MODEL)}>Update</a>
           <Popover content={
             <>
               <div style={{ marginBottom: '5px' }}>
@@ -96,7 +107,7 @@ const Water: React.FC = () => {
                 <span>Are you sure delete this user</span>
               </div>
               <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>No</Button>
-              <Button size='small' danger onClick={() => { _deleteWaterType(record.id, '') }}>Yes</Button>
+              <Button size='small' danger onClick={() => { showDeleteModel([record.id], ONLY) }}>Yes</Button>
             </>
           }
             trigger="focus"
@@ -107,13 +118,59 @@ const Water: React.FC = () => {
               Delete
             </Button>
           </Popover>
+          {/* 新建水量信息 */}
+          <Tooltip placement="top" title='add storage info'>
+            <Button style={{ backgroundColor: '#87d068bc', color: '#fff' }}
+              onClick={() => {
+                setControlModelS({ visible: true, editType: CREATE_MODEL });
+                setUpdateWaterS({
+                  key: undefined,
+                  id: 0,
+                  resourceId: record.id,
+                  addTime: undefined,
+                  addUser: undefined,
+                  detectTime: undefined,
+                  detectPeople: [],
+                  supply: undefined,
+                  storage: undefined,
+                  isDel: false,
+                  delReason: ''
+                })
+              }
+              }>storage</Button>
+          </Tooltip>
+          {/* 新建水质信息 */}
+          <Tooltip placement="top" title='add quality info' >
+            <Button
+              style={{ backgroundColor: '#1677ffaf', color: '#fff' }}
+              onClick={() => {
+                setControlModelQ({ visible: true, editType: CREATE_MODEL })
+                setUpdateWaterQ({
+                  key: undefined,
+                  id: 0,
+                  resourceId: record.id,
+                  addTime: undefined,
+                  addUser: undefined,
+                  detectTime: undefined,
+                  detectPeople: undefined,
+                  ph: undefined,
+                  turbidity: undefined,
+                  fluoride: undefined,
+                  isDel: false,
+                  delReason: ''
+                })
+              }
+              }> quality</Button>
+          </Tooltip>
         </Space >
       ),
     },
   ];
-  const changeDeleteVisible = (id: number) => {
-    setDeleteVisible(id)
-  }
+
+  useEffect(() => {
+    _getWaterTypeListByAPI()
+  }, [])
+
   const data = useSelector((state: any) => {
     return state.water.waterList
   })
@@ -121,19 +178,28 @@ const Water: React.FC = () => {
   const _getWaterTypeListByAPI = () => {
     dispatch(getWaterListByAPI())
   }
-  const _deleteWaterType = (id: number, delReason: string) => {
-    setDeleteVisible(undefined)
-    dispatch(deleteWaterByReason(id, delReason))
-  }
-  const _deleteUserList = (idList: React.Key[]) => {
+  const _deleteWaterList = (idList: React.Key[]) => {
     dispatch(deleteWaterTypeList(idList))
   }
-  useEffect(() => {
-    _getWaterTypeListByAPI()
-  }, [])
+  const _deleteWaterByReason = (id: number, delReason: string) => {
+    dispatch(deleteWaterByReason(id, delReason))
+  }
+  const changeDeleteVisible = (id: number) => {
+    setDeleteVisible(id)
+  }
+  const showDeleteModel = (id: number[], type: string) => {
+    setDeleteModel(true)
+    setDeleteVisible(undefined)
+    if (type === ONLY) {
+      setDeleteValue({ value: id, type })
+    }
+    if (type === MULTI) {
+      setDeleteValue({ value: selectedRowKeys, type })
+    }
+  }
+  const openModel = (record?: WaterTableType, editType?: string) => {
+    console.log('触发');
 
-  const openModel = (record?: WaterDataType, editType?: string) => {
-    console.log(record);
     if (record) {
       setUpdateWater(record)
     }
@@ -150,12 +216,42 @@ const Water: React.FC = () => {
     onChange: onSelectChange,
   };
 
+  const changeControl = (controlModel: ControlModel) => {
+    setControlModel(controlModel)
+    setUpdateWater(undefined)
+  }
+  const changeControlQuality = (controlModel: ControlModel) => {
+    setControlModelQ(controlModel)
+    setUpdateWaterQ(undefined)
+  }
+  const changeControlStorage = (controlModel: ControlModel) => {
+    setControlModelS(controlModel)
+    setUpdateWaterS(undefined)
+  }
+
   return (
     <div className='mycard'>
+      <CreateWaterQualityModel
+        controlModel={controlModel_quality}
+        changeControl={changeControlQuality}
+        updateWaterQualityInfo={updateWaterQuality}
+      />
+      <CreateWaterStorageModel
+        controlModel={controlModel_storage}
+        changeControl={changeControlStorage}
+        updateWaterStorageInfo={updateWaterStorage}
+      />
       <CreateWaterModel
         controlModel={controlModel}
-        changeControl={setControlModel}
+        changeControl={changeControl}
         updateWaterInfo={updateWater} />
+      <DeleteWaterModel
+        deleteVisible={deleteModel}
+        changeDeleteVisible={setDeleteModel}
+        deleteValue={deleteValue}
+        _deleteWaterList={_deleteWaterList}
+        _deleteWaterByReason={_deleteWaterByReason}
+      />
       <Space style={{ marginBottom: 16 }}>
         <span>区域</span>
         <Input placeholder="Basic usage" />
@@ -170,10 +266,10 @@ const Water: React.FC = () => {
       </Space>
       <div style={{ marginBottom: 16 }}>
         <Space>
-          <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)}  icon={<PlusOutlined />}>
+          <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)} icon={<PlusOutlined />}>
             新增数据
           </Button>
-          <Button type="primary" icon={<DeleteFilled />} danger>
+          <Button type="primary" onClick={() => showDeleteModel([], MULTI)} icon={<DeleteFilled />} danger>
             批量删除
           </Button>
           <Button icon={<DownloadOutlined />}>

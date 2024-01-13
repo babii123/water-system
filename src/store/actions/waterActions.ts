@@ -2,7 +2,7 @@
  * @description 水资源类型管理列表
  */
 
-import { WaterData, WaterDataType } from "../../model/waterModel"
+import { WaterData, WaterTableType } from "../../model/waterModel"
 import { CREATE_WATER, DELETE_WATER, DELETE_WATER_BY_REASON, DELETE_WATER_LIST, GET_WATER_LIST_BYAPI, UPDATE_WATER, UPDATE_WATER_LIST } from "../actionTypes/waterActionTypes"
 
 export const getWaterListByAPI = () => {
@@ -12,7 +12,7 @@ export const getWaterListByAPI = () => {
   }
 }
 
-export const updateWaterList = (waterList: WaterDataType[]) => {
+export const updateWaterList = (waterList: WaterTableType[]) => {
   return {
     type: UPDATE_WATER_LIST,
     payLoad: waterList

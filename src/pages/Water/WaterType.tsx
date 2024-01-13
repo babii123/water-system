@@ -5,16 +5,16 @@ import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../model/globalModel'
 import { useDispatch, useSelector } from 'react-redux';
-import { WaterTypeDataType } from '../../model/waterTypeModel';
+import { WaterTypeTableType } from '../../model/waterTypeModel';
 import { deleteWaterType, deleteWaterTypeList, getWaterTypeListByAPI } from '../../store/actions/waterTypeActions';
 import CreateModel from './components/CreateWaterTypeModel';
 
 function WaterType() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [controlModel, setControlModel] = useState<ControlModel>()
-  const [updateWaterType, setUpdateWaterType] = useState<WaterTypeDataType>()
+  const [updateWaterType, setUpdateWaterType] = useState<WaterTypeTableType>()
   const [deleteVisible, setDeleteVisible] = useState<number>()
-  const columns: ColumnsType<WaterTypeDataType> = [
+  const columns: ColumnsType<WaterTypeTableType> = [
     {
       key: 'id',
       title: 'ID',
@@ -65,7 +65,7 @@ function WaterType() {
   const changeDeleteVisible = (id: number) => {
     setDeleteVisible(id)
   }
-  
+
   const data = useSelector((state: any) => {
     return state.waterType.waterTypeList
   })
@@ -78,7 +78,7 @@ function WaterType() {
     setDeleteVisible(undefined)
     dispatch(deleteWaterType(id))
   }
-  const _deleteUserList = (idList: React.Key[]) => {
+  const _deleteWaterTypeList = (idList: React.Key[]) => {
     dispatch(deleteWaterTypeList(idList))
   }
   useEffect(() => {
@@ -96,24 +96,28 @@ function WaterType() {
     onChange: onSelectChange,
   };
 
-  const openModel = (record?: WaterTypeDataType, editType?: string) => {
-    console.log(record);
+  const openModel = (record?: WaterTypeTableType, editType?: string) => {
     if (record) {
       setUpdateWaterType(record)
     }
     setControlModel({ visible: true, editType })
   }
 
-  const deleteUserSeleted = () => {
+  const deleteWaterTypeSeleted = () => {
     console.log('selected', selectedRowKeys);
-    _deleteUserList(selectedRowKeys)
+    _deleteWaterTypeList(selectedRowKeys)
+  }
+
+  const changeControl = (controlModel: ControlModel) => {
+    setControlModel(controlModel)
+    setUpdateWaterType(undefined)
   }
 
   return (
     <div className='mycard'>
       <CreateModel
         controlModel={controlModel}
-        changeControl={setControlModel}
+        changeControl={changeControl}
         updateWaterTypeInfo={updateWaterType} />
       <Space style={{ marginBottom: 16 }}>
         <span className='searcher_title'>E-mail</span>
@@ -134,7 +138,7 @@ function WaterType() {
           <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)} icon={<PlusOutlined />}>
             新增类型
           </Button>
-          <Button type="primary" onClick={() => deleteUserSeleted()} icon={<DeleteFilled />} danger>
+          <Button type="primary" onClick={() => deleteWaterTypeSeleted()} icon={<DeleteFilled />} danger>
             批量删除
           </Button>
           <Button icon={<DownloadOutlined />}>

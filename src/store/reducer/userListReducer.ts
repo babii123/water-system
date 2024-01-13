@@ -1,9 +1,9 @@
-import { UserListDataType } from "../../model/userInfoModel"
+import { UserTableType } from "../../model/userInfoModel"
 import { ActionModel } from "../../model/globalModel"
 import { DELETE_USER, UPDATE_USER_LIST } from "../actionTypes/userListActionTypes"
 
 const defaultState: {
-  userList?: UserListDataType[]
+  userList?: UserTableType[]
 } = {
   userList: undefined
 }

@@ -6,3 +6,4 @@ export const CREATE_USER = `${basicAction}/create_user`
 export const UPDATE_USER = `${basicAction}/update_user`
 export const DELETE_USER = `${basicAction}/delete_user`
 export const DELETE_USER_LIST = `${basicAction}/delete_user_list`
+export const FIND_USER_BY_CONDITION = `${basicAction}/find_user_by_condition`

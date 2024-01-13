@@ -57,11 +57,16 @@ html {
   margin-top: 10px;
 }
 
-.flex{
+.flex {
   display: flex;
 }
 
-.searcher_title{
+.searcher_title {
   font-size: 16px;
   font-weight: 600;
+}
+
+.warn-text {
+  color: red;
+  font-size: 12px;
 }

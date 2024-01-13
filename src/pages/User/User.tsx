@@ -5,7 +5,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
 import CreateModel from './components/CreateModel';
 import dayjs from 'dayjs';
-import { UserListDataType } from '../../model/userInfoModel'
+import { UserTableType } from '../../model/userInfoModel'
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../model/globalModel'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, deleteUserList, getUserListByAPI } from '../../store/actions/userListActions';
@@ -15,13 +15,13 @@ import './User.css'
 function User() {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [controlModel, setControlModel] = useState<ControlModel>()
-    const [updateUser, setUpdateUser] = useState<UserListDataType>()
+    const [updateUser, setUpdateUser] = useState<UserTableType>()
 
     const [deleteVisible, setDeleteVisible] = useState<number>()
     const changeDeleteVisible = (id: number) => {
         setDeleteVisible(id)
     }
-    const columns: ColumnsType<UserListDataType> = [
+    const columns: ColumnsType<UserTableType> = [
         {
             key: 'id',
             title: 'ID',
@@ -152,7 +152,7 @@ function User() {
         onChange: onSelectChange,
     };
 
-    const openModel = (record?: UserListDataType, editType?: string) => {
+    const openModel = (record?: UserTableType, editType?: string) => {
         console.log(record);
 
         if (record) {
@@ -166,11 +166,16 @@ function User() {
         _deleteUserList(selectedRowKeys)
     }
 
+    const changeControl = (controlModel: ControlModel) => {
+        setControlModel(controlModel)
+        setUpdateUser(undefined)
+    }
+
     return (
         <div className='mycard'>
             <CreateModel
                 controlModel={controlModel}
-                changeControl={setControlModel}
+                changeControl={changeControl}
                 updateUserInfo={updateUser} />
             <Space style={{ marginBottom: 16 }}>
                 <span className='searcher_title'>E-mail</span>

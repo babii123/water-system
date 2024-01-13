@@ -1,9 +1,9 @@
 import { ActionModel } from "../../model/globalModel"
-import { WaterDataType } from "../../model/waterModel"
+import { WaterTableType } from "../../model/waterModel"
 import { UPDATE_WATER_LIST } from "../actionTypes/waterActionTypes"
 
 const defaultState: {
-  waterList: WaterDataType[]
+  waterList: WaterTableType[]
 } = {
   waterList: []
 }

@@ -15,7 +15,7 @@ export interface UserInfo {
   roles: string[]
 }
 
-export interface UserListDataType {
+export interface UserTableType {
   key: number
   id: number
   userId: string

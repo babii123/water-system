@@ -1,5 +1,5 @@
 // 表格数据类型
-export interface WaterDataType {
+export interface WaterTableType {
   key: number
   id: number
   type: string

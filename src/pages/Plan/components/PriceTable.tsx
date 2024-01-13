@@ -1,88 +1,24 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
+import { WaterPriceTableType } from '../../../model/waterPriceModel';
 
 const { Column, ColumnGroup } = Table;
 
-interface DataType {
-  key: React.Key;
-  firstName: string;
-  lastName: string;
-  age: number;
-  address: string;
-  tags: string[];
-}
-
-const data: DataType[] = [
-  {
-    key: '1',
-    firstName: 'John',
-    lastName: 'Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    firstName: 'Jim',
-    lastName: 'Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '4',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '5',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-
-const PriceTable: React.FC = () => (
+const PriceTable: React.FC<{ data: WaterPriceTableType[] }> = ({ data }) => (
   <Table dataSource={data} pagination={{ position: [] }}>
-    <ColumnGroup title="Name">
-      <Column title="First Name" dataIndex="firstName" key="firstName" />
-      <Column title="Last Name" dataIndex="lastName" key="lastName" />
+    <Column title="用户类型" dataIndex="type" />
+    <ColumnGroup title="自来水价格">
+      <Column title="基本水价" dataIndex="basicPrice" />
+      <Column title="水资源费" dataIndex="resourceCost" />
     </ColumnGroup>
-    <Column title="Age" dataIndex="age" key="age" />
-    <Column title="Address" dataIndex="address" key="address" />
+    <Column title="污水处理费" dataIndex="pollutionCost" />
+    <Column title="用户最终负担价格" dataIndex="realPrice" />
     <Column
-      title="Tags"
-      dataIndex="tags"
-      key="tags"
-      render={(tags: string[]) => (
-        <>
-          {tags.map((tag) => (
-            <Tag color="blue" key={tag}>
-              {tag}
-            </Tag>
-          ))}
-        </>
-      )}
-    />
-    <Column
-      title="Action"
+      title="操作"
       key="action"
-      render={(_: any, record: DataType) => (
+      render={(_: any, record: WaterPriceTableType) => (
         <Space size="middle">
-          <a>Invite {record.lastName}</a>
+          <a>Invite</a>
           <a>Delete</a>
         </Space>
       )}

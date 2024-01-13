@@ -1,12 +1,11 @@
-import { put, call, takeEvery, take } from "redux-saga/effects"
+import { put, call, takeEvery } from "redux-saga/effects"
 import { CREATE_WATER, DELETE_WATER, DELETE_WATER_LIST, GET_WATER_LIST_BYAPI, UPDATE_WATER, DELETE_WATER_BY_REASON } from "../actionTypes/waterActionTypes"
-import { createWater_API, deleteWaterList_API, deleteWater_API, getWaterAll_API, updateWater_API } from "../../services/waterRequest"
+import { createWater_API, deleteWaterList_API, deleteWaterByDelReason_API, getWaterAll_API, updateWater_API } from "../../services/waterRequest"
 import { WaterData } from "../../model/waterModel"
 import { updateWaterList } from "../actions/waterActions"
 import { message } from "antd"
 
 function* _getWaterListByAPI() {
-  console.log('xxx');
   const { code, data }: { code: number, data: WaterData[] } = yield call(getWaterAll_API)
   if (code === 200 && data) {
     const new_data = data.map((item) => {
@@ -36,8 +35,8 @@ function* _updateWater(action: { type: string, water: WaterData, id: number }) {
   }
 }
 
-function* _deleteWaterByReason(action: { type: string, id: number }) {
-  const { code } = yield call(deleteWater_API, action.id)
+function* _deleteWaterByReason(action: { type: string, id: number, delReason: string }) {
+  const { code } = yield call(deleteWaterByDelReason_API, action.id, action.delReason)
   if (code === 200) {
     yield call(_getWaterListByAPI)
     message.success('delete success')

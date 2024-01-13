@@ -10,3 +10,7 @@ export interface ActionModel {
   type: string,
   payLoad: any
 }
+
+export const ONLY = 'only'
+export const MULTI = 'multi'
+export const DELETE_REASON = 'Delete Reason'
