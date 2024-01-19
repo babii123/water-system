@@ -22,3 +22,4 @@ export const deletePlanList_API = (idList: number[]) => request.delete(`${basic_
 export const updatePlan_API = (id: number, data: Plan) => request.patch(`${basic_path}/${id}`, data)
 export const getPlanAll_API = () => request.get<PlanData[]>(`${basic_path}`)
 export const getPlan_API = (type: string) => request.get(`${basic_path}/${type}`)
+export const getPlanListByCondition_API = (waterArea?: string, waterPriceType?: string) => request.get(`${basic_path}/findByCondition?waterArea=${waterArea ? waterArea : ''}&waterPriceType=${waterPriceType ? waterPriceType : ''}`)

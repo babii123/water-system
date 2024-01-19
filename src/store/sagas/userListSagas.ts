@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { DELETE_USER, DELETE_USER_LIST, GET_USER_LIST_BYAPI, CREATE_USER, UPDATE_USER, FIND_USER_BY_CONDITION } from "../actionTypes/userListActionTypes";
+import { DELETE_USER, DELETE_USER_LIST, GET_USER_LIST_BYAPI, CREATE_USER, UPDATE_USER,FIND_USER_BY_CONDITION } from "../actionTypes/userListActionTypes";
 import { deleteUser_API, getUserAll_API, deleteUserList_API, updateUser_API, createUser_API, getUserListByCondition_API } from "../../services/userRequest";
 import { UserInfo } from "../../model/userInfoModel";
 import { updateUserList } from "../actions/userListActions";
@@ -44,14 +44,14 @@ function* _deleteUser(action: { type: string, userId: string }) {
 }
 
 function* _deleteUserList(action: { type: string, idList: number[] }) {
-  console.log('_deleteList', action.idList);
   const { code } = yield call(deleteUserList_API, action.idList)
   if (code === 200) {
     yield call(_getUserListByAPI)
   }
 }
 
-function* _findUserByCondition(action: { email?: string, realName?: string, phone?: string }) {
+// ???
+function* _findUserByCondition(action: any) {
   const { email, realName, phone } = action
   const { code, data }: { code: number, data: UserInfo[] } = yield call(getUserListByCondition_API, email, realName, phone)
   if (code === 200) {

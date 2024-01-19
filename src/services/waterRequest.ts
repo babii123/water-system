@@ -1,4 +1,5 @@
 import request from '.'
+import { PlanData } from '../model/planModel'
 import { WaterData } from '../model/waterModel'
 
 const basic_path = '/water'
@@ -21,3 +22,4 @@ export const deleteWaterList_API = (idList: number[]) => request.delete(`${basic
 export const updateWater_API = (id: number, data: water) => request.patch(`${basic_path}/${id}`, data)
 export const getWaterAll_API = () => request.get<WaterData[]>(`${basic_path}`)
 export const getWater_API = (type: string) => request.get(`${basic_path}/${type}`)
+export const getWaterListByCondition_API = (waterArea?: string, waterType?: string) => request.get<PlanData[]>(`${basic_path}/findByCondition?waterArea=${waterArea ? waterArea : ''}&waterType=${waterType ? waterType : ''}`) 

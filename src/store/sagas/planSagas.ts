@@ -1,12 +1,11 @@
 import { put, call, takeEvery } from "redux-saga/effects"
-import { CREATE_PLAN, DELETE_PLAN_LIST, GET_PLAN_LIST_BYAPI, UPDATE_PLAN, DELETE_PLAN_BY_REASON } from "../actionTypes/planActionTypes"
-import { createPlan_API, deletePlanByDelReason_API, deletePlanList_API, getPlanAll_API, updatePlan_API } from "../../services/planRequest"
+import { CREATE_PLAN, DELETE_PLAN_LIST, GET_PLAN_LIST_BYAPI, UPDATE_PLAN, DELETE_PLAN_BY_REASON, FIND_PLAN_BY_CONDITION } from "../actionTypes/planActionTypes"
+import { createPlan_API, deletePlanByDelReason_API, deletePlanList_API, getPlanAll_API, getPlanListByCondition_API, updatePlan_API } from "../../services/planRequest"
 import { PlanData } from "../../model/planModel"
 import { updatePlanList } from "../actions/planActions"
 import { message } from "antd"
 
 function* _getPlanListByAPI() {
-  console.log('xxx');
   const { code, data }: { code: number, data: PlanData[] } = yield call(getPlanAll_API)
   if (code === 200 && data) {
     const new_data = data.map((item) => {
@@ -58,6 +57,19 @@ function* _deletePlanList(action: { type: string, idList: number[] }) {
   }
 }
 
+function* _findPlanByCondition(action: any) {
+  const { waterArea, waterPriceType } = action
+  const { code, data }: { code: number, data: PlanData[] } = yield call(getPlanListByCondition_API, waterArea, waterPriceType)
+  if (code === 200) {
+    const new_data = data.map((item) => {
+      return { ...item, key: item.id }
+    })
+    yield put(updatePlanList(new_data))
+    message.success('find success')
+  } else {
+    message.error('find fail')
+  }
+}
 
 function* planSagas() {
   yield takeEvery(GET_PLAN_LIST_BYAPI, _getPlanListByAPI)
@@ -65,6 +77,7 @@ function* planSagas() {
   yield takeEvery(UPDATE_PLAN, _updatePlan)
   yield takeEvery(DELETE_PLAN_BY_REASON, _deletePlanByReason)
   yield takeEvery(DELETE_PLAN_LIST, _deletePlanList)
+  yield takeEvery(FIND_PLAN_BY_CONDITION, _findPlanByCondition)
 }
 
 export default planSagas

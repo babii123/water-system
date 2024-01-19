@@ -11,7 +11,6 @@ const defaultState: {
 export const userListReducer = (state = defaultState, action: ActionModel) => {
   switch (action.type) {
     case DELETE_USER:
-      console.log('11111');
       return state
     case UPDATE_USER_LIST:
       return {

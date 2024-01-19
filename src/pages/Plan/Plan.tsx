@@ -3,7 +3,7 @@ import { Button, Input, Popover, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined, ExclamationCircleTwoTone } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPlanListByAPI } from '../../store/actions/planActions';
+import { getPlanListByAPI, getPlanListByCondition } from '../../store/actions/planActions';
 import { PlanTableType } from '../../model/planModel';
 import { CREATE_MODEL, ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../model/globalModel';
 import CreatePlanModel from './components/CreatePlanModel';
@@ -17,6 +17,8 @@ function Plan() {
   const [deleteVisible, setDeleteVisible] = useState<number>()
   const [deleteModel, setDeleteModel] = useState<boolean>()
   const [deleteValue, setDeleteValue] = useState<{ value: any, type: string }>()
+  const [waterArea, setWaterArea] = useState<string>()
+  const [waterPriceType, setWaterPriceType] = useState<string>()
 
   const columns: ColumnsType<PlanTableType> = [
     {
@@ -127,6 +129,9 @@ function Plan() {
   const _getWaterPriceListByAPI = () => {
     dispatch(getWaterPriceListByAPI())
   }
+  const _getPlanByCondition = (waterArea?: string, waterPriceType?: string) => {
+    dispatch(getPlanListByCondition(waterArea, waterPriceType))
+  }
   useEffect(() => {
     _getPlanListByAPI()
     _getWaterPriceListByAPI()
@@ -148,7 +153,6 @@ function Plan() {
   }
 
   const openModel = (record?: PlanTableType, editType?: string) => {
-    console.log(record);
     if (record) {
       setUpdatePlan({ ...record, startTime: dayjs(record?.startTime, 'YYYY-MM-DD'), endTime: dayjs(record?.endTime, 'YYYY-MM-DD') })
     } else {
@@ -171,7 +175,6 @@ function Plan() {
   }
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -184,6 +187,9 @@ function Plan() {
     setControlModel(controlModel);
     setUpdatePlan(undefined);
   }
+  const findPlan = () => {
+    _getPlanByCondition(waterArea, waterPriceType)
+  }
 
   return (
     <div className='mycard'>
@@ -194,11 +200,13 @@ function Plan() {
         waterPriceList={waterPriceList}
       />
       <Space style={{ marginBottom: 16 }}>
-        <span>区域</span>
-        <Input placeholder="Basic usage" />
-        <span>日期</span>
-        <Input placeholder="Basic usage" />
-        <Button type="primary" icon={<SearchOutlined />}>
+        <span className='searcher_title'>用水区域</span>
+        <Input value={waterArea} onChange={(e) => setWaterArea(e.target.value)} />
+        <span className='searcher_title'>用水类型</span>
+        <Input value={waterPriceType} onChange={(e) => setWaterPriceType(e.target.value)} />
+        {/* <span className='searcher_title'>日期</span>
+        <Input placeholder="Basic usage" /> */}
+        <Button type="primary" icon={<SearchOutlined />} onClick={() => findPlan()}>
           搜索
         </Button>
         <Button icon={<RestOutlined />}>

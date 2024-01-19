@@ -41,10 +41,4 @@ const LayOut = (props: {}) => {
   )
 };
 
-export default connect(
-  // (state) => {
-  //   return {
-  //     userInfo: state.userInfo
-  //   }
-  // }
-)(LayOut);
+export default LayOut;

@@ -23,3 +23,4 @@ export const deleteWaterQualityList_API = (idList: number[]) => request.delete(`
 export const updateWaterQuality_API = (id: number, data: waterQuality) => request.patch(`${basic_path}/${id}`, data)
 export const getWaterQualityAll_API = () => request.get<WaterQualityData[]>(`${basic_path}`)
 export const getWaterQuality_API = (type: string) => request.get(`${basic_path}/${type}`)
+export const getQualityListByID_API = (id: number) => request.get<WaterQualityData[]>(`${basic_path}/${id}`,) 

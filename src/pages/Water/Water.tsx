@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL, ONLY, MULTI } from '../../model/globalModel';
 import { deleteWaterTypeList } from '../../store/actions/waterTypeActions';
 import { WaterTableType } from '../../model/waterModel';
-import { deleteWaterByReason, getWaterListByAPI } from '../../store/actions/waterActions';
+import { deleteWaterByReason, getWaterListByAPI, getWaterListByCondition } from '../../store/actions/waterActions';
 import CreateWaterModel from './components/CreateWaterModel';
 import DeleteWaterModel from './components/DeleteWaterModel';
 import CreateWaterQualityModel from '../Quality/components/CreateWaterQualityModel';
@@ -26,6 +26,8 @@ const Water: React.FC = () => {
   const [deleteVisible, setDeleteVisible] = useState<number>()
   const [deleteModel, setDeleteModel] = useState<boolean>()
   const [deleteValue, setDeleteValue] = useState<{ value: any, type: string }>()
+  const [waterArea, setWaterArea] = useState<string>()
+  const [waterType, setWaterType] = useState<string>()
 
   const columns: ColumnsType<WaterTableType> = [
     {
@@ -184,6 +186,9 @@ const Water: React.FC = () => {
   const _deleteWaterByReason = (id: number, delReason: string) => {
     dispatch(deleteWaterByReason(id, delReason))
   }
+  const _getWaterByCondition = (waterArea?: string, waterType?: string) => {
+    dispatch(getWaterListByCondition(waterArea, waterType))
+  }
   const changeDeleteVisible = (id: number) => {
     setDeleteVisible(id)
   }
@@ -198,8 +203,6 @@ const Water: React.FC = () => {
     }
   }
   const openModel = (record?: WaterTableType, editType?: string) => {
-    console.log('触发');
-
     if (record) {
       setUpdateWater(record)
     }
@@ -228,6 +231,9 @@ const Water: React.FC = () => {
     setControlModelS(controlModel)
     setUpdateWaterS(undefined)
   }
+  const findWater = () => {
+    _getWaterByCondition(waterArea, waterType)
+  }
 
   return (
     <div className='mycard'>
@@ -253,11 +259,11 @@ const Water: React.FC = () => {
         _deleteWaterByReason={_deleteWaterByReason}
       />
       <Space style={{ marginBottom: 16 }}>
-        <span>区域</span>
-        <Input placeholder="Basic usage" />
-        <span>日期</span>
-        <Input placeholder="Basic usage" />
-        <Button type="primary" icon={<SearchOutlined />}>
+        <span className='searcher_title'>区域</span>
+        <Input value={waterArea} onChange={(e) => setWaterArea(e.target.value)} />
+        <span className='searcher_title'>类型</span>
+        <Input value={waterType} onChange={(e) => setWaterType(e.target.value)} />
+        <Button type="primary" icon={<SearchOutlined />} onClick={() => findWater()}>
           搜索
         </Button>
         <Button icon={<RestOutlined />}>

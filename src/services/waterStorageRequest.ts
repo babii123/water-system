@@ -21,3 +21,4 @@ export const deleteWaterStorageList_API = (idList: number[]) => request.delete(`
 export const updateWaterStorage_API = (id: number, data: waterQuality) => request.patch(`${basic_path}/${id}`, data)
 export const getWaterStorageAll_API = () => request.get<WaterStorageData[]>(`${basic_path}`)
 export const getWaterStorage_API = (type: string) => request.get(`${basic_path}/${type}`)
+export const getStorageListByID_API = (id: number) => request.get<WaterStorageData[]>(`${basic_path}/${id}`,) 

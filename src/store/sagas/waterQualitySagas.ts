@@ -1,12 +1,11 @@
 import { put, call, takeEvery } from "redux-saga/effects"
-import { CREATE_WATER_QUALITY, DELETE_WATER_QUALITY, DELETE_WATER_QUALITY_LIST, GET_WATER_QUALITY_LIST_BYAPI, UPDATE_WATER_QUALITY, DELETE_WATER_QUALITY_BY_REASON } from "../actionTypes/waterQualityActionTypes"
-import { createWaterQuality_API, deleteWaterQualityList_API, deleteWaterQualityByDelReason_API, getWaterQualityAll_API, updateWaterQuality_API } from "../../services/waterQualityRequest"
+import { CREATE_WATER_QUALITY, DELETE_WATER_QUALITY, DELETE_WATER_QUALITY_LIST, GET_WATER_QUALITY_LIST_BYAPI, UPDATE_WATER_QUALITY, DELETE_WATER_QUALITY_BY_REASON, FIND_QUALITY_BY_ID } from "../actionTypes/waterQualityActionTypes"
+import { createWaterQuality_API, deleteWaterQualityList_API, deleteWaterQualityByDelReason_API, getWaterQualityAll_API, updateWaterQuality_API, getQualityListByID_API } from "../../services/waterQualityRequest"
 import { WaterQualityData } from "../../model/waterQualityModel"
 import { updateWaterQualityList } from "../actions/waterQualityActions"
 import { message } from "antd"
 
 function* _getWaterQualityListByAPI() {
-  console.log('xxx');
   const { code, data }: { code: number, data: WaterQualityData[] } = yield call(getWaterQualityAll_API)
   if (code === 200 && data) {
     const new_data = data.map((item) => {
@@ -57,13 +56,26 @@ function* _deleteWaterQualityList(action: { type: string, idList: number[] }) {
   }
 }
 
-
+function* _getWaterQualityByID(action: any) {
+  const { id } = action
+  const { code, data }: { code: number, data: WaterQualityData[] } = yield call(getQualityListByID_API, id)
+  if (code === 200 && data) {
+    const new_data = data.map((item) => {
+      return { ...item, key: item.id }
+    })
+    yield put(updateWaterQualityList(new_data))
+    message.success('find success')
+  } else {
+    message.error('find fail')
+  }
+}
 function* waterQualitySagas() {
   yield takeEvery(GET_WATER_QUALITY_LIST_BYAPI, _getWaterQualityListByAPI)
   yield takeEvery(CREATE_WATER_QUALITY, _createWaterQuality)
   yield takeEvery(UPDATE_WATER_QUALITY, _updateWaterQuality)
   yield takeEvery(DELETE_WATER_QUALITY_BY_REASON, _deleteWaterQualityByReason)
   yield takeEvery(DELETE_WATER_QUALITY, _deleteWaterQualityList)
+  yield takeEvery(FIND_QUALITY_BY_ID, _getWaterQualityByID)
 }
 
 export default waterQualitySagas

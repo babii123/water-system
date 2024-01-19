@@ -2,7 +2,7 @@
  * @description 个人信息
  */
 import { UserInfo } from "../../model/userInfoModel"
-import { CHANGE_MENU_ITEMS, SET_ROLES, UPDATE_USERINFO } from "../actionTypes/userActionTypes"
+import { CHANGE_MENU_ITEMS, SET_ROLES, UPDATE_USER_INFO, GET_USER_INFO, UPDATE_USER_INFO_TO_SERVER } from "../actionTypes/userActionTypes"
 
 export enum UserRole {
   ADMIN = "admin",
@@ -29,7 +29,20 @@ export const changeMenuItems = (menuItems: Array<string>) => {
 // 设置用户基础信息
 export const updateUserInfo = (userInfo: UserInfo) => {
   return {
-    type: UPDATE_USERINFO,
+    type: UPDATE_USER_INFO,
     payLoad: userInfo
   }
 }
+
+export const updateUserInfoToServer = (userInfo: UserInfo) => {
+  return {
+    type: UPDATE_USER_INFO_TO_SERVER,
+    userInfo
+  }
+}
+
+// export const getUserInfo = () => {
+//   return {
+//     type: GET_USER_INFO
+//   }
+// }

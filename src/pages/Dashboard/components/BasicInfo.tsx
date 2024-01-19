@@ -1,20 +1,26 @@
-const BasicInfo = () => {
+import React from "react";
+
+const BasicInfo:React.FC<
+  { userCount?: number, waterCount?: number, planCount?: number }
+> = (
+  { userCount, waterCount, planCount }
+) => {
 
   const basicInfoData = [
     {
       key: 1,
-      title: '1,234',
-      description: 'export default BasicInfo'
+      title: userCount,
+      description: '用户数量'
     },
     {
       key: 2,
-      title: '1,234',
-      description: 'export default BasicInfo'
+      title: waterCount,
+      description: '水资源数量'
     },
     {
       key: 3,
-      title: '1,234',
-      description: 'export default BasicInfo'
+      title: planCount,
+      description: '供水计划数量'
     },
   ]
 

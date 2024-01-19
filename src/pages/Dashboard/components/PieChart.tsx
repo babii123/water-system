@@ -1,6 +1,16 @@
 import ReactEcharts from "echarts-for-react"
 
-const Pie: React.FC = () => {
+const Pie: React.FC<{
+  adminCount?: number
+  engineerCount?: number
+  searcherCount?: number
+}> = (
+  {
+    adminCount,
+    engineerCount,
+    searcherCount
+  }
+) => {
   const getOption = () => {
     const option = {
       tooltip: {
@@ -36,9 +46,9 @@ const Pie: React.FC = () => {
             show: false
           },
           data: [
-            { value: 1048, name: 'Search' },
-            { value: 735, name: 'Direct' },
-            { value: 580, name: 'Email' },
+            { value: adminCount, name: 'admin' },
+            { value: engineerCount, name: 'engineer' },
+            { value: searcherCount, name: 'searcher' },
           ]
         }
       ]

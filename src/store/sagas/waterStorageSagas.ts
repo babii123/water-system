@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from "redux-saga/effects"
-import { CREATE_WATER_STORAGE, DELETE_WATER_STORAGE, DELETE_WATER_STORAGE_LIST, GET_WATER_STORAGE_LIST_BYAPI, UPDATE_WATER_STORAGE, DELETE_WATER_STORAGE_BY_REASON } from "../actionTypes/waterStorageActionTypes"
-import { createWaterStorage_API, deleteWaterStorageList_API, deleteWaterStorageByDelReason_API, getWaterStorageAll_API, updateWaterStorage_API } from "../../services/waterStorageRequest"
+import { CREATE_WATER_STORAGE, DELETE_WATER_STORAGE, DELETE_WATER_STORAGE_LIST, GET_WATER_STORAGE_LIST_BYAPI, UPDATE_WATER_STORAGE, DELETE_WATER_STORAGE_BY_REASON, FIND_STORAGE_BY_ID } from "../actionTypes/waterStorageActionTypes"
+import { createWaterStorage_API, deleteWaterStorageList_API, deleteWaterStorageByDelReason_API, getWaterStorageAll_API, updateWaterStorage_API, getStorageListByID_API } from "../../services/waterStorageRequest"
 import { WaterStorageData } from "../../model/waterStorageModel"
 import { updateWaterStorageList } from "../actions/waterStorageActions"
 import { message } from "antd"
@@ -56,6 +56,20 @@ function* _deleteWaterStorageList(action: { type: string, idList: number[] }) {
   }
 }
 
+function* _getWaterStorageByID(action: any) {
+  const { id } = action
+  const { code, data }: { code: number, data: WaterStorageData[] } = yield call(getStorageListByID_API, id)
+  if (code === 200 && data) {
+    const new_data = data.map((item) => {
+      return { ...item, key: item.id }
+    })
+    yield put(updateWaterStorageList(new_data))
+    message.success('find success')
+  } else {
+    message.error('find fail')
+  }
+}
+
 
 function* waterStorageSagas() {
   yield takeEvery(GET_WATER_STORAGE_LIST_BYAPI, _getWaterStorageListByAPI)
@@ -63,6 +77,7 @@ function* waterStorageSagas() {
   yield takeEvery(UPDATE_WATER_STORAGE, _updateWaterStorage)
   yield takeEvery(DELETE_WATER_STORAGE_BY_REASON, _deleteWaterStorageByReason)
   yield takeEvery(DELETE_WATER_STORAGE, _deleteWaterStorageList)
+  yield takeEvery(FIND_STORAGE_BY_ID, _getWaterStorageByID)
 }
 
 export default waterStorageSagas

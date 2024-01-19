@@ -5,7 +5,7 @@ import { SearchOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@a
 import { ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../model/globalModel';
 import { WaterStorageTableType } from '../../model/waterStorageModel';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteWaterStorageByReason, deleteWaterStorageList, getWaterStorageListByAPI } from '../../store/actions/waterStorageActions';
+import { deleteWaterStorageByReason, deleteWaterStorageList, getWaterStorageByID, getWaterStorageListByAPI } from '../../store/actions/waterStorageActions';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import CreateWaterStorageModel from './components/CreateWaterStorageModel';
 import DeleteWaterStorageModel from './components/DeleteWaterStorageModel';
@@ -17,8 +17,8 @@ function Storage() {
   const [deleteVisible, setDeleteVisible] = useState<number>()
   const [deleteModel, setDeleteModel] = useState<boolean>()
   const [deleteValue, setDeleteValue] = useState<{ value: any, type: string }>()
+  const [id, setID] = useState<number>()
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -122,6 +122,9 @@ function Storage() {
   const _deleteWaterStorageByReason = (id: number, delReason: string) => {
     dispatch(deleteWaterStorageByReason(id, delReason))
   }
+  const _getWaterStorageByID = (id: number) => {
+    dispatch(getWaterStorageByID(id))
+  }
   const changeDeleteVisible = (id?: number) => {
     setDeleteVisible(id)
   }
@@ -150,6 +153,11 @@ function Storage() {
     setControlModel(controlModel)
     setUpdateWaterStorage(undefined)
   }
+  const findStorage = () => {
+    if (id) {
+      _getWaterStorageByID(id)
+    }
+  }
 
   return (
     <>
@@ -167,21 +175,15 @@ function Storage() {
       />
       <div className='mycard'>
         <Space style={{ marginBottom: 16 }}>
-          {/* <span>ID</span> */}
-          <Input placeholder="ID" />
+          <span className='searcher_title'>ID</span>
+          <Input value={id} onChange={(e) => setID(parseInt(e.target.value))} />
           {/* <span>水资源类型</span> */}
-          <Input placeholder="水资源类型" />
+          {/* <Input placeholder="水资源类型" /> */}
           {/* <span>测量时间</span> */}
-          <Input placeholder="测量时间" />
+          {/* <Input placeholder="测量时间" /> */}
           {/* <span>测量人员</span> */}
-          <Input placeholder="测量人员" />
-          {/* <span>PH值</span> */}
-          <Input placeholder="PH值" />
-          {/* <span>浊度</span> */}
-          <Input placeholder="浊度" />
-          {/* <span>污染物水平</span> */}
-          <Input placeholder="污染物水平" />
-          <Button type="primary" icon={<SearchOutlined />}>
+          {/* <Input placeholder="测量人员" /> */}
+          <Button type="primary" icon={<SearchOutlined />} onClick={() => findStorage()}>
             搜索
           </Button>
           <Button icon={<RestOutlined />}>

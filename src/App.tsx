@@ -12,7 +12,6 @@ import Center from './pages/Center/Center';
 import User from './pages/User/User';
 import AuthMiddleware from './Components/AuthMiddleware'
 import NotFound from './pages/Error/NotFound';
-import Error404 from './pages/Error/Error404';
 import WaterType from './pages/Water/WaterType';
 
 function App() {
@@ -33,11 +32,11 @@ function App() {
           <Route path="/water_quality" element={<Quality />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/user_manage" element={<User />} />
+          <Route path="/user_center" element={<Center />} />
           <Route path="/user_center/:userId" element={<Center />} />
-          <Route path="/error/404" element={<NotFound />} />
-          <Route path="/error/5" element={<Error404 />} />
           <Route path="/" element={<Dashboard />} />
         </Route>
+        <Route path="/error/404" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

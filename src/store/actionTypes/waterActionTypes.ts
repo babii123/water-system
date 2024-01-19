@@ -7,3 +7,4 @@ export const UPDATE_WATER = `${basicAction}/update_water`
 export const DELETE_WATER = `${basicAction}/delete_water`
 export const DELETE_WATER_BY_REASON = `${basicAction}/delete_water_by_reason`
 export const DELETE_WATER_LIST = `${basicAction}/delete_water_list`
+export const FIND_WATER_BY_CONDITION = `${basicAction}/find_water_by_condition`

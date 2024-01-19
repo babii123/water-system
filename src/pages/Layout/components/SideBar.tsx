@@ -62,7 +62,17 @@ const SideBar: React.FC = () => {
   })
 
   const location = useLocation()
-  const selectedKeys = location.pathname.slice(1)
+  const getSelectedKeys = () => {
+    const pathname = location.pathname.slice(1)
+    if (pathname.startsWith('user_center')) {
+      return 'user_center'
+    } else if (pathname === '') {
+      return 'dashboard'
+    } else {
+      return pathname
+    }
+  }
+  const selectedKeys = getSelectedKeys()
 
   useEffect(() => {
     const filter_res = items.filter((item) => menuItems.includes(String(item?.key)))
@@ -71,8 +81,10 @@ const SideBar: React.FC = () => {
 
   const navigate = useNavigate()
   const onClick: MenuProps['onClick'] = (e) => {
+    if (e.key === 'user_center') {
+      navigate(`/${e.key}/${localStorage.getItem('userId')}`)
+    }
     navigate(`/${e.key}`)
-    // console.log('click ', e);
   };
 
   return (

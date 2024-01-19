@@ -91,7 +91,6 @@ const CreateWaterQualityModel: React.FC<
     };
 
     useEffect(() => {
-      console.log(updateWaterQualityInfo);
       if (updateWaterQualityInfo) {
         form.setFieldsValue(updateWaterQualityInfo)
       } else {

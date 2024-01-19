@@ -3,7 +3,7 @@
  */
 
 import { WaterData, WaterTableType } from "../../model/waterModel"
-import { CREATE_WATER, DELETE_WATER, DELETE_WATER_BY_REASON, DELETE_WATER_LIST, GET_WATER_LIST_BYAPI, UPDATE_WATER, UPDATE_WATER_LIST } from "../actionTypes/waterActionTypes"
+import { CREATE_WATER, DELETE_WATER, DELETE_WATER_BY_REASON, DELETE_WATER_LIST, FIND_WATER_BY_CONDITION, GET_WATER_LIST_BYAPI, UPDATE_WATER, UPDATE_WATER_LIST } from "../actionTypes/waterActionTypes"
 
 export const getWaterListByAPI = () => {
   return {
@@ -53,5 +53,13 @@ export const deleteWaterList = (idList: any) => {
   return {
     type: DELETE_WATER_LIST,
     idList
+  }
+}
+
+export const getWaterListByCondition = (waterArea?: string, waterType?: string) => {
+  return {
+    type: FIND_WATER_BY_CONDITION,
+    waterArea,
+    waterType
   }
 }

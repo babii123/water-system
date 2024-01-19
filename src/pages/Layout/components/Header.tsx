@@ -1,8 +1,12 @@
 import { Breadcrumb, Badge, Avatar } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Header: React.FC = () => {
+  const navigate = useNavigate()
+  const clickAvatar = () => {
+    navigate(`/user_center/${localStorage.getItem('userId')}`)
+  }
   return (
     <div className="header-box">
       <div className='header-breadcrumd'>
@@ -21,7 +25,7 @@ const Header: React.FC = () => {
       <div className='avatar'>
         {/* 头像和消息 */}
         <Badge count={1}>
-          <Avatar style={{ backgroundColor: '#87d068' }} shape="square" icon={<UserOutlined />} />
+          <Avatar style={{ backgroundColor: '#87d068' }} shape="square" icon={<UserOutlined />} onClick={() => clickAvatar()} />
         </Badge>
       </div>
     </div>

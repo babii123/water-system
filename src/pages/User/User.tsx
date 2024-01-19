@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { UserTableType } from '../../model/userInfoModel'
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../model/globalModel'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, deleteUserList, getUserListByAPI } from '../../store/actions/userListActions';
+import { deleteUser, deleteUserList, getUserListByAPI, getUserListByCondition } from '../../store/actions/userListActions';
 import { UserRole } from '../../store/reducer/userReducer'
 import './User.css'
 
@@ -16,11 +16,10 @@ function User() {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [controlModel, setControlModel] = useState<ControlModel>()
     const [updateUser, setUpdateUser] = useState<UserTableType>()
-
+    const [email, setEmail] = useState<string>()
+    const [realName, setRealName] = useState<string>()
+    const [phone, setPhone] = useState<string>()
     const [deleteVisible, setDeleteVisible] = useState<number>()
-    const changeDeleteVisible = (id: number) => {
-        setDeleteVisible(id)
-    }
     const columns: ColumnsType<UserTableType> = [
         {
             key: 'id',
@@ -137,6 +136,9 @@ function User() {
     const _deleteUserList = (idList: React.Key[]) => {
         dispatch(deleteUserList(idList))
     }
+    const _getUserByCondition = (email?: string, realName?: string, phone?: string) => {
+        dispatch(getUserListByCondition(email, realName, phone))
+    }
     useEffect(() => {
         // console.log('触发');
         _getUserListByAPI()
@@ -170,7 +172,12 @@ function User() {
         setControlModel(controlModel)
         setUpdateUser(undefined)
     }
-
+    const changeDeleteVisible = (id: number) => {
+        setDeleteVisible(id)
+    }
+    const findUser = () => {
+        _getUserByCondition(email, realName, phone)
+    }
     return (
         <div className='mycard'>
             <CreateModel
@@ -179,12 +186,12 @@ function User() {
                 updateUserInfo={updateUser} />
             <Space style={{ marginBottom: 16 }}>
                 <span className='searcher_title'>E-mail</span>
-                <Input placeholder="Basic usage" />
+                <Input value={email} onChange={(e) => setEmail(e.target.value)} />
                 <span className='searcher_title'>Real Name</span>
-                <Input placeholder="Basic usage" />
+                <Input value={realName} onChange={(e) => setRealName(e.target.value)} />
                 <span className='searcher_title'>Phone</span>
-                <Input placeholder="Basic usage" />
-                <Button type="primary" icon={<SearchOutlined />}>
+                <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <Button type="primary" icon={<SearchOutlined />} onClick={() => findUser()}>
                     搜索
                 </Button>
                 <Button icon={<RestOutlined />}>

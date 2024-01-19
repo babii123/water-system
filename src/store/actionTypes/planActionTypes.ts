@@ -7,3 +7,4 @@ export const UPDATE_PLAN = `${basicAction}/update_plan`
 export const DELETE_PLAN = `${basicAction}/delete_plan`
 export const DELETE_PLAN_BY_REASON = `${basicAction}/delete_plan_by_reason`
 export const DELETE_PLAN_LIST = `${basicAction}/delete_plan_list`
+export const FIND_PLAN_BY_CONDITION = `${basicAction}/find_plan_by_condition`

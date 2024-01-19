@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from "redux-saga/effects"
-import { CREATE_WATER, DELETE_WATER, DELETE_WATER_LIST, GET_WATER_LIST_BYAPI, UPDATE_WATER, DELETE_WATER_BY_REASON } from "../actionTypes/waterActionTypes"
-import { createWater_API, deleteWaterList_API, deleteWaterByDelReason_API, getWaterAll_API, updateWater_API } from "../../services/waterRequest"
+import { CREATE_WATER, DELETE_WATER, DELETE_WATER_LIST, GET_WATER_LIST_BYAPI, UPDATE_WATER, DELETE_WATER_BY_REASON, FIND_WATER_BY_CONDITION } from "../actionTypes/waterActionTypes"
+import { createWater_API, deleteWaterList_API, deleteWaterByDelReason_API, getWaterAll_API, updateWater_API, getWaterListByCondition_API } from "../../services/waterRequest"
 import { WaterData } from "../../model/waterModel"
 import { updateWaterList } from "../actions/waterActions"
 import { message } from "antd"
@@ -56,6 +56,19 @@ function* _deleteWaterList(action: { type: string, idList: number[] }) {
   }
 }
 
+function* _findWaterByCondition(action: any) {
+  const { waterArea, waterType } = action
+  const { code, data }: { code: number, data: WaterData[] } = yield call(getWaterListByCondition_API, waterArea, waterType)
+  if (code === 200) {
+    const new_data = data.map((item) => {
+      return { ...item, key: item.id }
+    })
+    yield put(updateWaterList(new_data))
+    message.success('find success')
+  } else {
+    message.error('find fail')
+  }
+}
 
 function* waterSagas() {
   yield takeEvery(GET_WATER_LIST_BYAPI, _getWaterListByAPI)
@@ -63,6 +76,7 @@ function* waterSagas() {
   yield takeEvery(UPDATE_WATER, _updateWater)
   yield takeEvery(DELETE_WATER_BY_REASON, _deleteWaterByReason)
   yield takeEvery(DELETE_WATER_LIST, _deleteWaterList)
+  yield takeEvery(FIND_WATER_BY_CONDITION, _findWaterByCondition)
 }
 
 export default waterSagas

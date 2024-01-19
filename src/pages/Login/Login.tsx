@@ -9,6 +9,9 @@ function Login() {
         <img src={LoginImg} alt='login_page' />
       </div>
       <div className='login-right'>
+        <div className='login-title'>
+          水资源信息管理系统
+        </div>
         <LoginForm />
       </div>
     </div>

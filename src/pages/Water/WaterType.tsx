@@ -119,7 +119,7 @@ function WaterType() {
         controlModel={controlModel}
         changeControl={changeControl}
         updateWaterTypeInfo={updateWaterType} />
-      <Space style={{ marginBottom: 16 }}>
+      {/* <Space style={{ marginBottom: 16 }}>
         <span className='searcher_title'>E-mail</span>
         <Input placeholder="Basic usage" />
         <span className='searcher_title'>Real Name</span>
@@ -132,7 +132,7 @@ function WaterType() {
         <Button icon={<RestOutlined />}>
           重置
         </Button>
-      </Space>
+      </Space> */}
       <div style={{ marginBottom: 16 }}>
         <Space>
           <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)} icon={<PlusOutlined />}>

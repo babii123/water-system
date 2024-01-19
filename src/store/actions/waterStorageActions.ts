@@ -3,7 +3,7 @@
  */
 
 import { WaterStorageData, WaterStorageTableType } from "../../model/waterStorageModel"
-import { CREATE_WATER_STORAGE, DELETE_WATER_STORAGE, DELETE_WATER_STORAGE_BY_REASON, DELETE_WATER_STORAGE_LIST, GET_WATER_STORAGE_LIST_BYAPI, UPDATE_WATER_STORAGE, UPDATE_WATER_STORAGE_LIST } from "../actionTypes/waterStorageActionTypes"
+import { CREATE_WATER_STORAGE, DELETE_WATER_STORAGE, DELETE_WATER_STORAGE_BY_REASON, DELETE_WATER_STORAGE_LIST, FIND_STORAGE_BY_ID, GET_WATER_STORAGE_LIST_BYAPI, UPDATE_WATER_STORAGE, UPDATE_WATER_STORAGE_LIST } from "../actionTypes/waterStorageActionTypes"
 
 export const getWaterStorageListByAPI = () => {
   return {
@@ -54,4 +54,11 @@ export const deleteWaterStorageList = (idList: any) => {
     type: DELETE_WATER_STORAGE_LIST,
     idList
   }
-} 
+}
+
+export const getWaterStorageByID = (id: number) => {
+  return {
+    type: FIND_STORAGE_BY_ID,
+    id
+  }
+}

@@ -5,7 +5,7 @@ import { SearchOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@a
 import { ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../model/globalModel';
 import { WaterQualityTableType } from '../../model/waterQualityModel';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteWaterQualityByReason, deleteWaterQualityList, getWaterQualityListByAPI } from '../../store/actions/waterQualityActions';
+import { deleteWaterQualityByReason, deleteWaterQualityList, getWaterQualityByID, getWaterQualityListByAPI } from '../../store/actions/waterQualityActions';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import CreateWaterQualityModel from './components/CreateWaterQualityModel';
 import DeleteWaterQualityModel from './components/DeleteWaterQualityModel';
@@ -17,8 +17,8 @@ function Quality() {
   const [deleteVisible, setDeleteVisible] = useState<number>()
   const [deleteModel, setDeleteModel] = useState<boolean>()
   const [deleteValue, setDeleteValue] = useState<{ value: any, type: string }>()
+  const [id, setID] = useState<number>()
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -124,6 +124,9 @@ function Quality() {
   const _deleteWaterQualityByReason = (id: number, delReason: string) => {
     dispatch(deleteWaterQualityByReason(id, delReason))
   }
+  const _getWaterQualityByID = (id: number) => {
+    dispatch(getWaterQualityByID(id))
+  }
   const changeDeleteVisible = (id: number) => {
     setDeleteVisible(id)
   }
@@ -156,7 +159,13 @@ function Quality() {
   useEffect(() => {
     _getWaterQualityListByAPI()
   }, [])
-  
+
+  const findQuality = () => {
+    if (id) {
+      _getWaterQualityByID(id)
+    }
+  }
+
   return (
     <>
       <CreateWaterQualityModel
@@ -173,21 +182,21 @@ function Quality() {
       />
       <div className='mycard'>
         <Space style={{ marginBottom: 16 }}>
-          {/* <span>ID</span> */}
-          <Input placeholder="ID" />
+          <span className='searcher_title'>ID</span>
+          <Input value={id} onChange={(e) => setID(parseInt(e.target.value))} />
           {/* <span>水资源类型</span> */}
-          <Input placeholder="水资源类型" />
+          {/* <Input placeholder="水资源类型" /> */}
           {/* <span>测量时间</span> */}
-          <Input placeholder="测量时间" />
+          {/* <Input placeholder="测量时间" /> */}
           {/* <span>测量人员</span> */}
-          <Input placeholder="测量人员" />
+          {/* <Input placeholder="测量人员" /> */}
           {/* <span>PH值</span> */}
-          <Input placeholder="PH值" />
+          {/* <Input placeholder="PH值" /> */}
           {/* <span>浊度</span> */}
-          <Input placeholder="浊度" />
+          {/* <Input placeholder="浊度" /> */}
           {/* <span>污染物水平</span> */}
-          <Input placeholder="污染物水平" />
-          <Button type="primary" icon={<SearchOutlined />}>
+          {/* <Input placeholder="污染物水平" /> */}
+          <Button type="primary" icon={<SearchOutlined />} onClick={() => findQuality()}>
             搜索
           </Button>
           <Button icon={<RestOutlined />}>
