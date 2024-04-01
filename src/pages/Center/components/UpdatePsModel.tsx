@@ -1,11 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Button, Modal, Form, Input, message } from 'antd';
-import { useDispatch } from 'react-redux';
-import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
-import TextArea from 'antd/es/input/TextArea';
-import { WaterTypeTableType } from '../../../model/waterTypeModel';
-import { createWaterType, updateWaterType } from '../../../store/actions/waterTypeActions';
 import { changePassWord } from '../../../services/userRequest';
+import { useTranslation } from 'react-i18next';
 
 const formItemLayout = {
   labelCol: {
@@ -47,6 +43,7 @@ const UpdatePsModel: React.FC<
     changeModelVisible,
   }
 ) => {
+    const { t } = useTranslation()
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
       changeModelVisible(false)
@@ -56,9 +53,9 @@ const UpdatePsModel: React.FC<
       if (userId) {
         changePassWord(userId, values).then(res => {
           if (res.code === 200) {
-            message.success('change success!')
+            message.success(t('change success!'))
           } else {
-            message.error('change fail!')
+            message.error(t('change fail!'))
           }
         })
         changeModelVisible(false)
@@ -67,7 +64,7 @@ const UpdatePsModel: React.FC<
     return (
       <>
         <Modal
-          title={'Change Password'}
+          title={t('Change Password')}
           centered
           open={modelVisible}
           onOk={() => changeModelVisible(false)}
@@ -86,23 +83,23 @@ const UpdatePsModel: React.FC<
             autoComplete="off"
           >
             <Form.Item<FieldType>
-              label="旧密码"
+              label={t('oldPassword')}
               name="oldPassword"
-              rules={[{ required: true, message: 'Please input old password!' }]}
+              rules={[{ required: true, message: t('Please input old password!') }]}
             >
               <Input />
             </Form.Item>
             <Form.Item<FieldType>
-              label="新密码"
+              label={t('newPassword')}
               name="newPassword"
-              rules={[{ required: true, message: 'Please input new password!' }]}
+              rules={[{ required: true, message: t('Please input new password!') }]}
             >
               <Input.Password />
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Submit
+                {t("Submit")}
               </Button>
             </Form.Item>
           </Form>

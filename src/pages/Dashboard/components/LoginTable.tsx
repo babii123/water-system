@@ -1,26 +1,26 @@
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { UserTableType } from '../../../model/userInfoModel'
 
 const columns: ColumnsType<UserTableType> = [
   {
-    title: 'User ID',
+    title: '用户ID',
     dataIndex: 'userId',
     key: 'userId'
   },
   {
-    title: 'Real Name',
+    title: '真实姓名',
     dataIndex: 'realName',
     key: 'realName'
   },
   {
-    title: 'Email',
+    title: '邮箱',
     dataIndex: 'email',
     key: 'email'
   },
   {
-    title: 'Phone',
+    title: '手机号',
     dataIndex: 'phone',
     key: 'phone'
   },

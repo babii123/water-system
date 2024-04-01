@@ -9,8 +9,10 @@ import { CREATE_MODEL, ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../mod
 import CreatePlanModel from './components/CreatePlanModel';
 import dayjs from 'dayjs';
 import { getWaterPriceListByAPI } from '../../store/actions/waterPriceActions';
+import { useTranslation } from 'react-i18next';
 
 function Plan() {
+  const { t } = useTranslation();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [controlModel, setControlModel] = useState<ControlModel>()
   const [updatePlan, setUpdatePlan] = useState<PlanTableType | undefined>()
@@ -29,13 +31,13 @@ function Plan() {
     },
     {
       key: 'addTime',
-      title: 'Add Time',
+      title: t('AddTime'),
       dataIndex: 'addTime',
       width: 150
     },
     {
       key: 'planTime',
-      title: 'Plan Time',
+      title: t('PlanTime'),
       width: 300,
       render: (_, record) => {
         return (
@@ -47,7 +49,7 @@ function Plan() {
     },
     {
       key: 'waterSources',
-      title: 'Water Sources',
+      title: t('WaterSources'),
       dataIndex: 'waterSources',
       width: 200,
       render: (_, record) => {
@@ -64,44 +66,44 @@ function Plan() {
     },
     {
       key: 'waterArea',
-      title: 'Water Area',
+      title: t('WaterArea'),
       dataIndex: 'waterArea',
       width: 150
     },
     {
       key: 'waterPriceType',
-      title: 'Water Price Type',
+      title: t('WaterPriceType'),
       dataIndex: 'waterPriceType',
       width: 150
     },
     {
       key: 'description',
-      title: 'Description',
+      title: t('Description'),
       dataIndex: 'description',
       width: 400
     },
     {
       key: 'addUser',
-      title: 'Add User',
+      title: t('addUser'),
       dataIndex: 'addUser',
       width: 150
     },
     {
-      title: 'Action',
+      title: t('Action'),
       key: 'action',
       fixed: 'right',
       width: 200,
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => { openModel(record, UPDATE_MODEL) }}>Update</a>
+          <a onClick={() => { openModel(record, UPDATE_MODEL) }}>{t("Update")}</a>
           <Popover content={
             <>
               <div style={{ marginBottom: '5px' }}>
                 <ExclamationCircleTwoTone twoToneColor='#faad14' style={{ marginRight: '5px' }} />
-                <span>Are you sure delete this user</span>
+                <span>{t("Are you sure delete this plan")}</span>
               </div>
-              <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>No</Button>
-              <Button size='small' danger onClick={() => { showDeleteModel([record.id], ONLY) }}>Yes</Button>
+              <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>{t('No')}</Button>
+              <Button size='small' danger onClick={() => { showDeleteModel([record.id], ONLY) }}>{t('Yes')}</Button>
             </>
           }
             trigger="focus"
@@ -109,7 +111,7 @@ function Plan() {
             onOpenChange={() => changeDeleteVisible(record.id)}
           >
             <Button type="link" danger>
-              Delete
+              {t('Delete')}
             </Button>
           </Popover>
         </Space >
@@ -187,7 +189,7 @@ function Plan() {
     setControlModel(controlModel);
     setUpdatePlan(undefined);
   }
-  const findPlan = () => {
+  const findPlan = (waterArea?: string, waterPriceType?: string) => {
     _getPlanByCondition(waterArea, waterPriceType)
   }
 
@@ -200,29 +202,29 @@ function Plan() {
         waterPriceList={waterPriceList}
       />
       <Space style={{ marginBottom: 16 }}>
-        <span className='searcher_title'>用水区域</span>
+        <span className='searcher_title'>{t('SupplyArea')}</span>
         <Input value={waterArea} onChange={(e) => setWaterArea(e.target.value)} />
-        <span className='searcher_title'>用水类型</span>
+        <span className='searcher_title'>{t('SupplyType')}</span>
         <Input value={waterPriceType} onChange={(e) => setWaterPriceType(e.target.value)} />
         {/* <span className='searcher_title'>日期</span>
         <Input placeholder="Basic usage" /> */}
-        <Button type="primary" icon={<SearchOutlined />} onClick={() => findPlan()}>
-          搜索
+        <Button type="primary" icon={<SearchOutlined />} onClick={() => findPlan(waterArea, waterPriceType)}>
+          {t('Search')}
         </Button>
-        <Button icon={<RestOutlined />}>
-          重置
+        <Button icon={<RestOutlined />} onClick={() => { setWaterArea(undefined); setWaterPriceType(undefined); findPlan() }}>
+          {t('Reset')}
         </Button>
       </Space>
       <div style={{ marginBottom: 16 }}>
         <Space>
           <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)} icon={<PlusOutlined />}>
-            新增计划
+            {t('AddPlan')}
           </Button>
           <Button type="primary" onClick={() => showDeleteModel([], MULTI)} icon={<DeleteFilled />} danger>
-            批量删除
+            {t('BatchDelete')}
           </Button>
           <Button icon={<DownloadOutlined />}>
-            导出所选
+            {t('Import')}
           </Button>
         </Space>
       </div>

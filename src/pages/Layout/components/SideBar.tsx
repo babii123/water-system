@@ -5,9 +5,9 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
+import { useTranslation } from 'react-i18next';
 
 type MenuItem = Required<MenuProps>['items'][number];
-
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4346841_dyrsmlbo016.js',
 });
@@ -29,33 +29,32 @@ function getItem(
 }
 
 
-const items: MenuProps['items'] = [
-  getItem('工作台', 'dashboard', <IconFont type='icon-gongzuotai' />),
-  {
-    type: 'divider',
-  },
-  getItem('用户管理', 'user_manage', <IconFont type='icon-yonghuguanli' />),
-  getItem('个人中心', 'user_center', <IconFont type='icon-gerenzhongxin' />),
-  {
-    type: 'divider',
-  },
-  getItem('供水计划', 'water_plan/', <IconFont type='icon-jihua' />, [
-    getItem('供水计划管理', 'water_plan'),
-    getItem('水价表', 'water_price'),
-  ]),
-  {
-    type: 'divider',
-  },
-  getItem('水资源', 'water_resource/', <IconFont type='icon-ziyuan-xianxing' />, [
-    getItem('水资源管理', 'water_resource'),
-    getItem('水资源类型管理', 'water_type'),
-  ]),
-  getItem('水量管理', 'water_storage', <IconFont type='icon-shuiliang' />),
-  getItem('水质管理', 'water_quality', <IconFont type='icon-zhiliang-xianxing' />),
-];
-
 const SideBar: React.FC = () => {
-
+  const { t } = useTranslation();
+  const items: MenuProps['items'] = [
+    getItem(t('dashboard'), 'dashboard', <IconFont type='icon-gongzuotai' />),
+    {
+      type: 'divider',
+    },
+    getItem(t('userManage'), 'user_manage', <IconFont type='icon-yonghuguanli' />),
+    getItem(t('userCenter'), 'user_center', <IconFont type='icon-gerenzhongxin' />),
+    {
+      type: 'divider',
+    },
+    getItem(t('waterPlan'), 'water_plan/', <IconFont type='icon-jihua' />, [
+      getItem(t('waterPlanManage'), 'water_plan'),
+      getItem(t('waterPriceTable'), 'water_price'),
+    ]),
+    {
+      type: 'divider',
+    },
+    getItem(t('WaterSources'), 'water_resource/', <IconFont type='icon-ziyuan-xianxing' />, [
+      getItem(t('waterSourcesManage'), 'water_resource'),
+      getItem(t('waterTypeManage'), 'water_type'),
+    ]),
+    getItem(t('waterStorageManage'), 'water_storage', <IconFont type='icon-shuiliang' />),
+    getItem(t('waterQualityManage'), 'water_quality', <IconFont type='icon-zhiliang-xianxing' />),
+  ];
   const [menuList, setMenuList] = useState<ItemType[] | undefined>();
   const menuItems = useSelector((state: any) => {
     return state.userInfo.menuItems
@@ -89,7 +88,7 @@ const SideBar: React.FC = () => {
 
   return (
     <>
-      <div className='title'>水资源管理系统</div>
+      <div className='title'>{t('Water Resources Management System')}</div>
       <Menu
         onClick={onClick}
         style={{

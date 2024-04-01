@@ -1,8 +1,10 @@
 import LoginImg from '../../assets/login-image.png'
 import LoginForm from './components/LoginForm';
 import './Login.css'
+import { useTranslation } from 'react-i18next';
 
 function Login() {
+  const { t } = useTranslation();
   return (
     <div className='login-container'>
       <div className='login-left'>
@@ -10,7 +12,7 @@ function Login() {
       </div>
       <div className='login-right'>
         <div className='login-title'>
-          水资源信息管理系统
+          {t('Water Resources Management System')}
         </div>
         <LoginForm />
       </div>

@@ -14,8 +14,10 @@ import CreateWaterQualityModel from '../Quality/components/CreateWaterQualityMod
 import CreateWaterStorageModel from '../Storage/components/CreateWaterStorageModel';
 import { WaterQualityTableType } from '../../model/waterQualityModel';
 import { WaterStorageTableType } from '../../model/waterStorageModel';
+import { useTranslation } from 'react-i18next';
 
 const Water: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [controlModel, setControlModel] = useState<ControlModel>()
   const [controlModel_quality, setControlModelQ] = useState<ControlModel>()
@@ -38,37 +40,37 @@ const Water: React.FC = () => {
     },
     {
       key: 'type',
-      title: 'Type',
+      title: t('Type'),
       dataIndex: 'type',
       width: 150
     },
     {
       key: 'waterName',
-      title: 'Water Name',
+      title: t('WaterName'),
       dataIndex: 'waterName',
       width: 150
     },
     {
       key: 'address',
-      title: 'Address',
+      title: t('Address'),
       dataIndex: 'address',
       width: 150
     },
     {
       key: 'description',
-      title: 'Description',
+      title: t('Description'),
       dataIndex: 'description',
       width: 400
     },
     {
       key: 'addTime',
-      title: 'Add Time',
+      title: t('AddTime'),
       dataIndex: 'addTime',
       width: 120
     },
     {
       key: 'addUser',
-      title: 'Add User',
+      title: t('AddUser'),
       dataIndex: 'addUser',
       width: 150,
       render: (_, record) => (
@@ -79,7 +81,7 @@ const Water: React.FC = () => {
     },
     {
       key: 'checkUser',
-      title: 'Check User',
+      title: t('CheckUser'),
       dataIndex: 'checkUser',
       width: 150,
       render: (_, record) => (
@@ -95,21 +97,21 @@ const Water: React.FC = () => {
       )
     },
     {
-      title: 'Action',
+      title: t('Action'),
       key: 'action',
       fixed: 'right',
       width: 350,
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => openModel(record, UPDATE_MODEL)}>Update</a>
+          <a onClick={() => openModel(record, UPDATE_MODEL)}>{t("Update")}</a>
           <Popover content={
             <>
               <div style={{ marginBottom: '5px' }}>
                 <ExclamationCircleTwoTone twoToneColor='#faad14' style={{ marginRight: '5px' }} />
-                <span>Are you sure delete this user</span>
+                <span>{t("Are you sure delete this water")}</span>
               </div>
-              <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>No</Button>
-              <Button size='small' danger onClick={() => { showDeleteModel([record.id], ONLY) }}>Yes</Button>
+              <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>{t("No")}</Button>
+              <Button size='small' danger onClick={() => { showDeleteModel([record.id], ONLY) }}>{t("Yes")}</Button>
             </>
           }
             trigger="focus"
@@ -117,11 +119,11 @@ const Water: React.FC = () => {
             onOpenChange={() => changeDeleteVisible(record.id)}
           >
             <Button type="link" danger>
-              Delete
+              {t("Delete")}
             </Button>
           </Popover>
           {/* 新建水量信息 */}
-          <Tooltip placement="top" title='add storage info'>
+          <Tooltip placement="top" title={t('add storage info')}>
             <Button style={{ backgroundColor: '#87d068bc', color: '#fff' }}
               onClick={() => {
                 setControlModelS({ visible: true, editType: CREATE_MODEL });
@@ -139,10 +141,10 @@ const Water: React.FC = () => {
                   delReason: ''
                 })
               }
-              }>storage</Button>
+              }>{t("storage")}</Button>
           </Tooltip>
           {/* 新建水质信息 */}
-          <Tooltip placement="top" title='add quality info' >
+          <Tooltip placement="top" title={t('add quality info')} >
             <Button
               style={{ backgroundColor: '#1677ffaf', color: '#fff' }}
               onClick={() => {
@@ -162,7 +164,7 @@ const Water: React.FC = () => {
                   delReason: ''
                 })
               }
-              }> quality</Button>
+              }>{t("quality")}</Button>
           </Tooltip>
         </Space >
       ),
@@ -231,7 +233,7 @@ const Water: React.FC = () => {
     setControlModelS(controlModel)
     setUpdateWaterS(undefined)
   }
-  const findWater = () => {
+  const findWater = (waterArea?: string, waterType?: string) => {
     _getWaterByCondition(waterArea, waterType)
   }
 
@@ -266,7 +268,7 @@ const Water: React.FC = () => {
         <Button type="primary" icon={<SearchOutlined />} onClick={() => findWater()}>
           搜索
         </Button>
-        <Button icon={<RestOutlined />}>
+        <Button icon={<RestOutlined />} onClick={() => { setWaterArea(undefined); setWaterType(undefined); findWater() }}>
           重置
         </Button>
       </Space>

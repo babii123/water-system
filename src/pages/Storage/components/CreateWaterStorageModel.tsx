@@ -5,6 +5,7 @@ import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import { WaterStorageTableType } from '../../../model/waterStorageModel';
 import { createWaterStorage, updateWaterStorage } from '../../../store/actions/waterStorageActions';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 const formItemLayout = {
   labelCol: {
@@ -53,6 +54,7 @@ const CreateWaterStorageModel: React.FC<
     updateWaterStorageInfo
   }
 ) => {
+    const { t } = useTranslation();
     const [form] = Form.useForm()
     useEffect(() => {
       console.log(updateWaterStorageInfo);
@@ -99,7 +101,7 @@ const CreateWaterStorageModel: React.FC<
     return (
       <>
         <Modal
-          title={controlModel?.editType === UPDATE_MODEL ? 'Update Water Storage' : 'Create Water Storage'}
+          title={controlModel?.editType === UPDATE_MODEL ? t('Update Water Storage') : t('Create Water Storage')}
           centered
           open={controlModel?.visible}
           onOk={() => changeControl({ visible: false, editType: controlModel?.editType })}
@@ -127,17 +129,17 @@ const CreateWaterStorageModel: React.FC<
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Detect Time"
+              label={t("DetectTime")}
               name="detectTime"
-              rules={[{ required: true, message: 'Please input your account name!' }]}
+              rules={[{ required: true, message: t('Please input detect time!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Detect People"
+              label={t("DetectPeople")}
               name="detectPeople"
-              rules={[{ required: true, message: 'Please input your phone number!' }]}
+              rules={[{ required: true, message: t('Please input detect people!') }]}
             >
               <Select
                 mode="tags"
@@ -147,24 +149,24 @@ const CreateWaterStorageModel: React.FC<
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Supply"
+              label={t("Supply")}
               name="supply"
-              rules={[{ required: true, message: 'Please input your description!' }]}
+              rules={[{ required: true, message: t('Please input supply!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Storage"
+              label={t("Storage")}
               name="storage"
-              rules={[{ required: true, message: 'Please input your addUser!' }]}
+              rules={[{ required: true, message: t('Please input storage!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Submit
+                {t("Submit")}
               </Button>
             </Form.Item>
           </Form>

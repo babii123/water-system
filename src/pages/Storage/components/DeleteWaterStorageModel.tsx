@@ -2,6 +2,7 @@ import { Modal } from "antd"
 import TextArea from "antd/es/input/TextArea";
 import { DELETE_REASON, MULTI, ONLY } from "../../../model/globalModel";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const DeleteWaterStorageModel: React.FC<{
   deleteVisible?: boolean,
@@ -10,6 +11,7 @@ const DeleteWaterStorageModel: React.FC<{
   _deleteWaterStorageList: Function,
   _deleteWaterStorageByReason: Function
 }> = ({ deleteVisible, changeDeleteVisible, deleteValue, _deleteWaterStorageList, _deleteWaterStorageByReason }) => {
+  const { t } = useTranslation();
   const [deleteReason, setDeleteReason] = useState<string>()
   const [warnVisible, setWarnVisible] = useState<boolean>()
   const handleOk = () => {
@@ -33,7 +35,7 @@ const DeleteWaterStorageModel: React.FC<{
         <TextArea autoSize={{ minRows: 3, maxRows: 5 }} value={deleteReason} onChange={(e) => { setDeleteReason(e.target.value) }} />
         {
           warnVisible ?
-            <span className="warn-text">Please input delete reason！！！</span>
+            <span className="warn-text">{t("Please input delete reason！！！")}</span>
             :
             <></>
         }

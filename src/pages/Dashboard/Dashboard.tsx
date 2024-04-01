@@ -52,22 +52,22 @@ function Dashboard() {
       amount: 1004
     },
     {
-      title: '操作数',
+      title: '水资源数',
       icon: 'icon-caozuo-heng',
       bgc: 'data-card-bgc2 margin-right',
-      amount: 1110
+      amount: waterCount
     },
     {
-      title: '登录用户数',
+      title: '用户数',
       icon: 'icon-zhanyezhong',
       bgc: 'data-card-bgc3 margin-right',
-      amount: 20
+      amount: userData?.allCount
     },
     {
       title: '供水计划数',
       icon: 'icon-jihua1',
       bgc: 'data-card-bgc4',
-      amount: 40
+      amount: planCount
     },
   ]
 

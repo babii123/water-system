@@ -9,8 +9,10 @@ import dayjs from "dayjs";
 import { getBasicInfo } from "../../services/userRequest";
 import './Center.css'
 import UpdatePsModel from "./components/UpdatePsModel";
+import { useTranslation } from "react-i18next";
 
 function Center() {
+  const { t } = useTranslation();
   const { userId } = useParams()
   const [userInfo, setUserInfo] = useState<UserInfo>({
     "id": 0,
@@ -65,7 +67,7 @@ function Center() {
   const items: DescriptionsProps['items'] = [
     {
       key: '1',
-      label: 'realName',
+      label: t('RealName'),
       children: (
         <>
           {
@@ -92,7 +94,7 @@ function Center() {
     },
     {
       key: '2',
-      label: 'accountName',
+      label: t('AccountName'),
       children: (
         <>
           {
@@ -118,7 +120,7 @@ function Center() {
     },
     {
       key: '3',
-      label: 'sex',
+      label: t('Sex'),
       children: (
         <>
           {
@@ -136,11 +138,11 @@ function Center() {
                 }}
                 options={[
                   {
-                    label: '男',
+                    label: t('male'),
                     value: 1
                   },
                   {
-                    label: '女',
+                    label: t('female'),
                     value: 2
                   }
                 ]}
@@ -153,7 +155,7 @@ function Center() {
     },
     {
       key: '4',
-      label: 'phone',
+      label: t('Phone'),
       children: (
         <>
           {
@@ -179,7 +181,7 @@ function Center() {
     },
     {
       key: '5',
-      label: 'email',
+      label: t('Email'),
       children: (
         <>
           {
@@ -206,7 +208,7 @@ function Center() {
     },
     {
       key: '6',
-      label: 'birthday',
+      label: t('Birthday'),
       children: (
         <>
           {
@@ -232,7 +234,7 @@ function Center() {
     },
     {
       key: '7',
-      label: 'roles',
+      label: t('Roles'),
       children: (
         roles.map((role: string) => {
           let color = '#2db7f5'
@@ -256,7 +258,7 @@ function Center() {
   ];
   const extraContent = (
     <>
-      <Button onClick={() => setModelVisible(true)}>修改密码</Button>
+      <Button onClick={() => setModelVisible(true)}>{t('UpdatePassword')}</Button>
     </>
   )
   return (
@@ -268,7 +270,7 @@ function Center() {
       <div className="mycard">
         {/* {userId} */}
         <Descriptions
-          title="基本信息"
+          title={t("BasicInfo")}
           layout="vertical"
           bordered
           items={items}

@@ -6,6 +6,7 @@ import { UserTableType } from '../../../model/userInfoModel'
 import { useDispatch } from 'react-redux';
 import { createUser, getUserListByAPI, updateUser } from '../../../store/actions/userListActions';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
+import { useTranslation } from 'react-i18next';
 
 const formItemLayout = {
   labelCol: {
@@ -57,6 +58,7 @@ const CreateModel: React.FC<{
   changeControl: Function,
   updateUserInfo?: UserTableType
 }> = ({ controlModel, changeControl, updateUserInfo }) => {
+  const { t } = useTranslation()
   const [form] = Form.useForm()
   useEffect(() => {
     if (updateUserInfo) {
@@ -112,7 +114,7 @@ const CreateModel: React.FC<{
   return (
     <>
       <Modal
-        title={controlModel?.editType === UPDATE_MODEL ? 'Update User' : 'Create User'}
+        title={controlModel?.editType === UPDATE_MODEL ? t('Update User') : t('Create User')}
         centered
         open={controlModel?.visible}
         onOk={() => changeControl({ visible: false, editType: controlModel?.editType })}
@@ -132,52 +134,52 @@ const CreateModel: React.FC<{
           form={form}
         >
           <Form.Item<FieldType>
-            label="Real Name"
+            label={t("RealName")}
             name="realName"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            rules={[{ required: true, message: t('Please input real name!') }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item<FieldType>
-            label="Account Name"
+            label={t("AccountName")}
             name="accountName"
-            rules={[{ required: true, message: 'Please input your account name!' }]}
+            rules={[{ required: true, message: t('Please input account name!') }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item<FieldType>
             name="phone"
-            label="Phone Number"
-            rules={[{ required: true, message: 'Please input your phone number!' }]}
+            label={t("Phone")}
+            rules={[{ required: true, message: t('Please input phone!') }]}
           >
             <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
           </Form.Item>
 
           <Form.Item<FieldType>
-            label="E-mail"
+            label={t("Email")}
             name="email"
-            rules={[{ required: true, message: 'Please input your email!' }]}
+            rules={[{ required: true, message: t('Please input email!') }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item<FieldType>
-            label="Gender"
+            label={t("Sex")}
             name="sex"
-            rules={[{ required: true, message: 'Please select your gender!' }]}
+            rules={[{ required: true, message: t('Please select sex!') }]}
           >
-            <Select placeholder="select your gender">
+            <Select placeholder="select  gender">
               <Option value={1}>Male</Option>
               <Option value={2}>Female</Option>
             </Select>
           </Form.Item>
 
           <Form.Item<FieldType>
-            label="Birthday"
+            label={t("Birthday")}
             name="birthday"
-            rules={[{ required: true, message: 'Please input your birthday!' }]}
+            rules={[{ required: true, message: t('Please input birthday!') }]}
           >
             <DatePicker
               style={{ width: '100%' }}
@@ -187,9 +189,9 @@ const CreateModel: React.FC<{
           </Form.Item>
 
           <Form.Item<FieldType>
-            label="Roles"
+            label={t("Roles")}
             name="roles"
-            rules={[{ required: true, message: 'Please select your roles!' }]}
+            rules={[{ required: true, message: t('Please select roles!') }]}
           >
             <Select
               mode="multiple"
@@ -197,16 +199,16 @@ const CreateModel: React.FC<{
               style={{ width: '100%' }}
               placeholder="Please select roles"
               options={[
-                { label: 'admin', value: 'admin' },
-                { label: 'engineer', value: 'engineer' },
-                { label: 'searcher', value: 'searcher' }
+                { label: t('admin'), value: 'admin' },
+                { label: t('engineer'), value: 'engineer' },
+                { label: t('searcher'), value: 'searcher' }
               ]}
             />
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
-              Submit
+              {t("Submit")}
             </Button>
           </Form.Item>
         </Form>

@@ -7,6 +7,7 @@ import { PlanTableType } from '../../../model/planModel';
 import { createPlan, updatePlan } from '../../../store/actions/planActions';
 import { WaterPriceTableType } from '../../../model/waterPriceModel';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 const formItemLayout = {
   labelCol: {
@@ -59,6 +60,7 @@ const CreatePlanModel: React.FC<
     updatePlanInfo,
     waterPriceList
   }) => {
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const [startTime, setStartTime] = useState<string>()
     const [endTime, setEndTime] = useState<string>()
@@ -122,7 +124,7 @@ const CreatePlanModel: React.FC<
     return (
       <>
         <Modal
-          title={controlModel?.editType === UPDATE_MODEL ? 'Update Water' : 'Create Water'}
+          title={controlModel?.editType === UPDATE_MODEL ? t('Update Plan') : t('Create Plan')}
           centered
           open={controlModel?.visible}
           onOk={() => changeControl({ visible: false, editType: controlModel?.editType })}
@@ -142,33 +144,35 @@ const CreatePlanModel: React.FC<
             autoComplete="off"
           >
             <Form.Item<FieldType>
-              label="Start Time"
+              label={t("StartTime")}
               name="startTime"
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              rules={[{ required: true, message: t('Please input start time!') }]}
             >
               <DatePicker
                 style={{ width: '100%' }}
                 format="YYYY-MM-DD"
                 onChange={handleStartDateChange}
+                placeholder=''
               />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="End Time"
+              label={t("EndTime")}
               name="endTime"
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              rules={[{ required: true, message: t('Please input end time!') }]}
             >
               <DatePicker
                 style={{ width: '100%' }}
                 format="YYYY-MM-DD"
                 onChange={handleEndDateChange}
+                placeholder=''
               />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Water Sources"
+              label={t("WaterSources")}
               name="waterSources"
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              rules={[{ required: true, message: t('Please input water sources!') }]}
             >
               <Select
                 mode="tags"
@@ -178,17 +182,17 @@ const CreatePlanModel: React.FC<
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Water Area"
+              label={t("WaterArea")}
               name="waterArea"
-              rules={[{ required: true, message: 'Please input your addUser!' }]}
+              rules={[{ required: true, message: t('Please input water area!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Water Price Type"
+              label={t("WaterPriceType")}
               name="waterPriceType"
-              rules={[{ required: true, message: 'Please input your addUser!' }]}
+              rules={[{ required: true, message: t('Please input water price type!') }]}
             >
               <Select
                 style={{ width: '100%' }}
@@ -197,16 +201,16 @@ const CreatePlanModel: React.FC<
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Description"
+              label={t("Description")}
               name="description"
-              rules={[{ required: true, message: 'Please input your description!' }]}
+              rules={[{ required: true, message: t('Please input description!') }]}
             >
               <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Submit
+                {t("Submit")}
               </Button>
             </Form.Item>
           </Form>

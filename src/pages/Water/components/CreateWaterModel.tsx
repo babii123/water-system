@@ -6,6 +6,7 @@ import TextArea from 'antd/es/input/TextArea';
 import { WaterTableType } from '../../../model/waterModel';
 import { createWater, updateWater } from '../../../store/actions/waterActions';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 const formItemLayout = {
   labelCol: {
@@ -53,6 +54,7 @@ const CreateWaterModel: React.FC<
     updateWaterInfo
   }
 ) => {
+    const { t } = useTranslation();
     const [form] = Form.useForm()
     useEffect(() => {
       if (updateWaterInfo) {
@@ -118,50 +120,50 @@ const CreateWaterModel: React.FC<
             form={form}
           >
             <Form.Item<FieldType>
-              label="Type"
+              label={t("Type")}
               name="type"
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              rules={[{ required: true, message: t('Please input type!') }]}
             >
               <Input />
               {/* 修改为选择框 */}
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Water Name"
+              label={t("WaterName")}
               name="waterName"
-              rules={[{ required: true, message: 'Please input your account name!' }]}
+              rules={[{ required: true, message: t('Please input water name!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Address"
+              label={t("Address")}
               name="address"
-              rules={[{ required: true, message: 'Please input your phone number!' }]}
+              rules={[{ required: true, message: t('Please input address!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Description"
+              label={t("Description")}
               name="description"
-              rules={[{ required: true, message: 'Please input your description!' }]}
+              rules={[{ required: true, message: t('Please input description!') }]}
             >
               <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Add User"
+              label={t("AddUser")}
               name="addUser"
-              rules={[{ required: true, message: 'Please input your addUser!' }]}
+              rules={[{ required: true, message: t('Please input add user!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Check User"
+              label={t("CheckUser")}
               name="checkUser"
-              rules={[{ required: true, message: 'Please input your checkUser!' }]}
+              rules={[{ required: true, message: t('Please input check user!') }]}
             >
               <Select
                 mode="tags"
@@ -172,7 +174,7 @@ const CreateWaterModel: React.FC<
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Submit
+                {t("Submit")}
               </Button>
             </Form.Item>
           </Form>

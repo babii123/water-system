@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import './Layout.css'
 import SideBar from './components/SideBar';
 import Header from './components/Header';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getBasicInfo } from '../../services/userRequest';
 import { updateUserInfo } from '../../store/actions/userActions';
 import { UserInfo } from '../../model/userInfoModel';

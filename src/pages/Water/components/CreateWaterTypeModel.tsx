@@ -5,6 +5,7 @@ import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import TextArea from 'antd/es/input/TextArea';
 import { WaterTypeTableType } from '../../../model/waterTypeModel';
 import { createWaterType, updateWaterType } from '../../../store/actions/waterTypeActions';
+import { useTranslation } from 'react-i18next';
 
 const formItemLayout = {
   labelCol: {
@@ -48,6 +49,7 @@ const CreateWaterTypeModel: React.FC<
     updateWaterTypeInfo
   }
 ) => {
+    const { t } = useTranslation();
     const [form] = Form.useForm()
     useEffect(() => {
       if (updateWaterTypeInfo) {
@@ -92,7 +94,7 @@ const CreateWaterTypeModel: React.FC<
     return (
       <>
         <Modal
-          title={controlModel?.editType === UPDATE_MODEL ? 'Update Water Type' : 'Create Water Type'}
+          title={controlModel?.editType === UPDATE_MODEL ? t('Update Water Type') : t('Create Water Type')}
           centered
           open={controlModel?.visible}
           onOk={() => changeControl({ visible: false, editType: controlModel?.editType })}
@@ -119,16 +121,16 @@ const CreateWaterTypeModel: React.FC<
               <Input />
             </Form.Item>
             <Form.Item<FieldType>
-              label="Description"
+              label={t("Description")}
               name="description"
-              rules={[{ required: true, message: 'Please input description!' }]}
+              rules={[{ required: true, message: t('Please input description!') }]}
             >
               <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Submit
+                {t("Submit")}
               </Button>
             </Form.Item>
           </Form>

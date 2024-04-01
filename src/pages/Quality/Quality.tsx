@@ -9,8 +9,10 @@ import { deleteWaterQualityByReason, deleteWaterQualityList, getWaterQualityByID
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import CreateWaterQualityModel from './components/CreateWaterQualityModel';
 import DeleteWaterQualityModel from './components/DeleteWaterQualityModel';
+import { useTranslation } from 'react-i18next';
 
 function Quality() {
+  const { t } = useTranslation();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [controlModel, setControlModel] = useState<ControlModel>()
   const [updateWaterQuality, setUpdateWaterQuality] = useState<WaterQualityTableType>()
@@ -30,27 +32,27 @@ function Quality() {
     },
     {
       key: 'resourceId',
-      title: 'Water ID',
+      title: t('WaterID'),
       dataIndex: 'resourceId'
     },
     {
       key: 'addTime',
-      title: 'Add Time',
+      title: t('AddTime'),
       dataIndex: 'addTime'
     },
     {
       key: 'addUser',
-      title: 'Add User',
+      title: t('AddUser'),
       dataIndex: 'addUser',
     },
     {
       key: 'detectTime',
-      title: 'Detect Time',
+      title: t('DetectTime'),
       dataIndex: 'detectTime'
     },
     {
       key: 'detectPeople',
-      title: 'Detect People',
+      title: t('DetectPeople'),
       dataIndex: 'detectPeople',
       width: 150,
       render: (_, record) => (
@@ -67,35 +69,35 @@ function Quality() {
     },
     {
       key: 'ph',
-      title: 'PH',
+      title: t('PH'),
       dataIndex: 'ph'
     },
     {
       key: 'turbidity',
-      title: 'Turbidity',
+      title: t('Turbidity'),
       dataIndex: 'turbidity'
     },
     {
       key: 'fluoride',
-      title: 'Fluoride',
+      title: t('Fluoride'),
       dataIndex: 'fluoride'
     },
     {
-      title: 'Action',
+      title: t('Action'),
       key: 'action',
       fixed: 'right',
       width: 200,
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => openModel(record, UPDATE_MODEL)}>Update</a>
+          <a onClick={() => openModel(record, UPDATE_MODEL)}>{t("Update")}</a>
           <Popover content={
             <>
               <div style={{ marginBottom: '5px' }}>
                 <ExclamationCircleTwoTone twoToneColor='#faad14' style={{ marginRight: '5px' }} />
-                <span>Are you sure delete this user</span>
+                <span>{t("Are you sure delete this quality")}</span>
               </div>
-              <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>No</Button>
-              <Button size='small' danger onClick={() => { showDeleteModel([record.id], ONLY) }}>Yes</Button>
+              <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>{t("No")}</Button>
+              <Button size='small' danger onClick={() => { showDeleteModel([record.id], ONLY) }}>{t("Yes")}</Button>
             </>
           }
             trigger="focus"
@@ -103,7 +105,7 @@ function Quality() {
             onOpenChange={() => changeDeleteVisible(record.id)}
           >
             <Button type="link" danger>
-              Delete
+              {t("Delete")}
             </Button>
           </Popover>
         </Space >
@@ -160,9 +162,11 @@ function Quality() {
     _getWaterQualityListByAPI()
   }, [])
 
-  const findQuality = () => {
+  const findQuality = (id?: number) => {
     if (id) {
       _getWaterQualityByID(id)
+    } else {
+      _getWaterQualityListByAPI()
     }
   }
 
@@ -196,10 +200,10 @@ function Quality() {
           {/* <Input placeholder="浊度" /> */}
           {/* <span>污染物水平</span> */}
           {/* <Input placeholder="污染物水平" /> */}
-          <Button type="primary" icon={<SearchOutlined />} onClick={() => findQuality()}>
+          <Button type="primary" icon={<SearchOutlined />} onClick={() => findQuality(id)}>
             搜索
           </Button>
-          <Button icon={<RestOutlined />}>
+          <Button icon={<RestOutlined />} onClick={() => { setID(undefined); findQuality() }}>
             重置
           </Button>
         </Space>

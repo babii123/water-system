@@ -5,6 +5,7 @@ import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import { WaterQualityTableType } from '../../../model/waterQualityModel';
 import { createWaterQuality, updateWaterQuality } from '../../../store/actions/waterQualityActions';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 const formItemLayout = {
   labelCol: {
@@ -54,6 +55,7 @@ const CreateWaterQualityModel: React.FC<
     updateWaterQualityInfo
   }
 ) => {
+    const { t } = useTranslation();
     const [form] = Form.useForm()
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
@@ -101,7 +103,7 @@ const CreateWaterQualityModel: React.FC<
     return (
       <>
         <Modal
-          title={controlModel?.editType === UPDATE_MODEL ? 'Update Water Quality' : 'Create Water Quality'}
+          title={controlModel?.editType === UPDATE_MODEL ? t('Update Water Quality') : t('Create Water Quality')}
           centered
           open={controlModel?.visible}
           onOk={() => changeControl({ visible: false, editType: controlModel?.editType })}
@@ -121,7 +123,7 @@ const CreateWaterQualityModel: React.FC<
             form={form}
           >
             <Form.Item<FieldType>
-              label="Resource ID"
+              label={t("WaterID")}
               name="resourceId"
             >
               <Input disabled />
@@ -129,17 +131,17 @@ const CreateWaterQualityModel: React.FC<
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Detect Time"
+              label={t("DetectTime")}
               name="detectTime"
-              rules={[{ required: true, message: 'Please input your account name!' }]}
+              rules={[{ required: true, message: t('Please input detect time!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Detect People"
+              label={t("DetectPeople")}
               name="detectPeople"
-              rules={[{ required: true, message: 'Please input your phone number!' }]}
+              rules={[{ required: true, message: t('Please input detect people!') }]}
             >
               <Select
                 mode="tags"
@@ -149,32 +151,32 @@ const CreateWaterQualityModel: React.FC<
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="PH"
+              label={t("PH")}
               name="ph"
-              rules={[{ required: true, message: 'Please input your description!' }]}
+              rules={[{ required: true, message: t('Please input ph!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Turbidity"
+              label={t("Turbidity")}
               name="turbidity"
-              rules={[{ required: true, message: 'Please input your addUser!' }]}
+              rules={[{ required: true, message: t('Please input turbidity!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="fluoride"
+              label={t("Fluoride")}
               name="fluoride"
-              rules={[{ required: true, message: 'Please input your checkUser!' }]}
+              rules={[{ required: true, message: t('Please input fluoride!') }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                Submit
+                {t("Submit")}
               </Button>
             </Form.Item>
           </Form>

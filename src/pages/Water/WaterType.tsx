@@ -8,8 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { WaterTypeTableType } from '../../model/waterTypeModel';
 import { deleteWaterType, deleteWaterTypeList, getWaterTypeListByAPI } from '../../store/actions/waterTypeActions';
 import CreateModel from './components/CreateWaterTypeModel';
+import { useTranslation } from 'react-i18next';
 
 function WaterType() {
+  const { t } = useTranslation();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [controlModel, setControlModel] = useState<ControlModel>()
   const [updateWaterType, setUpdateWaterType] = useState<WaterTypeTableType>()
@@ -23,30 +25,30 @@ function WaterType() {
     },
     {
       key: 'type',
-      title: 'Type',
+      title: t('Type'),
       dataIndex: 'type',
       width: 250
     },
     {
       key: 'description',
-      title: 'Description',
+      title: t('Description'),
       dataIndex: 'description',
       width: 700
     },
     {
-      title: 'Action',
+      title: t('Action'),
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => { openModel(record, UPDATE_MODEL) }}>Update</a>
+          <a onClick={() => { openModel(record, UPDATE_MODEL) }}>{t("Update")}</a>
           <Popover content={
             <>
               <div style={{ marginBottom: '5px' }}>
                 <ExclamationCircleTwoTone twoToneColor='#faad14' style={{ marginRight: '5px' }} />
-                <span>Are you sure delete this user</span>
+                <span>{t("Are you sure delete this water type")}</span>
               </div>
-              <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>No</Button>
-              <Button size='small' danger onClick={() => { _deleteWaterType(record.id) }}>Yes</Button>
+              <Button size='small' onClick={() => { setDeleteVisible(undefined) }} style={{ marginRight: '5px' }}>{t("No")}</Button>
+              <Button size='small' danger onClick={() => { _deleteWaterType(record.id) }}>{t("Yes")}</Button>
             </>
           }
             trigger="focus"
@@ -54,7 +56,7 @@ function WaterType() {
             onOpenChange={() => changeDeleteVisible(record.id)}
           >
             <Button type="link" danger>
-              Delete
+              {t("Delete")}
             </Button>
           </Popover>
         </Space >
