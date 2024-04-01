@@ -14,6 +14,7 @@ import CreateWaterQualityModel from '../Quality/components/CreateWaterQualityMod
 import CreateWaterStorageModel from '../Storage/components/CreateWaterStorageModel';
 import { WaterQualityTableType } from '../../model/waterQualityModel';
 import { WaterStorageTableType } from '../../model/waterStorageModel';
+import { exportDataExcel } from '../../services/globalRequest'
 import { useTranslation } from 'react-i18next';
 
 const Water: React.FC = () => {
@@ -261,32 +262,32 @@ const Water: React.FC = () => {
         _deleteWaterByReason={_deleteWaterByReason}
       />
       <Space style={{ marginBottom: 16 }}>
-        <span className='searcher_title'>区域</span>
+        <span className='searcher_title'>{t('Address')}</span>
         <Input value={waterArea} onChange={(e) => setWaterArea(e.target.value)} />
-        <span className='searcher_title'>类型</span>
+        <span className='searcher_title'>{t('Type')}</span>
         <Input value={waterType} onChange={(e) => setWaterType(e.target.value)} />
         <Button type="primary" icon={<SearchOutlined />} onClick={() => findWater()}>
-          搜索
+          {t('Search')}
         </Button>
         <Button icon={<RestOutlined />} onClick={() => { setWaterArea(undefined); setWaterType(undefined); findWater() }}>
-          重置
+          {t('Reset')}
         </Button>
       </Space>
       <div style={{ marginBottom: 16 }}>
         <Space>
           <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)} icon={<PlusOutlined />}>
-            新增数据
+            {t('AddWater')}
           </Button>
           <Button type="primary" onClick={() => showDeleteModel([], MULTI)} icon={<DeleteFilled />} danger>
-            批量删除
+            {t('BatchDelete')}
           </Button>
-          <Button icon={<DownloadOutlined />}>
-            导出所选
+          <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('water')}>
+            {t('Export')}
           </Button>
         </Space>
       </div>
       <Table rowSelection={rowSelection} columns={columns} dataSource={data} scroll={{ y: 420 }} />
-    </div>
+    </div >
   );
 };
 

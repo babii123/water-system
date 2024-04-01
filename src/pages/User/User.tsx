@@ -12,6 +12,7 @@ import { deleteUser, deleteUserList, getUserListByAPI, getUserListByCondition } 
 import { UserRole } from '../../store/reducer/userReducer'
 import { useTranslation } from 'react-i18next'
 import './User.css'
+import { exportDataExcel } from '../../services/globalRequest';
 
 function User() {
   const { t } = useTranslation()
@@ -208,8 +209,8 @@ function User() {
           <Button type="primary" onClick={() => deleteUserSeleted()} icon={<DeleteFilled />} danger>
             {t('BatchDelete')}
           </Button>
-          <Button icon={<DownloadOutlined />}>
-            {t('Import')}
+          <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('user')}>
+            {t('Export')}
           </Button>
         </Space>
       </div>

@@ -1,6 +1,12 @@
-import { Breadcrumb, Badge, Avatar } from 'antd'
+import { Breadcrumb, Badge, Avatar, Space, Divider } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import { createFromIconfontCN } from '@ant-design/icons';
+
+const IconFont = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/c/font_4346841_x6js1441e5b.js',
+});
+
 
 const Header: React.FC = () => {
   const navigate = useNavigate()
@@ -23,10 +29,17 @@ const Header: React.FC = () => {
         />
       </div>
       <div className='avatar'>
-        {/* 头像和消息 */}
-        <Badge count={1}>
-          <Avatar style={{ backgroundColor: '#87d068' }} shape="square" icon={<UserOutlined />} onClick={() => clickAvatar()} />
-        </Badge>
+        <Space align="center">
+          <IconFont type='icon-zhongyingwenqiehuan-yingwen' style={{ fontSize: '30px' }} />
+          <Divider type="vertical" style={{ columnGap: '0' }} />
+          {/* 头像和消息 */}
+          <Badge count={1}>
+            <Avatar
+              style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}
+              icon={<UserOutlined />}
+              onClick={() => clickAvatar()} />
+          </Badge>
+        </Space>
       </div>
     </div>
   )

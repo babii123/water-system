@@ -56,3 +56,7 @@
 .header-avatar {
 	flex: 1
 }
+
+.avatar{
+	padding-right: 30px;
+}

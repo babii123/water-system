@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 type MenuItem = Required<MenuProps>['items'][number];
 const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_4346841_dyrsmlbo016.js',
+  scriptUrl: '//at.alicdn.com/t/c/font_4346841_x6js1441e5b.js',
 });
 
 function getItem(

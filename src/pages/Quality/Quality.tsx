@@ -10,6 +10,7 @@ import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import CreateWaterQualityModel from './components/CreateWaterQualityModel';
 import DeleteWaterQualityModel from './components/DeleteWaterQualityModel';
 import { useTranslation } from 'react-i18next';
+import { exportDataExcel } from '../../services/globalRequest';
 
 function Quality() {
   const { t } = useTranslation();
@@ -201,19 +202,19 @@ function Quality() {
           {/* <span>污染物水平</span> */}
           {/* <Input placeholder="污染物水平" /> */}
           <Button type="primary" icon={<SearchOutlined />} onClick={() => findQuality(id)}>
-            搜索
+            {t('Search')}
           </Button>
           <Button icon={<RestOutlined />} onClick={() => { setID(undefined); findQuality() }}>
-            重置
+            {t('Reset')}
           </Button>
         </Space>
         <div style={{ marginBottom: 16 }}>
           <Space>
             <Button type="primary" icon={<DeleteFilled />} danger>
-              批量删除
+              {t('BatchDelete')}
             </Button>
-            <Button icon={<DownloadOutlined />}>
-              导出所选
+            <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('waterQuality')}>
+              {t('Export')}
             </Button>
           </Space>
         </div>

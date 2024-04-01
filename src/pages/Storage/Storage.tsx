@@ -10,6 +10,7 @@ import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import CreateWaterStorageModel from './components/CreateWaterStorageModel';
 import DeleteWaterStorageModel from './components/DeleteWaterStorageModel';
 import { useTranslation } from 'react-i18next';
+import { exportDataExcel } from '../../services/globalRequest';
 
 function Storage() {
   const { t } = useTranslation();
@@ -188,19 +189,19 @@ function Storage() {
           {/* <span>测量人员</span> */}
           {/* <Input placeholder="测量人员" /> */}
           <Button type="primary" icon={<SearchOutlined />} onClick={() => findStorage(id)}>
-            搜索
+            {t('Search')}
           </Button>
           <Button icon={<RestOutlined />} onClick={() => { setID(undefined); findStorage() }}>
-            重置
+            {t('Reset')}
           </Button>
         </Space>
         <div style={{ marginBottom: 16 }}>
           <Space>
             <Button type="primary" icon={<DeleteFilled />} danger>
-              批量删除
+              {t('BatchDelete')}
             </Button>
-            <Button icon={<DownloadOutlined />}>
-              导出所选
+            <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('waterStorage')}>
+              {t('Export')}
             </Button>
           </Space>
         </div>

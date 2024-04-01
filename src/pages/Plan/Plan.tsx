@@ -10,6 +10,7 @@ import CreatePlanModel from './components/CreatePlanModel';
 import dayjs from 'dayjs';
 import { getWaterPriceListByAPI } from '../../store/actions/waterPriceActions';
 import { useTranslation } from 'react-i18next';
+import { exportDataExcel } from '../../services/globalRequest';
 
 function Plan() {
   const { t } = useTranslation();
@@ -223,8 +224,8 @@ function Plan() {
           <Button type="primary" onClick={() => showDeleteModel([], MULTI)} icon={<DeleteFilled />} danger>
             {t('BatchDelete')}
           </Button>
-          <Button icon={<DownloadOutlined />}>
-            {t('Import')}
+          <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('supplyPlan')}>
+            {t('Export')}
           </Button>
         </Space>
       </div>

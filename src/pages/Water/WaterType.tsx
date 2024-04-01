@@ -9,6 +9,7 @@ import { WaterTypeTableType } from '../../model/waterTypeModel';
 import { deleteWaterType, deleteWaterTypeList, getWaterTypeListByAPI } from '../../store/actions/waterTypeActions';
 import CreateModel from './components/CreateWaterTypeModel';
 import { useTranslation } from 'react-i18next';
+import { exportDataExcel } from '../../services/globalRequest';
 
 function WaterType() {
   const { t } = useTranslation();
@@ -138,13 +139,13 @@ function WaterType() {
       <div style={{ marginBottom: 16 }}>
         <Space>
           <Button type="primary" onClick={() => openModel(undefined, CREATE_MODEL)} icon={<PlusOutlined />}>
-            新增类型
+            {t('AddType')}
           </Button>
           <Button type="primary" onClick={() => deleteWaterTypeSeleted()} icon={<DeleteFilled />} danger>
-            批量删除
+            {t('BatchDelete')}
           </Button>
-          <Button icon={<DownloadOutlined />}>
-            导出所选
+          <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('waterType')}>
+            {t('Export')}
           </Button>
         </Space>
       </div>
