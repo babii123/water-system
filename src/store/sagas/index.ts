@@ -7,6 +7,7 @@ import planSagas from './planSagas';
 import waterQualitySagas from './waterQualitySagas';
 import waterStorageSagas from './waterStorageSagas';
 import waterPriceSagas from './waterPriceSagas';
+import noticeSagas from './noticeSagas';
 
 function* watchSaga() {
   yield all([
@@ -17,7 +18,8 @@ function* watchSaga() {
     planSagas(),
     waterQualitySagas(),
     waterStorageSagas(),
-    waterPriceSagas()
+    waterPriceSagas(),
+    noticeSagas()
   ])
 }
 

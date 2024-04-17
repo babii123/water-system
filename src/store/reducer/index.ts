@@ -7,6 +7,7 @@ import { planReducer } from "./planReducer";
 import { waterQualityReducer } from './waterQualityReducer'
 import { waterStorageReducer } from "./waterStorageReducer";
 import { waterPriceReducer } from "./waterPriceReducer";
+import { noticeReducer } from "./noticeReducer";
 
 const reducer = combineReducers(
   {
@@ -17,7 +18,8 @@ const reducer = combineReducers(
     plan: planReducer,
     waterQuality: waterQualityReducer,
     waterStorage: waterStorageReducer,
-    waterPrice: waterPriceReducer
+    waterPrice: waterPriceReducer,
+    notice: noticeReducer
   }
 )
 export default reducer;

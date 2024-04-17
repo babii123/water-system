@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
+import { getNoticeListByAPI } from '../store/actions/noticeAction';
 
 const SocketClient = () => {
   const userId = localStorage.getItem('userId')
+  const dispatch = useDispatch()
+  const _getNoticeListByAPI = () => {
+    dispatch(getNoticeListByAPI())
+  }
   useEffect(() => {
     const socket = io('http://localhost:5000', {
       query: { userId } // 发送用户身份信息给服务器
@@ -11,6 +17,7 @@ const SocketClient = () => {
     socket.on('notification', (data) => {
       console.log('Received notification:', data);
       // 处理收到的通知
+      _getNoticeListByAPI()
     });
 
     return () => {

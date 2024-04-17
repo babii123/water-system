@@ -156,17 +156,12 @@ export interface WaterLinkData {
   link: string;
 }
 
-export interface NoticeListType {
-  key?: number
-  id: number
-  addTime: Date | any
-  startTime: Date | any
-  endTime: Date | any
-  waterSources: string[]
-  waterArea: string
-  waterPriceType: string
-  description: string
-  addUser: string
-  isDel: boolean
-  delReason: string
+export interface NoticeListModel {
+  id: number;
+  type: string;
+  info: string;
+  sendId: string;
+  receiveId: string;
+  time: Date;
+  isRead: boolean;
 }

@@ -3,14 +3,16 @@ import { Outlet } from 'react-router-dom';
 import './Layout.css'
 import SideBar from './components/SideBar';
 import Header from './components/Header';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getBasicInfo } from '../../services/userRequest';
 import { updateUserInfo } from '../../store/actions/userActions';
 import { UserInfo } from '../../model/userInfoModel';
 
-const LayOut = (props: {}) => {
+const LayOut = () => {
+  const noticeList = useSelector((state: any) => {
+    return state.notice.noticeList;
+  })
   const dispatch = useDispatch()
-
   const _updateUserInfo = (userInfo: UserInfo) => {
     dispatch(updateUserInfo(userInfo))
   }
@@ -31,7 +33,7 @@ const LayOut = (props: {}) => {
       </div>
       <div className='main-container'>
         <div className="header">
-          <Header />
+          <Header noticeList={noticeList} />
         </div>
         <div className='content'>
           <Outlet />

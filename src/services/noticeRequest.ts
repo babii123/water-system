@@ -18,6 +18,6 @@ interface NoticeModel {
   isRead: boolean;
 }
 
-export const getAllNotice_API = (receiveId: string) => request.get<NoticeModel[]>(`${basic_path}/${receiveId}`);
+export const getAllNotice_API = () => request.get<NoticeModel[]>(`${basic_path}`);
 export const sendEmail_API = (data: SendEmailModal) => request.post(`${basic_path}/send`, data);
 export const readNotice_API = (id: number) => request.patch(`${basic_path}/${id}`);

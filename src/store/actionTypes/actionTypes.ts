@@ -1,8 +1,8 @@
 const noticeBasicAction = 'notice_list'
 
-export const UPDATE_NOTICE_LIST = `${noticeBasicAction}/update_notice`
+export const UPDATE_NOTICE_LIST = `${noticeBasicAction}/update_notice_list`
+export const UPDATE_NOTICE = `${noticeBasicAction}/update_notice`
 export const GET_NOTICE_LIST_BYAPI = `${noticeBasicAction}/get_notice_list_byAPI`
-export const CREATE_NOTICE = `${noticeBasicAction}/create_notice`
 export const DELETE_NOTICE = `${noticeBasicAction}/delete_notice`
 
 const planBasicAction = 'plan'

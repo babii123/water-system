@@ -3,17 +3,23 @@ import { UserOutlined, BellFilled } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { createFromIconfontCN } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { NoticeListModel } from '../../../model/tableModel';
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4346841_j188fjl72wf.js',
 });
 
 
-const Header: React.FC = () => {
+const Header: React.FC<{ noticeList: NoticeListModel[] }> = ({ noticeList }) => {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
   const [lang, setLang] = useState('zh');
+  const [noticeCount, setNoticeCount] = useState(0);
+  useEffect(() => {
+    const count = noticeList.filter(item => !item.isRead).length;
+    setNoticeCount(count)
+  }, [noticeList])
   const clickAvatar = () => {
     navigate(`/user_center/${localStorage.getItem('userId')}`)
   }
@@ -58,7 +64,7 @@ const Header: React.FC = () => {
       <div className='avatar'>
         <Space align="center">
           {/* 头像和消息 */}
-          <Badge count={1} size="small">
+          <Badge count={noticeCount} size="small">
             <BellFilled
               onClick={() => clickNotice()}
               style={{ fontSize: '25px', color: '#8a919f' }}
