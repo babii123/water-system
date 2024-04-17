@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from "redux-saga/effects"
 import { CREATE_WATER_STORAGE, DELETE_WATER_STORAGE, DELETE_WATER_STORAGE_LIST, GET_WATER_STORAGE_LIST_BYAPI, UPDATE_WATER_STORAGE, DELETE_WATER_STORAGE_BY_REASON, FIND_STORAGE_BY_ID } from "../actionTypes/waterStorageActionTypes"
-import { createWaterStorage_API, deleteWaterStorageList_API, deleteWaterStorageByDelReason_API, getWaterStorageAll_API, updateWaterStorage_API, getStorageListByID_API } from "../../services/waterStorageRequest"
+import { createWaterStorage_API, deleteWaterStorageList_API, deleteWaterStorageByDelReason_API, getWaterStorageAll_API, updateWaterStorage_API, getStorageListByID_API, deleteWaterStorage_API } from "../../services/waterStorageRequest"
 import { WaterStorageData } from "../../model/waterStorageModel"
 import { updateWaterStorageList } from "../actions/waterStorageActions"
 import { message } from "antd"
@@ -35,6 +35,16 @@ function* _updateWaterStorage(action: { type: string, waterQuality: WaterStorage
   }
 }
 
+function* _deleteWaterStorage(action: { type: string, idList: number[] }) {
+  const { code } = yield call(deleteWaterStorage_API, action.idList)
+  if (code === 200) {
+    yield call(_getWaterStorageListByAPI)
+    message.success('delete success')
+  } else {
+    message.error('delete error')
+  }
+}
+
 function* _deleteWaterStorageByReason(action: { type: string, id: number, delReason: string }) {
   const { code } = yield call(deleteWaterStorageByDelReason_API, action.id, action.delReason)
   if (code === 200) {
@@ -45,9 +55,8 @@ function* _deleteWaterStorageByReason(action: { type: string, id: number, delRea
   }
 }
 
-function* _deleteWaterStorageList(action: { type: string, idList: number[] }) {
-  console.log('_deleteList', action.idList);
-  const { code } = yield call(deleteWaterStorageList_API, action.idList)
+function* _deleteWaterStorageList(action: { type: string, idList: number[], delReason: string }) {
+  const { code } = yield call(deleteWaterStorageList_API, action.idList, action.delReason)
   if (code === 200) {
     message.success('delete list success')
     yield call(_getWaterStorageListByAPI)
@@ -75,8 +84,9 @@ function* waterStorageSagas() {
   yield takeEvery(GET_WATER_STORAGE_LIST_BYAPI, _getWaterStorageListByAPI)
   yield takeEvery(CREATE_WATER_STORAGE, _createWaterStorage)
   yield takeEvery(UPDATE_WATER_STORAGE, _updateWaterStorage)
+  yield takeEvery(DELETE_WATER_STORAGE, _deleteWaterStorage)
   yield takeEvery(DELETE_WATER_STORAGE_BY_REASON, _deleteWaterStorageByReason)
-  yield takeEvery(DELETE_WATER_STORAGE, _deleteWaterStorageList)
+  yield takeEvery(DELETE_WATER_STORAGE_LIST, _deleteWaterStorageList)
   yield takeEvery(FIND_STORAGE_BY_ID, _getWaterStorageByID)
 }
 

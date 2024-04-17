@@ -3,7 +3,7 @@ import { Button, Input, Popover, Space, Table, Tag } from 'antd';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
-import CreateModel from './components/CreateModel';
+import CreateModel from './components/CreateUserModel';
 import dayjs from 'dayjs';
 import { UserTableType } from '../../model/userInfoModel'
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../model/globalModel'
@@ -197,7 +197,7 @@ function User() {
         <Button type="primary" icon={<SearchOutlined />} onClick={() => findUser()}>
           {t('Search')}
         </Button>
-        <Button icon={<RestOutlined />}>
+        <Button icon={<RestOutlined />} onClick={() => { setEmail(undefined); setRealName(undefined); setPhone(undefined); findUser(); }}>
           {t('Reset')}
         </Button>
       </Space>

@@ -34,10 +34,10 @@ export const updateWaterQuality = (waterQuality: WaterQualityData, id: number) =
   }
 }
 
-export const deleteWaterQuality = (id: number) => {
+export const deleteWaterQuality = (idList: number[]) => {
   return {
     type: DELETE_WATER_QUALITY,
-    id
+    idList
   }
 }
 
@@ -49,10 +49,11 @@ export const deleteWaterQualityByReason = (id: number, delReason: string) => {
   }
 }
 
-export const deleteWaterQualityList = (idList: any) => {
+export const deleteWaterQualityList = (idList: any, delReason: string) => {
   return {
     type: DELETE_WATER_QUALITY_LIST,
-    idList
+    idList,
+    delReason
   }
 } 
 

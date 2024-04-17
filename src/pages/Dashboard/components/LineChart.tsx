@@ -1,10 +1,17 @@
 import ReactEcharts from "echarts-for-react"
-// import echarts from "echarts";
 import { waterPriceResultModel } from '../../../services/dashboardRequest'
 
-const LineChart: React.FC<{ waterPrice?: waterPriceResultModel }> = ({ waterPrice }) => {
+/**
+ * 展示水量信息的库存量，1-100，100-120，120-140，140-160，160-180亿立方千米
+ * @param param0 
+ * @returns 
+ */
+const LineChart: React.FC<{ waterYield: { storageLine: [], supplyLine: [] } }> = ({ waterYield }) => {
   const getOption = () => {
     const option = {
+      title: {
+        text: '水量展示图(x-(亿立方米)，y-(个))'
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -14,8 +21,9 @@ const LineChart: React.FC<{ waterPrice?: waterPriceResultModel }> = ({ waterPric
           }
         }
       },
+      color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
       legend: {
-        data: ['Email', 'Union Ads']
+        data: ['供水量', '库存量']
       },
       toolbox: {
         feature: {
@@ -32,7 +40,7 @@ const LineChart: React.FC<{ waterPrice?: waterPriceResultModel }> = ({ waterPric
         {
           type: 'category',
           boundaryGap: false,
-          data: ['生活', '工业企业', '行政事业', '经营服务', '特种行业']
+          data: ['1-100', '100-120', '120-140', '140-160', '160-180', '180-200', '大于200']
         }
       ],
       yAxis: [
@@ -42,51 +50,33 @@ const LineChart: React.FC<{ waterPrice?: waterPriceResultModel }> = ({ waterPric
       ],
       series: [
         {
-          name: 'basicPrices',
+          name: '库存量',
           type: 'line',
+          smooth: true,
           stack: 'Total',
           areaStyle: {},
           emphasis: {
             focus: 'series'
           },
-          data: [waterPrice?.basicPrices.生活用水, waterPrice?.basicPrices.工业企业用水, waterPrice?.basicPrices.行政事业用水, waterPrice?.basicPrices.经营服务用水, waterPrice?.basicPrices.特种行业用水]
+          data: waterYield.storageLine
         },
         {
-          name: 'pollutionCosts',
+          name: '供水量',
           type: 'line',
+          smooth: true,
           stack: 'Total',
           areaStyle: {},
           emphasis: {
             focus: 'series'
           },
-          data: [waterPrice?.pollutionCosts.生活用水, waterPrice?.pollutionCosts.工业企业用水, waterPrice?.pollutionCosts.行政事业用水, waterPrice?.pollutionCosts.经营服务用水, waterPrice?.pollutionCosts.特种行业用水]
-        },
-        {
-          name: 'realPrices',
-          type: 'line',
-          stack: 'Total',
-          areaStyle: {},
-          emphasis: {
-            focus: 'series'
-          },
-          data: [waterPrice?.realPrices.生活用水, waterPrice?.realPrices.工业企业用水, waterPrice?.realPrices.行政事业用水, waterPrice?.realPrices.经营服务用水, waterPrice?.realPrices.特种行业用水]
-        },
-        {
-          name: 'resourceCosts',
-          type: 'line',
-          stack: 'Total',
-          areaStyle: {},
-          emphasis: {
-            focus: 'series'
-          },
-          data: [waterPrice?.resourceCosts.生活用水, waterPrice?.resourceCosts.工业企业用水, waterPrice?.resourceCosts.行政事业用水, waterPrice?.resourceCosts.经营服务用水, waterPrice?.resourceCosts.特种行业用水]
-        },
+          data: waterYield.supplyLine
+        }
       ]
     };
     return option;
   }
   return (
-    <div style={{ width: '80%' }}>
+    <div style={{ width: '100%' }}>
       <ReactEcharts option={getOption()} style={{ height: '240px' }} />
     </div>
   )

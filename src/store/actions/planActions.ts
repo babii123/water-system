@@ -34,10 +34,10 @@ export const updatePlan = (plan: PlanData, id: number) => {
   }
 }
 
-export const deletePlan = (id: number) => {
+export const deletePlan = (idList: number[]) => {
   return {
     type: DELETE_PLAN,
-    id
+    idList
   }
 }
 
@@ -49,10 +49,11 @@ export const deletePlanByReason = (id: number, delReason: string) => {
   }
 }
 
-export const deletePlanList = (idList: any) => {
+export const deletePlanList = (idList: any, delReason: string) => {
   return {
     type: DELETE_PLAN_LIST,
-    idList
+    idList,
+    delReason
   }
 }
 

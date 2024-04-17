@@ -8,6 +8,7 @@ import { createPlan, updatePlan } from '../../../store/actions/planActions';
 import { WaterPriceTableType } from '../../../model/waterPriceModel';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
+import { WaterTableType } from '../../../model/waterModel';
 
 const formItemLayout = {
   labelCol: {
@@ -53,31 +54,43 @@ const CreatePlanModel: React.FC<
     controlModel?: ControlModel,
     changeControl: Function,
     updatePlanInfo?: PlanTableType,
-    waterPriceList?: WaterPriceTableType[]
+    waterPriceList?: WaterPriceTableType[],
+    waterList?: WaterTableType[],
   }> = ({
     controlModel,
     changeControl,
     updatePlanInfo,
-    waterPriceList
+    waterPriceList,
+    waterList
   }) => {
     const { t } = useTranslation();
     const [form] = Form.useForm();
     const [startTime, setStartTime] = useState<string>()
     const [endTime, setEndTime] = useState<string>()
     const [waterPrice, setWaterPrice] = useState<{ label: string, value: string }[]>()
+    const [water, setWater] = useState<{ label: string, value: string }[] | any[]>()
     useEffect(() => {
       if (updatePlanInfo) {
         form.setFieldsValue(updatePlanInfo)
       } else {
         form.resetFields()
       }
-      const data = waterPriceList?.map(item => {
+      const waterPriceData = waterPriceList?.map(item => {
         return {
           label: item.type,
-          value: item.type + item.id
+          value: item.type
         }
       })
-      setWaterPrice(data)
+      const waterData = waterList?.map(item => {
+        if (!item.isDel) {
+          return {
+            label: item.waterName,
+            value: item.waterName
+          }
+        }
+      }).filter(item => item !== undefined)
+      setWaterPrice(waterPriceData);
+      setWater(waterData);
     }, [updatePlanInfo])
     const handleStartDateChange = (date: any, dateString: string) => {
       setStartTime(dateString)
@@ -175,9 +188,9 @@ const CreatePlanModel: React.FC<
               rules={[{ required: true, message: t('Please input water sources!') }]}
             >
               <Select
-                mode="tags"
+                mode="multiple"
                 style={{ width: '100%' }}
-                tokenSeparators={[',']}
+                options={water}
               />
             </Form.Item>
 

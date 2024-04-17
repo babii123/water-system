@@ -9,6 +9,7 @@ export interface WaterQualityTableType {
   ph?: number
   turbidity?: number
   fluoride?: number
+  cyanin?: number
   isDel?: boolean
   delReason?: string
 }
@@ -23,6 +24,7 @@ export interface WaterQualityData {
   ph: number
   turbidity: number
   fluoride: number
+  cyanin: number
   isDel: boolean
   delReason: string
 }

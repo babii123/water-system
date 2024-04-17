@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from "redux-saga/effects"
 import { CREATE_WATER, DELETE_WATER, DELETE_WATER_LIST, GET_WATER_LIST_BYAPI, UPDATE_WATER, DELETE_WATER_BY_REASON, FIND_WATER_BY_CONDITION } from "../actionTypes/waterActionTypes"
-import { createWater_API, deleteWaterList_API, deleteWaterByDelReason_API, getWaterAll_API, updateWater_API, getWaterListByCondition_API } from "../../services/waterRequest"
+import { createWater_API, deleteWaterList_API, deleteWaterByDelReason_API, getWaterAll_API, updateWater_API, getWaterListByCondition_API, deleteWater_API } from "../../services/waterRequest"
 import { WaterData } from "../../model/waterModel"
 import { updateWaterList } from "../actions/waterActions"
 import { message } from "antd"
@@ -35,6 +35,16 @@ function* _updateWater(action: { type: string, water: WaterData, id: number }) {
   }
 }
 
+function* _deleteWater(action: { type: string, idList: number[] }) {
+  const { code } = yield call(deleteWater_API, action.idList)
+  if (code === 200) {
+    yield call(_getWaterListByAPI)
+    message.success('delete success')
+  } else {
+    message.error('delete error')
+  }
+}
+
 function* _deleteWaterByReason(action: { type: string, id: number, delReason: string }) {
   const { code } = yield call(deleteWaterByDelReason_API, action.id, action.delReason)
   if (code === 200) {
@@ -45,9 +55,9 @@ function* _deleteWaterByReason(action: { type: string, id: number, delReason: st
   }
 }
 
-function* _deleteWaterList(action: { type: string, idList: number[] }) {
+function* _deleteWaterList(action: { type: string, idList: number[], delReason: string }) {
   console.log('_deleteList', action.idList);
-  const { code } = yield call(deleteWaterList_API, action.idList)
+  const { code } = yield call(deleteWaterList_API, action.idList, action.delReason)
   if (code === 200) {
     message.success('delete list success')
     yield call(_getWaterListByAPI)
@@ -74,6 +84,7 @@ function* waterSagas() {
   yield takeEvery(GET_WATER_LIST_BYAPI, _getWaterListByAPI)
   yield takeEvery(CREATE_WATER, _createWater)
   yield takeEvery(UPDATE_WATER, _updateWater)
+  yield takeEvery(DELETE_WATER, _deleteWater)
   yield takeEvery(DELETE_WATER_BY_REASON, _deleteWaterByReason)
   yield takeEvery(DELETE_WATER_LIST, _deleteWaterList)
   yield takeEvery(FIND_WATER_BY_CONDITION, _findWaterByCondition)

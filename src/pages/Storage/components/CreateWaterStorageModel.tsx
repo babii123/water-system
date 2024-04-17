@@ -57,7 +57,6 @@ const CreateWaterStorageModel: React.FC<
     const { t } = useTranslation();
     const [form] = Form.useForm()
     useEffect(() => {
-      console.log(updateWaterStorageInfo);
       if (updateWaterStorageInfo) {
         form.setFieldsValue(updateWaterStorageInfo)
       } else {
@@ -121,7 +120,7 @@ const CreateWaterStorageModel: React.FC<
             form={form}
           >
             <Form.Item<FieldType>
-              label="Resource ID"
+              label={t("WaterID")}
               name="resourceId"
             >
               <Input disabled />

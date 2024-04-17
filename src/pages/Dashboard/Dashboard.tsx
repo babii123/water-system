@@ -3,23 +3,22 @@ import LineChart from './components/LineChart';
 import PieChart from './components/PieChart';
 import DataCard from './components/DataCard';
 import TimeLine from './components/TimeLine';
-import LoginTable from './components/LoginTable';
+import QualityChart from './components/QualityChart';
 import './Dashboard.css'
-import BasicInfo from './components/BasicInfo';
 import { useEffect, useState } from 'react';
-import { getUserDashboard, userResultModel, getPlanDashboard, getWaterPriceDashboard, waterPriceResultModel, getWaterDashboard } from '../../services/dashboardRequest'
+import { getUserDashboard, userResultModel, getPlanDashboard, getWaterPriceDashboard, waterPriceResultModel, getWaterDashboard, getHandleLog, getWaterTypeDashboard, getWaterYieldDashboard, getWaterQualityDashboard } from '../../services/dashboardRequest'
 
 function Dashboard() {
   const [userData, setUserData] = useState<userResultModel>()
   const [waterCount, setWaterCount] = useState<number>()
+  const [waterType, setWaterType] = useState<{ allCount: 0, typeArr: [] }>()
+  const [waterQuality, setwaterQuality] = useState<[[]]>([[]])
   const [planCount, setPlanCount] = useState<number>()
-  const [waterPrice, setWaterPrice] = useState<waterPriceResultModel>()
+  const [waterYield, setWaterYield] = useState<{ storageLine: [], supplyLine: [] }>({ storageLine: [], supplyLine: [] })
+  const [handleLog, setHandleLog] = useState([]);
 
   useEffect(() => {
-    getData()
-    setInterval(() => {
-      getData()
-    }, 1000 * 30)
+    getData();
   }, [])
   const getData = () => {
     getUserDashboard().then((res) => {
@@ -32,36 +31,51 @@ function Dashboard() {
         setPlanCount(res.data)
       }
     })
-    getWaterPriceDashboard().then((res: any) => {
-      if (res.code === 200) {
-        setWaterPrice(res.data)
-      }
-    })
     getWaterDashboard().then(res => {
       if (res.code === 200) {
         setWaterCount(res.data)
       }
     })
-    console.log(waterPrice?.basicPrices.valueOf());
+    getWaterTypeDashboard().then(res => {
+      if (res.code === 200) {
+        setWaterType(res.data)
+      }
+    })
+    getWaterYieldDashboard().then(res => {
+      if (res.code === 200) {
+        setWaterYield(res.data)
+      }
+    })
+    getWaterQualityDashboard().then(res => {
+      console.log(res);
+      if (res.code === 200) {
+        setwaterQuality(res.data)
+      }
+    })
+    getHandleLog().then(res => {
+      if (res.code === 200) {
+        setHandleLog(res.data);
+      }
+    })
   }
   const dataCardProps = [
     {
-      title: '用水量',
-      icon: 'icon-yewei',
+      title: '用户数',
+      icon: 'icon-zhanyezhong',
       bgc: 'data-card-bgc1 margin-right',
-      amount: 1004
+      amount: userData?.allCount
     },
     {
       title: '水资源数',
-      icon: 'icon-caozuo-heng',
+      icon: 'icon-yewei',
       bgc: 'data-card-bgc2 margin-right',
       amount: waterCount
     },
     {
-      title: '用户数',
-      icon: 'icon-zhanyezhong',
+      title: '水资源类型数',
+      icon: 'icon-caozuo-heng',
       bgc: 'data-card-bgc3 margin-right',
-      amount: userData?.allCount
+      amount: waterType?.allCount
     },
     {
       title: '供水计划数',
@@ -75,23 +89,12 @@ function Dashboard() {
     <div>
       <div style={{ height: '260px' }} className='flex margin-bottom'>
         <div style={{ flex: 3 }} className='mycard margin-right flex'>
-          <BasicInfo
-            waterCount={waterCount}
-            userCount={userData?.allCount}
-            planCount={planCount}
-          />
           {/* 用水量折线图 */}
-          <LineChart
-            waterPrice={waterPrice}
-          />
+          <LineChart waterYield={waterYield} />
         </div>
         <div style={{ flex: 1 }} className='mycard'>
           {/* 水资源分类饼状图 */}
-          <PieChart
-            adminCount={userData?.adminCount}
-            engineerCount={userData?.engineerCount}
-            searcherCount={userData?.searcherCount}
-          />
+          <PieChart data={waterType?.typeArr} />
         </div>
       </div>
       <div style={{ display: 'flex', height: '73px' }} className='margin-bottom'>
@@ -102,15 +105,13 @@ function Dashboard() {
         }
       </div>
       <div style={{ display: 'flex', height: '300px' }}>
-        <div style={{ flex: 1, overflowY: 'auto' }} className='mycard margin-right'>
+        <div style={{ flex: 2, overflowY: 'auto' }} className='mycard margin-right'>
           {/* 操作时间线 */}
-          <TimeLine />
+          <TimeLine items={handleLog} />
         </div>
         <div style={{ flex: 2 }} className='mycard'>
           {/* 登录用户表格 */}
-          <LoginTable
-            data={userData?.adminList}
-          />
+          <QualityChart waterQuality={waterQuality} />
         </div>
       </div>
     </div>

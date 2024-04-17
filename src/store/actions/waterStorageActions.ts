@@ -34,10 +34,10 @@ export const updateWaterStorage = (waterStorage: WaterStorageData, id: number) =
   }
 }
 
-export const deleteWaterStorage = (id: number) => {
+export const deleteWaterStorage = (idList: number[]) => {
   return {
     type: DELETE_WATER_STORAGE,
-    id
+    idList
   }
 }
 
@@ -49,10 +49,11 @@ export const deleteWaterStorageByReason = (id: number, delReason: string) => {
   }
 }
 
-export const deleteWaterStorageList = (idList: any) => {
+export const deleteWaterStorageList = (idList: any, delReason: string) => {
   return {
     type: DELETE_WATER_STORAGE_LIST,
-    idList
+    idList,
+    delReason
   }
 }
 

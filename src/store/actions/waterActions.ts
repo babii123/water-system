@@ -34,10 +34,10 @@ export const updateWater = (water: WaterData, id: number) => {
   }
 }
 
-export const deleteWater = (id: number) => {
+export const deleteWater = (idList: number[]) => {
   return {
     type: DELETE_WATER,
-    id
+    idList
   }
 }
 
@@ -49,10 +49,11 @@ export const deleteWaterByReason = (id: number, delReason: string) => {
   }
 }
 
-export const deleteWaterList = (idList: any) => {
+export const deleteWaterList = (idList: any, delReason: string) => {
   return {
     type: DELETE_WATER_LIST,
-    idList
+    idList,
+    delReason
   }
 }
 

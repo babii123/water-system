@@ -68,7 +68,6 @@ function WaterType() {
   const changeDeleteVisible = (id: number) => {
     setDeleteVisible(id)
   }
-
   const data = useSelector((state: any) => {
     return state.waterType.waterTypeList
   })
@@ -77,7 +76,6 @@ function WaterType() {
     dispatch(getWaterTypeListByAPI())
   }
   const _deleteWaterType = (id: number) => {
-    // console.log('_delete');
     setDeleteVisible(undefined)
     dispatch(deleteWaterType(id))
   }

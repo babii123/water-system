@@ -28,7 +28,7 @@ const DeleteWaterModel: React.FC<{
   };
   return (
     <>
-      <Modal title={DELETE_REASON}
+      <Modal title={t(DELETE_REASON)}
         open={deleteVisible}
         onOk={handleOk}
         onCancel={() => changeDeleteVisible(false)}>

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Button, Input, Popover, Space, Table, Tag, Tooltip } from 'antd';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table';
-import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
+import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined, QuestionCircleFilled } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL, ONLY, MULTI } from '../../model/globalModel';
-import { deleteWaterTypeList } from '../../store/actions/waterTypeActions';
 import { WaterTableType } from '../../model/waterModel';
-import { deleteWaterByReason, getWaterListByAPI, getWaterListByCondition } from '../../store/actions/waterActions';
+import { deleteWater, deleteWaterByReason, deleteWaterList, getWaterListByAPI, getWaterListByCondition } from '../../store/actions/waterActions';
 import CreateWaterModel from './components/CreateWaterModel';
 import DeleteWaterModel from './components/DeleteWaterModel';
 import CreateWaterQualityModel from '../Quality/components/CreateWaterQualityModel';
@@ -16,6 +15,8 @@ import { WaterQualityTableType } from '../../model/waterQualityModel';
 import { WaterStorageTableType } from '../../model/waterStorageModel';
 import { exportDataExcel } from '../../services/globalRequest'
 import { useTranslation } from 'react-i18next';
+import { UserRole } from '../../store/actions/userActions';
+import { getWaterTypeListByAPI } from '../../store/actions/waterTypeActions';
 
 const Water: React.FC = () => {
   const { t } = useTranslation();
@@ -35,39 +36,62 @@ const Water: React.FC = () => {
   const columns: ColumnsType<WaterTableType> = [
     {
       key: 'id',
-      title: 'ID',
+      title: <>
+        <span>ID</span>&nbsp;
+        <Tooltip title="标红数据为普通用户删除数据" color='red'>
+          <QuestionCircleFilled style={{ color: '#8a919f' }} />
+        </Tooltip>
+      </>,
       dataIndex: 'id',
-      width: 50
+      width: 50,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.id}</span>
+      )
     },
     {
       key: 'type',
       title: t('Type'),
       dataIndex: 'type',
-      width: 150
+      width: 150,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.type}</span>
+      )
     },
     {
       key: 'waterName',
       title: t('WaterName'),
       dataIndex: 'waterName',
-      width: 150
+      width: 150,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.waterName}</span>
+      )
     },
     {
       key: 'address',
       title: t('Address'),
       dataIndex: 'address',
-      width: 150
+      width: 150,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.address}</span>
+      )
     },
     {
       key: 'description',
       title: t('Description'),
       dataIndex: 'description',
-      width: 400
+      width: 400,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.description}</span>
+      )
     },
     {
       key: 'addTime',
       title: t('AddTime'),
       dataIndex: 'addTime',
-      width: 120
+      width: 120,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.addTime.toString()}</span>
+      )
     },
     {
       key: 'addUser',
@@ -75,9 +99,7 @@ const Water: React.FC = () => {
       dataIndex: 'addUser',
       width: 150,
       render: (_, record) => (
-        <Tag color='#f50' key={record.id}>
-          {record.addUser}
-        </Tag>
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.addUser}</span>
       )
     },
     {
@@ -95,6 +117,15 @@ const Water: React.FC = () => {
             })
           }
         </>
+      )
+    },
+    {
+      key: 'delReason',
+      title: t('delReason'),
+      dataIndex: 'delReason',
+      width: 150,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.delReason}</span>
       )
     },
     {
@@ -161,6 +192,7 @@ const Water: React.FC = () => {
                   ph: undefined,
                   turbidity: undefined,
                   fluoride: undefined,
+                  cyanin: undefined,
                   isDel: false,
                   delReason: ''
                 })
@@ -173,21 +205,36 @@ const Water: React.FC = () => {
   ];
 
   useEffect(() => {
-    _getWaterTypeListByAPI()
+    _getWaterListByAPI();
+    _getWaterTypeListByAPI();
   }, [])
 
   const data = useSelector((state: any) => {
     return state.water.waterList
   })
+  const userRole = useSelector((state: any) => {
+    return state.userInfo.roles
+  })
+  const waterTypeList = useSelector((state: any) => {
+    console.log(state.waterType.waterTypeList);
+    return state.waterType.waterTypeList
+  })
   const dispatch = useDispatch()
-  const _getWaterTypeListByAPI = () => {
+  const _getWaterListByAPI = () => {
     dispatch(getWaterListByAPI())
   }
-  const _deleteWaterList = (idList: React.Key[]) => {
-    dispatch(deleteWaterTypeList(idList))
+  const _getWaterTypeListByAPI = () => {
+    dispatch(getWaterTypeListByAPI())
+  }
+  const _deleteWaterList = (idList: React.Key[], delReason: string) => {
+    dispatch(deleteWaterList(idList, delReason))
   }
   const _deleteWaterByReason = (id: number, delReason: string) => {
     dispatch(deleteWaterByReason(id, delReason))
+  }
+  // 彻底删除
+  const _deleteWater = (idList: any) => {
+    dispatch(deleteWater(idList))
   }
   const _getWaterByCondition = (waterArea?: string, waterType?: string) => {
     dispatch(getWaterListByCondition(waterArea, waterType))
@@ -196,6 +243,10 @@ const Water: React.FC = () => {
     setDeleteVisible(id)
   }
   const showDeleteModel = (id: number[], type: string) => {
+    if (userRole.includes(UserRole.ADMIN)) {
+      const idList = id && id.length > 0 ? id : selectedRowKeys
+      _deleteWater(idList)
+    }
     setDeleteModel(true)
     setDeleteVisible(undefined)
     if (type === ONLY) {
@@ -240,27 +291,37 @@ const Water: React.FC = () => {
 
   return (
     <div className='mycard'>
-      <CreateWaterQualityModel
-        controlModel={controlModel_quality}
-        changeControl={changeControlQuality}
-        updateWaterQualityInfo={updateWaterQuality}
-      />
-      <CreateWaterStorageModel
-        controlModel={controlModel_storage}
-        changeControl={changeControlStorage}
-        updateWaterStorageInfo={updateWaterStorage}
-      />
-      <CreateWaterModel
-        controlModel={controlModel}
-        changeControl={changeControl}
-        updateWaterInfo={updateWater} />
-      <DeleteWaterModel
-        deleteVisible={deleteModel}
-        changeDeleteVisible={setDeleteModel}
-        deleteValue={deleteValue}
-        _deleteWaterList={_deleteWaterList}
-        _deleteWaterByReason={_deleteWaterByReason}
-      />
+      {
+        controlModel_quality?.visible && <CreateWaterQualityModel
+          controlModel={controlModel_quality}
+          changeControl={changeControlQuality}
+          updateWaterQualityInfo={updateWaterQuality}
+        />
+      }
+      {
+        controlModel_storage?.visible && <CreateWaterStorageModel
+          controlModel={controlModel_storage}
+          changeControl={changeControlStorage}
+          updateWaterStorageInfo={updateWaterStorage}
+        />
+      }
+      {
+        controlModel?.visible && <CreateWaterModel
+          controlModel={controlModel}
+          changeControl={changeControl}
+          updateWaterInfo={updateWater}
+          waterTypeList={waterTypeList}
+        />
+      }
+      {
+        !userRole.includes(UserRole.ADMIN) && <DeleteWaterModel
+          deleteVisible={deleteModel}
+          changeDeleteVisible={setDeleteModel}
+          deleteValue={deleteValue}
+          _deleteWaterList={_deleteWaterList}
+          _deleteWaterByReason={_deleteWaterByReason}
+        />
+      }
       <Space style={{ marginBottom: 16 }}>
         <span className='searcher_title'>{t('Address')}</span>
         <Input value={waterArea} onChange={(e) => setWaterArea(e.target.value)} />

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Popover, Space, Table, Tag } from 'antd';
+import { Button, Input, Popover, Space, Table, Tag, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { SearchOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
+import { SearchOutlined, DownloadOutlined, DeleteFilled, RestOutlined, QuestionCircleFilled } from '@ant-design/icons';
 import { ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../model/globalModel';
 import { WaterQualityTableType } from '../../model/waterQualityModel';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteWaterQualityByReason, deleteWaterQualityList, getWaterQualityByID, getWaterQualityListByAPI } from '../../store/actions/waterQualityActions';
+import { deleteWaterQuality, deleteWaterQualityByReason, deleteWaterQualityList, getWaterQualityByID, getWaterQualityListByAPI } from '../../store/actions/waterQualityActions';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import CreateWaterQualityModel from './components/CreateWaterQualityModel';
 import DeleteWaterQualityModel from './components/DeleteWaterQualityModel';
 import { useTranslation } from 'react-i18next';
 import { exportDataExcel } from '../../services/globalRequest';
+import { UserRole } from '../../store/actions/userActions';
 
 function Quality() {
   const { t } = useTranslation();
@@ -28,28 +29,48 @@ function Quality() {
   const columns: ColumnsType<WaterQualityTableType> = [
     {
       key: 'id',
-      title: 'ID',
-      dataIndex: 'id'
+      title: <>
+        <span>ID</span>&nbsp;
+        <Tooltip title="标红数据为普通用户删除数据" color='red'>
+          <QuestionCircleFilled style={{ color: '#8a919f' }} />
+        </Tooltip>
+      </>,
+      dataIndex: 'id',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.id}</span>
+      )
     },
     {
       key: 'resourceId',
       title: t('WaterID'),
-      dataIndex: 'resourceId'
+      dataIndex: 'resourceId',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.resourceId}</span>
+      )
     },
     {
       key: 'addTime',
       title: t('AddTime'),
-      dataIndex: 'addTime'
+      dataIndex: 'addTime',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.addTime?.toString()}</span>
+      )
     },
     {
       key: 'addUser',
       title: t('AddUser'),
       dataIndex: 'addUser',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.addUser}</span>
+      )
     },
     {
       key: 'detectTime',
       title: t('DetectTime'),
-      dataIndex: 'detectTime'
+      dataIndex: 'detectTime',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.detectTime?.toString()}</span>
+      )
     },
     {
       key: 'detectPeople',
@@ -71,17 +92,43 @@ function Quality() {
     {
       key: 'ph',
       title: t('PH'),
-      dataIndex: 'ph'
+      dataIndex: 'ph',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.ph}</span>
+      )
     },
     {
       key: 'turbidity',
       title: t('Turbidity'),
-      dataIndex: 'turbidity'
+      dataIndex: 'turbidity',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.turbidity}</span>
+      )
     },
     {
       key: 'fluoride',
       title: t('Fluoride'),
-      dataIndex: 'fluoride'
+      dataIndex: 'fluoride',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.fluoride}</span>
+      )
+    },
+    {
+      key: 'cyanin',
+      title: t('Cyanin'),
+      dataIndex: 'cyanin',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.cyanin}</span>
+      )
+    },
+    {
+      key: 'delReason',
+      title: t('delReason'),
+      dataIndex: 'delReason',
+      width: 150,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.delReason}</span>
+      )
     },
     {
       title: t('Action'),
@@ -117,15 +164,24 @@ function Quality() {
   const data = useSelector((state: any) => {
     return state.waterQuality.waterQualityList
   })
+  const userRole = useSelector((state: any) => {
+    return state.userInfo.roles
+  })
   const dispatch = useDispatch()
   const _getWaterQualityListByAPI = () => {
     dispatch(getWaterQualityListByAPI())
   }
-  const _deleteWaterQualityList = (idList: React.Key[]) => {
-    dispatch(deleteWaterQualityList(idList))
+  // 批量删除
+  const _deleteWaterQualityList = (idList: React.Key[], delReason: string) => {
+    dispatch(deleteWaterQualityList(idList, delReason))
   }
+  // 标记删除
   const _deleteWaterQualityByReason = (id: number, delReason: string) => {
     dispatch(deleteWaterQualityByReason(id, delReason))
+  }
+  // 彻底删除
+  const _deleteWaterQuality = (idList: any) => {
+    dispatch(deleteWaterQuality(idList))
   }
   const _getWaterQualityByID = (id: number) => {
     dispatch(getWaterQualityByID(id))
@@ -134,6 +190,10 @@ function Quality() {
     setDeleteVisible(id)
   }
   const showDeleteModel = (id: number[], type: string) => {
+    if (userRole.includes(UserRole.ADMIN)) {
+      const idList = id && id.length > 0 ? id : selectedRowKeys
+      _deleteWaterQuality(idList)
+    }
     setDeleteModel(true)
     setDeleteVisible(undefined)
     if (type === ONLY) {
@@ -178,29 +238,19 @@ function Quality() {
         changeControl={changeControl}
         updateWaterQualityInfo={updateWaterQuality}
       />
-      <DeleteWaterQualityModel
-        deleteVisible={deleteModel}
-        changeDeleteVisible={setDeleteModel}
-        deleteValue={deleteValue}
-        _deleteWaterQualityList={_deleteWaterQualityList}
-        _deleteWaterQualityByReason={_deleteWaterQualityByReason}
-      />
+      {
+        !userRole.includes(UserRole.ADMIN) && <DeleteWaterQualityModel
+          deleteVisible={deleteModel}
+          changeDeleteVisible={setDeleteModel}
+          deleteValue={deleteValue}
+          _deleteWaterQualityList={_deleteWaterQualityList}
+          _deleteWaterQualityByReason={_deleteWaterQualityByReason}
+        />
+      }
       <div className='mycard'>
         <Space style={{ marginBottom: 16 }}>
           <span className='searcher_title'>ID</span>
           <Input value={id} onChange={(e) => setID(parseInt(e.target.value))} />
-          {/* <span>水资源类型</span> */}
-          {/* <Input placeholder="水资源类型" /> */}
-          {/* <span>测量时间</span> */}
-          {/* <Input placeholder="测量时间" /> */}
-          {/* <span>测量人员</span> */}
-          {/* <Input placeholder="测量人员" /> */}
-          {/* <span>PH值</span> */}
-          {/* <Input placeholder="PH值" /> */}
-          {/* <span>浊度</span> */}
-          {/* <Input placeholder="浊度" /> */}
-          {/* <span>污染物水平</span> */}
-          {/* <Input placeholder="污染物水平" /> */}
           <Button type="primary" icon={<SearchOutlined />} onClick={() => findQuality(id)}>
             {t('Search')}
           </Button>
@@ -210,7 +260,7 @@ function Quality() {
         </Space>
         <div style={{ marginBottom: 16 }}>
           <Space>
-            <Button type="primary" icon={<DeleteFilled />} danger>
+            <Button type="primary" icon={<DeleteFilled />} danger onClick={() => { showDeleteModel([], MULTI) }}>
               {t('BatchDelete')}
             </Button>
             <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('waterQuality')}>

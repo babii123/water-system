@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Input, Select } from 'antd';
 import { useDispatch } from 'react-redux';
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
@@ -7,6 +7,7 @@ import { WaterTableType } from '../../../model/waterModel';
 import { createWater, updateWater } from '../../../store/actions/waterActions';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
+import { WaterTypeTableType } from '../../../model/waterTypeModel';
 
 const formItemLayout = {
   labelCol: {
@@ -45,23 +46,33 @@ const CreateWaterModel: React.FC<
   {
     controlModel?: ControlModel,
     changeControl: Function,
-    updateWaterInfo?: WaterTableType
+    updateWaterInfo?: WaterTableType,
+    waterTypeList?: WaterTypeTableType[]
   }
 > = (
   {
     controlModel,
     changeControl,
-    updateWaterInfo
+    updateWaterInfo,
+    waterTypeList
   }
 ) => {
     const { t } = useTranslation();
     const [form] = Form.useForm()
+    const [waterType, setWaterType] = useState<{ label: string, value: string }[]>()
     useEffect(() => {
       if (updateWaterInfo) {
         form.setFieldsValue(updateWaterInfo);
       } else {
         form.resetFields()
       }
+      const waterTypeData = waterTypeList?.map(item => {
+        return {
+          label: item.type,
+          value: item.type
+        }
+      })
+      setWaterType(waterTypeData);
     }, [updateWaterInfo])
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
@@ -100,7 +111,7 @@ const CreateWaterModel: React.FC<
     return (
       <>
         <Modal
-          title={controlModel?.editType === UPDATE_MODEL ? 'Update Water' : 'Create Water'}
+          title={controlModel?.editType === UPDATE_MODEL ? t('Update Water') : t('Create Water')}
           centered
           open={controlModel?.visible}
           onOk={() => changeControl({ visible: false, editType: controlModel?.editType })}
@@ -124,8 +135,10 @@ const CreateWaterModel: React.FC<
               name="type"
               rules={[{ required: true, message: t('Please input type!') }]}
             >
-              <Input />
-              {/* 修改为选择框 */}
+              <Select
+                style={{ width: '100%' }}
+                options={waterType}
+              />
             </Form.Item>
 
             <Form.Item<FieldType>

@@ -1,6 +1,6 @@
-import { put, call, takeEvery } from "redux-saga/effects"
-import { CREATE_PLAN, DELETE_PLAN_LIST, GET_PLAN_LIST_BYAPI, UPDATE_PLAN, DELETE_PLAN_BY_REASON, FIND_PLAN_BY_CONDITION } from "../actionTypes/planActionTypes"
-import { createPlan_API, deletePlanByDelReason_API, deletePlanList_API, getPlanAll_API, getPlanListByCondition_API, updatePlan_API } from "../../services/planRequest"
+import { put, call, takeEvery, select } from "redux-saga/effects"
+import { CREATE_PLAN, DELETE_PLAN_LIST, GET_PLAN_LIST_BYAPI, UPDATE_PLAN, DELETE_PLAN_BY_REASON, FIND_PLAN_BY_CONDITION, DELETE_PLAN } from "../actionTypes/planActionTypes"
+import { createPlan_API, deletePlanByDelReason_API, deletePlanList_API, deletePlan_API, getPlanAll_API, getPlanListByCondition_API, updatePlan_API } from "../../services/planRequest"
 import { PlanData } from "../../model/planModel"
 import { updatePlanList } from "../actions/planActions"
 import { message } from "antd"
@@ -36,6 +36,16 @@ function* _updatePlan(action: { type: string, plan: PlanData, id: number }) {
   }
 }
 
+function* _deletePlan(action: { type: string, idList: number[] }) {
+  const { code } = yield call(deletePlan_API, action.idList)
+  if (code === 200) {
+    yield call(_getPlanListByAPI)
+    message.success('delete success')
+  } else {
+    message.error('delete error')
+  }
+}
+
 function* _deletePlanByReason(action: { type: string, id: number, delReason: string }) {
   const { code } = yield call(deletePlanByDelReason_API, action.id, action.delReason)
   if (code === 200) {
@@ -46,9 +56,9 @@ function* _deletePlanByReason(action: { type: string, id: number, delReason: str
   }
 }
 
-function* _deletePlanList(action: { type: string, idList: number[] }) {
+function* _deletePlanList(action: { type: string, idList: number[], delReason: string }) {
   console.log('_deleteList', action.idList);
-  const { code } = yield call(deletePlanList_API, action.idList)
+  const { code } = yield call(deletePlanList_API, action.idList, action.delReason)
   if (code === 200) {
     message.success('delete list success')
     yield call(_getPlanListByAPI)
@@ -75,6 +85,7 @@ function* planSagas() {
   yield takeEvery(GET_PLAN_LIST_BYAPI, _getPlanListByAPI)
   yield takeEvery(CREATE_PLAN, _createPlan)
   yield takeEvery(UPDATE_PLAN, _updatePlan)
+  yield takeEvery(DELETE_PLAN, _deletePlan)
   yield takeEvery(DELETE_PLAN_BY_REASON, _deletePlanByReason)
   yield takeEvery(DELETE_PLAN_LIST, _deletePlanList)
   yield takeEvery(FIND_PLAN_BY_CONDITION, _findPlanByCondition)

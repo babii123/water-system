@@ -3,7 +3,7 @@ export interface PlanTableType {
   key?: number
   id: number
   addTime: Date | any
-  startTime: Date| any
+  startTime: Date | any
   endTime: Date | any
   waterSources: string[]
   waterArea: string
@@ -17,7 +17,7 @@ export interface PlanTableType {
 export interface PlanData {
   id: number
   addTime: Date
-  startTime: Date 
+  startTime: Date
   endTime: Date
   waterSources: string[]
   waterArea: string
@@ -26,4 +26,10 @@ export interface PlanData {
   addUser: string
   isDel: boolean
   delReason: string
+}
+
+export interface WaterLinkData {
+  id: number;
+  title: string;
+  link: string;
 }

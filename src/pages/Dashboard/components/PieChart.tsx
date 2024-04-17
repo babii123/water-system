@@ -1,28 +1,27 @@
 import ReactEcharts from "echarts-for-react"
 
-const Pie: React.FC<{
-  adminCount?: number
-  engineerCount?: number
-  searcherCount?: number
-}> = (
-  {
-    adminCount,
-    engineerCount,
-    searcherCount
-  }
-) => {
+/**
+ * 展示各种水资源类型的水资源数量
+ * @param param0 
+ * @returns 
+ */
+const PieChart: React.FC<{ data?: [] }> = ({ data }) => {
   const getOption = () => {
     const option = {
+      title: {
+        text: '水资源类型统计图'
+      },
       tooltip: {
         trigger: 'item'
       },
-      legend: {
-        top: '5%',
-        left: 'center'
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
       },
       series: [
         {
-          name: 'Access From',
+          name: '名称',
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
@@ -35,21 +34,7 @@ const Pie: React.FC<{
             show: false,
             position: 'center'
           },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 40,
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: [
-            { value: adminCount, name: 'admin' },
-            { value: engineerCount, name: 'engineer' },
-            { value: searcherCount, name: 'searcher' },
-          ]
+          data
         }
       ]
     };
@@ -62,4 +47,4 @@ const Pie: React.FC<{
   )
 }
 
-export default Pie;
+export default PieChart;

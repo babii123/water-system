@@ -31,3 +31,11 @@ export const getWaterPriceDashboard = () => request.get<waterPriceResultModel>('
 export const getPlanDashboard = () => request.get<number>('/supply-plan/getPlan_dashboard')
 // 获取水资源数量
 export const getWaterDashboard = () => request.get<number>('/water/getWater_dashboard')
+// 获取日志
+export const getHandleLog = () => request.get('/handle-log');
+// 获取水资源类型数据
+export const getWaterTypeDashboard = () => request.get('/water-type/getWaterType_dashboard')
+// 获取水量折线图数据
+export const getWaterYieldDashboard = () => request.get<{ storageLine: [], supplyLine: [] }>('/water-yield/getWaterYield_dashboard')
+// 获取水质信息
+export const getWaterQualityDashboard = () => request.get<[[]]>('/water-quality/getWaterQuality_dashboard')

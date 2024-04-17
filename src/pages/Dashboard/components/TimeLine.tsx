@@ -1,63 +1,44 @@
 import React from 'react';
 import { SmileOutlined } from '@ant-design/icons';
 import { Timeline } from 'antd';
+import { color } from 'echarts';
 
-const TimeLine: React.FC = () => (
+function getColor(str: string) {
+  if (str.includes('新增')) {
+    return 'green'
+  } else if (str.includes('删除')) {
+    return 'red'
+  } else if (str.includes('修改')) {
+    return '#cd4f93'
+  } else if (str.includes('导出')) {
+    return '#00CCFF'
+  } else if (str.includes('导入')) {
+    return '#fac858'
+  } else {
+    return '#6951ba'
+  }
+}
+
+function getTimeLineData(data: []) {
+  console.log(data);
+  let res: any = []
+  data && data.length > 0 && data.forEach((item: any) => {
+    res.push({
+      color: getColor(item.handle),
+      children: (
+        <>
+          <p>{item.handle} - {item.time}</p>
+          <p>{item.description}</p>
+        </>
+      )
+    })
+  })
+  return res;
+}
+
+const TimeLine: React.FC<{ items: any }> = ({ items }) => (
   <Timeline
-    items={[
-      {
-        color: 'green',
-        children: 'Create a services site 2015-09-01',
-      },
-      {
-        color: 'green',
-        children: 'Create a services site 2015-09-01',
-      },
-      {
-        color: 'red',
-        children: (
-          <>
-            <p>Solve initial network problems 1</p>
-            <p>Solve initial network problems 2</p>
-            <p>Solve initial network problems 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        color: 'gray',
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        color: 'gray',
-        children: (
-          <>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </>
-        ),
-      },
-      {
-        color: '#00CCFF',
-        dot: <SmileOutlined />,
-        children: <p>Custom color testing</p>,
-      },
-    ]}
+    items={getTimeLineData(items)}
   />
 );
 

@@ -40,6 +40,7 @@ type FieldType = {
   ph?: number
   turbidity?: number
   fluoride?: number
+  cyanin?: number
 };
 
 const CreateWaterQualityModel: React.FC<
@@ -170,6 +171,14 @@ const CreateWaterQualityModel: React.FC<
               label={t("Fluoride")}
               name="fluoride"
               rules={[{ required: true, message: t('Please input fluoride!') }]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item<FieldType>
+              label={t("Cyanin")}
+              name="cyanin"
+              rules={[{ required: true, message: t('Please input cyanin!') }]}
             >
               <Input />
             </Form.Item>

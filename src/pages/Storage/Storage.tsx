@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Popover, Space, Table, Tag } from 'antd';
+import { Button, Input, Popover, Space, Table, Tag, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { SearchOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
+import { SearchOutlined, DownloadOutlined, DeleteFilled, RestOutlined, QuestionCircleFilled } from '@ant-design/icons';
 import { ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../model/globalModel';
 import { WaterStorageTableType } from '../../model/waterStorageModel';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteWaterStorageByReason, deleteWaterStorageList, getWaterStorageByID, getWaterStorageListByAPI } from '../../store/actions/waterStorageActions';
+import { deleteWaterStorage, deleteWaterStorageByReason, deleteWaterStorageList, getWaterStorageByID, getWaterStorageListByAPI } from '../../store/actions/waterStorageActions';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import CreateWaterStorageModel from './components/CreateWaterStorageModel';
 import DeleteWaterStorageModel from './components/DeleteWaterStorageModel';
 import { useTranslation } from 'react-i18next';
 import { exportDataExcel } from '../../services/globalRequest';
+import { UserRole } from '../../store/actions/userActions';
 
 function Storage() {
   const { t } = useTranslation();
@@ -28,28 +29,48 @@ function Storage() {
   const columns: ColumnsType<WaterStorageTableType> = [
     {
       key: 'id',
-      title: 'ID',
-      dataIndex: 'id'
+      title: <>
+        <span>ID</span>&nbsp;
+        <Tooltip title="标红数据为普通用户删除数据" color='red'>
+          <QuestionCircleFilled style={{ color: '#8a919f' }} />
+        </Tooltip>
+      </>,
+      dataIndex: 'id',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.id}</span>
+      )
     },
     {
       key: 'resourceId',
       title: t('WaterID'),
-      dataIndex: 'resourceId'
+      dataIndex: 'resourceId',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.resourceId}</span>
+      )
     },
     {
       key: 'addTime',
       title: t('AddTime'),
-      dataIndex: 'addTime'
+      dataIndex: 'addTime',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.addTime?.toString()}</span>
+      )
     },
     {
       key: 'addUser',
       title: t('AddUser'),
       dataIndex: 'addUser',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.addUser}</span>
+      )
     },
     {
       key: 'detectTime',
       title: t('DetectTime'),
-      dataIndex: 'detectTime'
+      dataIndex: 'detectTime',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.detectTime?.toString()}</span>
+      )
     },
     {
       key: 'detectPeople',
@@ -71,12 +92,27 @@ function Storage() {
     {
       key: 'supply',
       title: t('Supply'),
-      dataIndex: 'supply'
+      dataIndex: 'supply',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.supply}</span>
+      )
     },
     {
       key: 'storage',
       title: t('Storage'),
-      dataIndex: 'storage'
+      dataIndex: 'storage',
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.storage}</span>
+      )
+    },
+    {
+      key: 'delReason',
+      title: t('delReason'),
+      dataIndex: 'delReason',
+      width: 150,
+      render: (_, record) => (
+        <span style={{ color: record.isDel ? 'red' : '' }}>{record.delReason}</span>
+      )
     },
     {
       title: t('Action'),
@@ -115,15 +151,22 @@ function Storage() {
   const data = useSelector((state: any) => {
     return state.waterStorage.waterStorageList
   })
+  const userRole = useSelector((state: any) => {
+    return state.userInfo.roles
+  })
   const dispatch = useDispatch()
   const _getWaterStorageListByAPI = () => {
     dispatch(getWaterStorageListByAPI())
   }
-  const _deleteWaterStorageList = (idList: React.Key[]) => {
-    dispatch(deleteWaterStorageList(idList))
+  const _deleteWaterStorageList = (idList: React.Key[], delReason: string) => {
+    dispatch(deleteWaterStorageList(idList, delReason))
   }
   const _deleteWaterStorageByReason = (id: number, delReason: string) => {
     dispatch(deleteWaterStorageByReason(id, delReason))
+  }
+  // 彻底删除
+  const _deleteWaterStorage = (idList: any) => {
+    dispatch(deleteWaterStorage(idList))
   }
   const _getWaterStorageByID = (id: number) => {
     dispatch(getWaterStorageByID(id))
@@ -132,6 +175,10 @@ function Storage() {
     setDeleteVisible(id)
   }
   const showDeleteModel = (id: number[], type: string) => {
+    if (userRole.includes(UserRole.ADMIN)) {
+      const idList = id && id.length > 0 ? id : selectedRowKeys
+      _deleteWaterStorage(idList)
+    }
     setDeleteModel(true)
     setDeleteVisible(undefined)
     if (type === ONLY) {
@@ -171,13 +218,15 @@ function Storage() {
         changeControl={changeControl}
         updateWaterStorageInfo={updateWaterStorage}
       />
-      <DeleteWaterStorageModel
-        deleteVisible={deleteModel}
-        changeDeleteVisible={setDeleteModel}
-        deleteValue={deleteValue}
-        _deleteWaterStorageList={_deleteWaterStorageList}
-        _deleteWaterStorageByReason={_deleteWaterStorageByReason}
-      />
+      {
+        !userRole.includes(UserRole.ADMIN) && <DeleteWaterStorageModel
+          deleteVisible={deleteModel}
+          changeDeleteVisible={setDeleteModel}
+          deleteValue={deleteValue}
+          _deleteWaterStorageList={_deleteWaterStorageList}
+          _deleteWaterStorageByReason={_deleteWaterStorageByReason}
+        />
+      }
       <div className='mycard'>
         <Space style={{ marginBottom: 16 }}>
           <span className='searcher_title'>ID</span>

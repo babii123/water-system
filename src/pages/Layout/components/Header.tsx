@@ -1,18 +1,45 @@
-import { Breadcrumb, Badge, Avatar, Space, Divider } from 'antd'
-import { UserOutlined } from '@ant-design/icons';
+import { Breadcrumb, Badge, Avatar, Space, Divider, Dropdown, Menu } from 'antd'
+import { UserOutlined, BellFilled } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { createFromIconfontCN } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_4346841_x6js1441e5b.js',
+  scriptUrl: '//at.alicdn.com/t/c/font_4346841_j188fjl72wf.js',
 });
 
 
 const Header: React.FC = () => {
-  const navigate = useNavigate()
+  const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const [lang, setLang] = useState('zh');
   const clickAvatar = () => {
     navigate(`/user_center/${localStorage.getItem('userId')}`)
   }
+  const clickNotice = () => {
+    navigate(`/notice`)
+  }
+
+  // 2.更改语言函数
+  const changeLanguageFun = () => {
+    const language = lang === 'zh' ? 'en' : 'zh';
+    setLang(language);
+    i18n.changeLanguage(language);
+    // window.location.reload()
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <span onClick={() => clickAvatar()}>个人中心</span>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <span onClick={() => { localStorage.removeItem('token'); localStorage.removeItem('userId'); }}>退出登录</span>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <div className="header-box">
       <div className='header-breadcrumd'>
@@ -30,15 +57,26 @@ const Header: React.FC = () => {
       </div>
       <div className='avatar'>
         <Space align="center">
-          <IconFont type='icon-zhongyingwenqiehuan-yingwen' style={{ fontSize: '30px' }} />
-          <Divider type="vertical" style={{ columnGap: '0' }} />
           {/* 头像和消息 */}
-          <Badge count={1}>
+          <Badge count={1} size="small">
+            <BellFilled
+              onClick={() => clickNotice()}
+              style={{ fontSize: '25px', color: '#8a919f' }}
+            />
+          </Badge>
+          <Divider type="vertical" style={{ columnGap: '0' }} />
+          <IconFont
+            type='icon-zhongyingwenqiehuan-yingwen'
+            style={{ fontSize: '30px' }}
+            onClick={() => changeLanguageFun()}
+          />
+          <Divider type="vertical" style={{ columnGap: '0' }} />
+          <Dropdown overlay={menu} trigger={['click']}>
             <Avatar
               style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}
               icon={<UserOutlined />}
               onClick={() => clickAvatar()} />
-          </Badge>
+          </Dropdown>
         </Space>
       </div>
     </div>

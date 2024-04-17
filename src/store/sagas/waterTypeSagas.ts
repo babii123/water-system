@@ -6,7 +6,6 @@ import { updateWaterTypeList } from "../actions/waterTypeActions"
 import { message } from "antd"
 
 function* _getWaterTypeListByAPI() {
-  console.log('xxx');
   const { code, data }: { code: number, data: WaterType[] } = yield call(getWaterTypeAll_API)
   if (code === 200 && data) {
     const new_data = data.map((item) => {
