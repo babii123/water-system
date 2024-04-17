@@ -2,7 +2,12 @@
  * @description 个人信息
  */
 import { UserInfo } from "../../model/userInfoModel"
-import { CHANGE_MENU_ITEMS, SET_ROLES, UPDATE_USER_INFO, GET_USER_INFO, UPDATE_USER_INFO_TO_SERVER } from "../actionTypes/userActionTypes"
+import {
+  CHANGE_MENU_ITEMS,
+  SET_ROLES,
+  UPDATE_USER_INFO,
+  UPDATE_USER_INFO_TO_SERVER
+} from "../actionTypes/actionTypes"
 
 export enum UserRole {
   ADMIN = "admin",

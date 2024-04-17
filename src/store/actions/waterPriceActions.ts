@@ -2,8 +2,11 @@
  * @description 水价管理列表
  */
 
-import { WaterPriceTableType } from "../../model/waterPriceModel"
-import { GET_WATER_PRICE_LIST_BYAPI, UPDATE_WATER_PRICE_LIST } from "../actionTypes/waterPriceActionTypes"
+import { WaterPriceTableType } from "../../model/tableModel"
+import {
+  GET_WATER_PRICE_LIST_BYAPI,
+  UPDATE_WATER_PRICE_LIST
+} from "../actionTypes/actionTypes"
 
 export const getWaterPriceListByAPI = () => {
   return {

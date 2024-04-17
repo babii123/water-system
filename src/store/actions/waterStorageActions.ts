@@ -2,8 +2,17 @@
  * @description 水量管理列表
  */
 
-import { WaterStorageData, WaterStorageTableType } from "../../model/waterStorageModel"
-import { CREATE_WATER_STORAGE, DELETE_WATER_STORAGE, DELETE_WATER_STORAGE_BY_REASON, DELETE_WATER_STORAGE_LIST, FIND_STORAGE_BY_ID, GET_WATER_STORAGE_LIST_BYAPI, UPDATE_WATER_STORAGE, UPDATE_WATER_STORAGE_LIST } from "../actionTypes/waterStorageActionTypes"
+import { WaterStorageData, WaterStorageTableType } from "../../model/tableModel"
+import {
+  CREATE_WATER_STORAGE,
+  DELETE_WATER_STORAGE,
+  DELETE_WATER_STORAGE_BY_REASON,
+  DELETE_WATER_STORAGE_LIST,
+  FIND_STORAGE_BY_ID,
+  GET_WATER_STORAGE_LIST_BYAPI,
+  UPDATE_WATER_STORAGE,
+  UPDATE_WATER_STORAGE_LIST
+} from "../actionTypes/actionTypes"
 
 export const getWaterStorageListByAPI = () => {
   return {

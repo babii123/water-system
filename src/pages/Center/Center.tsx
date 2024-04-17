@@ -46,14 +46,7 @@ function Center() {
     setCurrentKey('')
     _updateUserInfoToServer(userInfo)
   }
-
-  const changeUserInfo = (e: any) => {
-    console.log({
-      ...userInfo,
-      realName: e.target.value
-    });
-
-  }
+  
   useEffect(() => {
     setUserInfo(userInfo1)
   }, [userInfo1])

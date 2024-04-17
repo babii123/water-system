@@ -2,8 +2,17 @@
  * @description 水资源类型管理列表
  */
 
-import { WaterData, WaterTableType } from "../../model/waterModel"
-import { CREATE_WATER, DELETE_WATER, DELETE_WATER_BY_REASON, DELETE_WATER_LIST, FIND_WATER_BY_CONDITION, GET_WATER_LIST_BYAPI, UPDATE_WATER, UPDATE_WATER_LIST } from "../actionTypes/waterActionTypes"
+import { WaterData, WaterTableType } from "../../model/tableModel"
+import {
+  CREATE_WATER,
+  DELETE_WATER,
+  DELETE_WATER_BY_REASON,
+  DELETE_WATER_LIST,
+  FIND_WATER_BY_CONDITION,
+  GET_WATER_LIST_BYAPI,
+  UPDATE_WATER,
+  UPDATE_WATER_LIST
+} from "../actionTypes/actionTypes"
 
 export const getWaterListByAPI = () => {
   return {

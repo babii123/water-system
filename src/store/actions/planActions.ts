@@ -2,8 +2,17 @@
  * @description 供水计划管理列表
  */
 
-import { PlanData, PlanTableType } from "../../model/planModel"
-import { CREATE_PLAN, DELETE_PLAN, DELETE_PLAN_BY_REASON, DELETE_PLAN_LIST, FIND_PLAN_BY_CONDITION, GET_PLAN_LIST_BYAPI, UPDATE_PLAN, UPDATE_PLAN_LIST } from "../actionTypes/planActionTypes"
+import { PlanData, PlanTableType } from "../../model/tableModel"
+import {
+  CREATE_PLAN,
+  DELETE_PLAN,
+  DELETE_PLAN_BY_REASON,
+  DELETE_PLAN_LIST,
+  FIND_PLAN_BY_CONDITION,
+  GET_PLAN_LIST_BYAPI,
+  UPDATE_PLAN,
+  UPDATE_PLAN_LIST
+} from "../actionTypes/actionTypes"
 
 export const getPlanListByAPI = () => {
   return {

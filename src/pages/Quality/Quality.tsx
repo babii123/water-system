@@ -3,7 +3,7 @@ import { Button, Input, Popover, Space, Table, Tag, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, DownloadOutlined, DeleteFilled, RestOutlined, QuestionCircleFilled } from '@ant-design/icons';
 import { ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../model/globalModel';
-import { WaterQualityTableType } from '../../model/waterQualityModel';
+import { WaterQualityTableType } from '../../model/tableModel';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteWaterQuality, deleteWaterQualityByReason, deleteWaterQualityList, getWaterQualityByID, getWaterQualityListByAPI } from '../../store/actions/waterQualityActions';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'

@@ -3,7 +3,7 @@ import { Button, Input, Popover, Space, Table, Tag, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, DownloadOutlined, DeleteFilled, RestOutlined, QuestionCircleFilled } from '@ant-design/icons';
 import { ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../model/globalModel';
-import { WaterStorageTableType } from '../../model/waterStorageModel';
+import { WaterStorageTableType } from '../../model/tableModel';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteWaterStorage, deleteWaterStorageByReason, deleteWaterStorageList, getWaterStorageByID, getWaterStorageListByAPI } from '../../store/actions/waterStorageActions';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'

@@ -3,11 +3,11 @@ import { Button, Modal, Form, Input, Select } from 'antd';
 import { useDispatch } from 'react-redux';
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import TextArea from 'antd/es/input/TextArea';
-import { WaterTableType } from '../../../model/waterModel';
+import { WaterTableType } from '../../../model/tableModel';
 import { createWater, updateWater } from '../../../store/actions/waterActions';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import { WaterTypeTableType } from '../../../model/waterTypeModel';
+import { WaterTypeTableType } from '../../../model/tableModel';
 
 const formItemLayout = {
   labelCol: {

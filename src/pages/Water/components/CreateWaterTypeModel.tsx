@@ -3,7 +3,7 @@ import { Button, Modal, Form, Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import TextArea from 'antd/es/input/TextArea';
-import { WaterTypeTableType } from '../../../model/waterTypeModel';
+import { WaterTypeTableType } from '../../../model/tableModel';
 import { createWaterType, updateWaterType } from '../../../store/actions/waterTypeActions';
 import { useTranslation } from 'react-i18next';
 

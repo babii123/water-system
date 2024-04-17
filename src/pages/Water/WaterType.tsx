@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Popover, Space, Table } from 'antd';
+import { Button, Popover, Space, Table } from 'antd';
 import { ExclamationCircleTwoTone } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table';
-import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
+import { PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined } from '@ant-design/icons';
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../model/globalModel'
 import { useDispatch, useSelector } from 'react-redux';
-import { WaterTypeTableType } from '../../model/waterTypeModel';
+import { WaterTypeTableType } from '../../model/tableModel';
 import { deleteWaterType, deleteWaterTypeList, getWaterTypeListByAPI } from '../../store/actions/waterTypeActions';
 import CreateModel from './components/CreateWaterTypeModel';
 import { useTranslation } from 'react-i18next';

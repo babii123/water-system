@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
 import { useDispatch } from 'react-redux';
-import { CREATE_MODEL, ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
+import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import TextArea from 'antd/es/input/TextArea';
-import { PlanTableType } from '../../../model/planModel';
+import { PlanTableType } from '../../../model/tableModel';
 import { createPlan, updatePlan } from '../../../store/actions/planActions';
-import { WaterPriceTableType } from '../../../model/waterPriceModel';
+import { WaterPriceTableType } from '../../../model/tableModel';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import { WaterTableType } from '../../../model/waterModel';
+import { WaterTableType } from '../../../model/tableModel';
 
 const formItemLayout = {
   labelCol: {

@@ -3,7 +3,15 @@
  */
 
 import { UserTableType } from "../../model/userInfoModel"
-import { UPDATE_USER_LIST, GET_USER_LIST_BYAPI, DELETE_USER, DELETE_USER_LIST, CREATE_USER, UPDATE_USER, FIND_USER_BY_CONDITION } from "../actionTypes/userListActionTypes"
+import {
+  UPDATE_USER_LIST,
+  GET_USER_LIST_BYAPI,
+  DELETE_USER,
+  DELETE_USER_LIST,
+  CREATE_USER,
+  UPDATE_USER,
+  FIND_USER_BY_CONDITION
+} from "../actionTypes/actionTypes"
 
 export const getUserListByAPI = () => {
   return {

@@ -4,7 +4,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined, ExclamationCircleTwoTone, QuestionCircleFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePlan, deletePlanByReason, deletePlanList, getPlanListByAPI, getPlanListByCondition } from '../../store/actions/planActions';
-import { PlanTableType } from '../../model/planModel';
+import { PlanTableType } from '../../model/tableModel';
 import { CREATE_MODEL, ControlModel, MULTI, ONLY, UPDATE_MODEL } from '../../model/globalModel';
 import CreatePlanModel from './components/CreatePlanModel';
 import dayjs from 'dayjs';

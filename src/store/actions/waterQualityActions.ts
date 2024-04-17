@@ -2,8 +2,17 @@
  * @description 水质管理列表
  */
 
-import { WaterQualityData, WaterQualityTableType } from "../../model/waterQualityModel"
-import { CREATE_WATER_QUALITY, DELETE_WATER_QUALITY, DELETE_WATER_QUALITY_BY_REASON, DELETE_WATER_QUALITY_LIST, FIND_QUALITY_BY_ID, GET_WATER_QUALITY_LIST_BYAPI, UPDATE_WATER_QUALITY, UPDATE_WATER_QUALITY_LIST } from "../actionTypes/waterQualityActionTypes"
+import { WaterQualityData, WaterQualityTableType } from "../../model/tableModel"
+import {
+  CREATE_WATER_QUALITY,
+  DELETE_WATER_QUALITY,
+  DELETE_WATER_QUALITY_BY_REASON,
+  DELETE_WATER_QUALITY_LIST,
+  FIND_QUALITY_BY_ID,
+  GET_WATER_QUALITY_LIST_BYAPI,
+  UPDATE_WATER_QUALITY,
+  UPDATE_WATER_QUALITY_LIST
+} from "../actionTypes/actionTypes"
 
 export const getWaterQualityListByAPI = () => {
   return {
@@ -55,7 +64,7 @@ export const deleteWaterQualityList = (idList: any, delReason: string) => {
     idList,
     delReason
   }
-} 
+}
 
 export const getWaterQualityByID = (id: number) => {
   return {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Modal, Form, Input, Select } from 'antd';
 import { useDispatch } from 'react-redux';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
-import { WaterQualityTableType } from '../../../model/waterQualityModel';
+import { WaterQualityTableType } from '../../../model/tableModel';
 import { createWaterQuality, updateWaterQuality } from '../../../store/actions/waterQualityActions';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';

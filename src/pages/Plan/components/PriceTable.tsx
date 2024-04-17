@@ -1,6 +1,6 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
-import { WaterPriceTableType } from '../../../model/waterPriceModel';
+import { WaterPriceTableType } from '../../../model/tableModel';
 import { useTranslation } from 'react-i18next';
 
 const { Column, ColumnGroup } = Table;

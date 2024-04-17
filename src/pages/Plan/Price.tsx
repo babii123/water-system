@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getWaterPriceListByAPI } from "../../store/actions/waterPriceActions";
 import { createWaterLink_API, deleteWaterLink_API, getAllWaterLink_API } from "../../services/planRequest";
-import { WaterLinkData } from "../../model/planModel";
+import { WaterLinkData } from "../../model/tableModel";
 import { useTranslation } from "react-i18next";
 import { exportDataExcel } from "../../services/globalRequest";
 

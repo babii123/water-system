@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
 import { Gender } from '../../../model/userInfoModel';
-import { createUser_API, updateUser_API } from '../../../services/userRequest';
 import { UserTableType } from '../../../model/userInfoModel'
 import { useDispatch } from 'react-redux';
-import { createUser, getUserListByAPI, updateUser } from '../../../store/actions/userListActions';
+import { createUser, updateUser } from '../../../store/actions/userListActions';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import { useTranslation } from 'react-i18next';
 

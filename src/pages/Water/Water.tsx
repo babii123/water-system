@@ -5,14 +5,14 @@ import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, PlusOutlined, DownloadOutlined, DeleteFilled, RestOutlined, QuestionCircleFilled } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { CREATE_MODEL, ControlModel, UPDATE_MODEL, ONLY, MULTI } from '../../model/globalModel';
-import { WaterTableType } from '../../model/waterModel';
+import { WaterTableType } from '../../model/tableModel';
 import { deleteWater, deleteWaterByReason, deleteWaterList, getWaterListByAPI, getWaterListByCondition } from '../../store/actions/waterActions';
 import CreateWaterModel from './components/CreateWaterModel';
 import DeleteWaterModel from './components/DeleteWaterModel';
 import CreateWaterQualityModel from '../Quality/components/CreateWaterQualityModel';
 import CreateWaterStorageModel from '../Storage/components/CreateWaterStorageModel';
-import { WaterQualityTableType } from '../../model/waterQualityModel';
-import { WaterStorageTableType } from '../../model/waterStorageModel';
+import { WaterQualityTableType } from '../../model/tableModel';
+import { WaterStorageTableType } from '../../model/tableModel';
 import { exportDataExcel } from '../../services/globalRequest'
 import { useTranslation } from 'react-i18next';
 import { UserRole } from '../../store/actions/userActions';

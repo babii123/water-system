@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Modal, Form, Input, Select } from 'antd';
 import { useDispatch } from 'react-redux';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
-import { WaterStorageTableType } from '../../../model/waterStorageModel';
+import { WaterStorageTableType } from '../../../model/tableModel';
 import { createWaterStorage, updateWaterStorage } from '../../../store/actions/waterStorageActions';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
