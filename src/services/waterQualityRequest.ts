@@ -1,6 +1,5 @@
 import request from '.'
-import { WaterData } from '../model/waterModel'
-import { WaterQualityData } from '../model/waterQualityModel'
+import { WaterQualityData } from '../model/tableModel'
 
 const basic_path = '/water-quality'
 interface waterQuality {

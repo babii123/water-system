@@ -1,7 +1,23 @@
-import { put, call, takeEvery, select } from "redux-saga/effects"
-import { CREATE_PLAN, DELETE_PLAN_LIST, GET_PLAN_LIST_BYAPI, UPDATE_PLAN, DELETE_PLAN_BY_REASON, FIND_PLAN_BY_CONDITION, DELETE_PLAN } from "../actionTypes/planActionTypes"
-import { createPlan_API, deletePlanByDelReason_API, deletePlanList_API, deletePlan_API, getPlanAll_API, getPlanListByCondition_API, updatePlan_API } from "../../services/planRequest"
-import { PlanData } from "../../model/planModel"
+import { put, call, takeEvery } from "redux-saga/effects"
+import {
+  CREATE_PLAN,
+  DELETE_PLAN_LIST,
+  GET_PLAN_LIST_BYAPI,
+  UPDATE_PLAN,
+  DELETE_PLAN_BY_REASON,
+  FIND_PLAN_BY_CONDITION,
+  DELETE_PLAN
+} from "../actionTypes/actionTypes"
+import {
+  createPlan_API,
+  deletePlanByDelReason_API,
+  deletePlanList_API,
+  deletePlan_API,
+  getPlanAll_API,
+  getPlanListByCondition_API,
+  updatePlan_API
+} from "../../services/planRequest"
+import { PlanData } from "../../model/tableModel"
 import { updatePlanList } from "../actions/planActions"
 import { message } from "antd"
 

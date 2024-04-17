@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_WATER_PRICE_LIST_BYAPI } from "../actionTypes/waterPriceActionTypes";
-import { WaterPriceData } from "../../model/waterPriceModel";
+import { GET_WATER_PRICE_LIST_BYAPI } from "../actionTypes/actionTypes";
+import { WaterPriceData } from "../../model/tableModel";
 import { getWaterPriceAll_API } from "../../services/waterPriceRequest";
 import { updateWaterPriceList } from "../actions/waterPriceActions";
 

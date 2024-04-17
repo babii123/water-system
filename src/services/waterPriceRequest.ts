@@ -1,5 +1,5 @@
 import request from '.'
-import { WaterPriceData } from '../model/waterPriceModel'
+import { WaterPriceData } from '../model/tableModel'
 
 const basic_path = '/water-price'
 interface waterPrice {

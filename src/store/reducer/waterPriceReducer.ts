@@ -1,6 +1,6 @@
 import { ActionModel } from "../../model/globalModel"
-import { WaterPriceTableType } from "../../model/waterPriceModel"
-import { UPDATE_WATER_PRICE_LIST } from "../actionTypes/waterPriceActionTypes"
+import { WaterPriceTableType } from "../../model/tableModel"
+import { UPDATE_WATER_PRICE_LIST } from "../actionTypes/actionTypes"
 
 const defaultState: {
   waterPriceList: WaterPriceTableType[]

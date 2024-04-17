@@ -1,7 +1,23 @@
 import { put, call, takeEvery } from "redux-saga/effects"
-import { CREATE_WATER_STORAGE, DELETE_WATER_STORAGE, DELETE_WATER_STORAGE_LIST, GET_WATER_STORAGE_LIST_BYAPI, UPDATE_WATER_STORAGE, DELETE_WATER_STORAGE_BY_REASON, FIND_STORAGE_BY_ID } from "../actionTypes/waterStorageActionTypes"
-import { createWaterStorage_API, deleteWaterStorageList_API, deleteWaterStorageByDelReason_API, getWaterStorageAll_API, updateWaterStorage_API, getStorageListByID_API, deleteWaterStorage_API } from "../../services/waterStorageRequest"
-import { WaterStorageData } from "../../model/waterStorageModel"
+import {
+  CREATE_WATER_STORAGE,
+  DELETE_WATER_STORAGE,
+  DELETE_WATER_STORAGE_BY_REASON,
+  DELETE_WATER_STORAGE_LIST,
+  FIND_STORAGE_BY_ID,
+  GET_WATER_STORAGE_LIST_BYAPI,
+  UPDATE_WATER_STORAGE,
+} from "../actionTypes/actionTypes"
+import {
+  createWaterStorage_API,
+  deleteWaterStorageList_API,
+  deleteWaterStorageByDelReason_API,
+  getWaterStorageAll_API,
+  updateWaterStorage_API,
+  getStorageListByID_API,
+  deleteWaterStorage_API
+} from "../../services/waterStorageRequest"
+import { WaterStorageData } from "../../model/tableModel"
 import { updateWaterStorageList } from "../actions/waterStorageActions"
 import { message } from "antd"
 

@@ -1,6 +1,6 @@
 import { ActionModel } from "../../model/globalModel"
-import { PlanTableType } from "../../model/planModel"
-import { UPDATE_PLAN_LIST } from "../actionTypes/planActionTypes"
+import { PlanTableType } from "../../model/tableModel"
+import { UPDATE_PLAN_LIST } from "../actionTypes/actionTypes"
 
 const defaultState: {
   planList: PlanTableType[]

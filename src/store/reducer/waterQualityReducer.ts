@@ -1,6 +1,6 @@
 import { ActionModel } from "../../model/globalModel"
-import { WaterQualityTableType } from "../../model/waterQualityModel"
-import { UPDATE_WATER_QUALITY_LIST } from "../actionTypes/waterQualityActionTypes"
+import { WaterQualityTableType } from "../../model/tableModel"
+import { UPDATE_WATER_QUALITY_LIST } from "../actionTypes/actionTypes"
 
 const defaultState: {
   waterQualityList: WaterQualityTableType[]

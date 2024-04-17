@@ -1,7 +1,19 @@
 import { put, call, takeEvery, take } from "redux-saga/effects"
-import { CREATE_WATER_TYPE, DELETE_WATER_TYPE, DELETE_WATER_TYPE_LIST, GET_WATER_TYPE_LIST_BYAPI, UPDATE_WATER_TYPE } from "../actionTypes/waterTypeActionTypes"
-import { createWaterType_API, deleteWaterTypeList_API, deleteWaterType_API, getWaterTypeAll_API, updateWaterType_API } from "../../services/waterTypeRequest"
-import { WaterType } from "../../model/waterTypeModel"
+import {
+  CREATE_WATER_TYPE,
+  DELETE_WATER_TYPE,
+  DELETE_WATER_TYPE_LIST,
+  GET_WATER_TYPE_LIST_BYAPI,
+  UPDATE_WATER_TYPE,
+} from "../actionTypes/actionTypes"
+import {
+  createWaterType_API,
+  deleteWaterTypeList_API,
+  deleteWaterType_API,
+  getWaterTypeAll_API,
+  updateWaterType_API
+} from "../../services/waterTypeRequest"
+import { WaterType } from "../../model/tableModel"
 import { updateWaterTypeList } from "../actions/waterTypeActions"
 import { message } from "antd"
 

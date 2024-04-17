@@ -1,5 +1,5 @@
 import request from '.'
-import { PlanData, WaterLinkData } from '../model/planModel'
+import { PlanData, WaterLinkData } from '../model/tableModel'
 
 const basic_path = '/supply-plan'
 const basic_path1 = '/water-link'

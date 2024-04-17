@@ -1,5 +1,5 @@
 import { UserInfo } from "../../model/userInfoModel"
-import { CHANGE_MENU_ITEMS, UPDATE_USER_INFO, SET_ROLES } from "../actionTypes/userActionTypes"
+import { CHANGE_MENU_ITEMS, UPDATE_USER_INFO, SET_ROLES } from "../actionTypes/actionTypes"
 
 export enum UserRole {
   ADMIN = "admin",

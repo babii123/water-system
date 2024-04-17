@@ -1,7 +1,23 @@
 import { put, call, takeEvery } from "redux-saga/effects"
-import { CREATE_WATER_QUALITY, DELETE_WATER_QUALITY, DELETE_WATER_QUALITY_LIST, GET_WATER_QUALITY_LIST_BYAPI, UPDATE_WATER_QUALITY, DELETE_WATER_QUALITY_BY_REASON, FIND_QUALITY_BY_ID } from "../actionTypes/waterQualityActionTypes"
-import { createWaterQuality_API, deleteWaterQualityList_API, deleteWaterQualityByDelReason_API, getWaterQualityAll_API, updateWaterQuality_API, getQualityListByID_API, deleteWaterQuality_API } from "../../services/waterQualityRequest"
-import { WaterQualityData } from "../../model/waterQualityModel"
+import {
+  CREATE_WATER_QUALITY,
+  DELETE_WATER_QUALITY,
+  DELETE_WATER_QUALITY_BY_REASON,
+  DELETE_WATER_QUALITY_LIST,
+  FIND_QUALITY_BY_ID,
+  GET_WATER_QUALITY_LIST_BYAPI,
+  UPDATE_WATER_QUALITY,
+} from "../actionTypes/actionTypes"
+import {
+  createWaterQuality_API,
+  deleteWaterQualityList_API,
+  deleteWaterQualityByDelReason_API,
+  getWaterQualityAll_API,
+  updateWaterQuality_API,
+  getQualityListByID_API,
+  deleteWaterQuality_API
+} from "../../services/waterQualityRequest"
+import { WaterQualityData } from "../../model/tableModel"
 import { updateWaterQualityList } from "../actions/waterQualityActions"
 import { message } from "antd"
 

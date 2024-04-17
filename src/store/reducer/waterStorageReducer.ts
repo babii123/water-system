@@ -1,6 +1,6 @@
 import { ActionModel } from "../../model/globalModel"
-import { WaterStorageTableType } from "../../model/waterStorageModel"
-import { UPDATE_WATER_STORAGE_LIST } from "../actionTypes/waterStorageActionTypes"
+import { WaterStorageTableType } from "../../model/tableModel"
+import { UPDATE_WATER_STORAGE_LIST } from "../actionTypes/actionTypes"
 
 const defaultState: {
   waterStorageList: WaterStorageTableType[]

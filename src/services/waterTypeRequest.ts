@@ -1,5 +1,5 @@
 import request from '.'
-import { WaterType } from '../model/waterTypeModel'
+import { WaterType } from '../model/tableModel'
 
 const basic_path = '/water-type'
 interface waterType {

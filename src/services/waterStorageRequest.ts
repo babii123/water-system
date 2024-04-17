@@ -1,5 +1,5 @@
 import request from '.'
-import { WaterStorageData } from '../model/waterStorageModel'
+import { WaterStorageData } from '../model/tableModel'
 
 const basic_path = '/water-yield'
 interface waterStorage {
