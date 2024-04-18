@@ -31,7 +31,7 @@ function* _getPlanListByAPI() {
   }
 }
 
-function* _createPlan(action: { type: string, plan: PlanData }) {
+function* _createPlan(action: { type: string, plan: any }) {
   const { code } = yield call(createPlan_API, action.plan)
   if (code === 200) {
     message.success('create success')
@@ -41,8 +41,7 @@ function* _createPlan(action: { type: string, plan: PlanData }) {
   }
 }
 
-function* _updatePlan(action: { type: string, plan: PlanData, id: number }) {
-  console.log('plan:', action.plan);
+function* _updatePlan(action: { type: string, plan: any, id: number }) {
   const { code } = yield call(updatePlan_API, action.id, action.plan)
   if (code === 200) {
     message.success('update success')

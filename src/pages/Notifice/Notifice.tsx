@@ -9,6 +9,7 @@ import { NoticeListModel } from '../../model/tableModel';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNoticeListByAPI, updateNotice } from '../../store/actions/noticeAction';
 import SendEmailModal from './components/SendEmailModal';
+import { UserRole } from '../../store/actions/userActions';
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4346841_j188fjl72wf.js',
@@ -23,6 +24,9 @@ function Notifice() {
   const { t } = useTranslation()
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [notice, setNotice] = useState<NoticeListModel>();
+  const userRole = useSelector((state: any) => {
+    return state.userInfo.roles
+  })
   const panelStyle: React.CSSProperties = {
     marginBottom: '24px',
     background: '#fff',
@@ -50,7 +54,7 @@ function Notifice() {
         key: notice.id,
         label: <><Badge dot={!notice.isRead} offset={[10, 0]}>{getLabel(notice.type, notice.time)}</Badge></>,
         children: <p>{notice.info}</p>,
-        extra: genExtra(notice),
+        extra: userRole.includes(UserRole.ADMIN)  ? genExtra(notice) : null,
         style: panelStyle,
       })
     }

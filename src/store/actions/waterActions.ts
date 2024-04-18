@@ -28,14 +28,14 @@ export const updateWaterList = (waterList: WaterTableType[]) => {
   }
 }
 
-export const createWater = (water: WaterData) => {
+export const createWater = (water: any) => {
   return {
     type: CREATE_WATER,
     water
   }
 }
 
-export const updateWater = (water: WaterData, id: number) => {
+export const updateWater = (water: any, id: number) => {
   return {
     type: UPDATE_WATER,
     water,

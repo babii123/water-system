@@ -178,7 +178,7 @@ function User() {
   const changeDeleteVisible = (id: number) => {
     setDeleteVisible(id)
   }
-  const findUser = () => {
+  const findUser = (email?: string, realName?: string, phone?: string) => {
     _getUserByCondition(email, realName, phone)
   }
   return (
@@ -194,7 +194,7 @@ function User() {
         <Input value={realName} onChange={(e) => setRealName(e.target.value)} />
         <span className='searcher_title'>{t('Phone')}</span>
         <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
-        <Button type="primary" icon={<SearchOutlined />} onClick={() => findUser()}>
+        <Button type="primary" icon={<SearchOutlined />} onClick={() => findUser(email, realName, phone)}>
           {t('Search')}
         </Button>
         <Button icon={<RestOutlined />} onClick={() => { setEmail(undefined); setRealName(undefined); setPhone(undefined); findUser(); }}>

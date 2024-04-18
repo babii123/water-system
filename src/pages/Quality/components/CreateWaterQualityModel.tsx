@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Button, Modal, Form, Input, Select } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
 import { useDispatch } from 'react-redux';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import { WaterQualityTableType } from '../../../model/tableModel';
@@ -58,6 +58,7 @@ const CreateWaterQualityModel: React.FC<
 ) => {
     const { t } = useTranslation();
     const [form] = Form.useForm()
+    const [detectTime, setDetectTime] = useState<string>();
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
       changeControl({
@@ -77,7 +78,7 @@ const CreateWaterQualityModel: React.FC<
       console.log('Success:', updateWaterQualityInfo);
       if (updateWaterQualityInfo) {
         if (JSON.stringify(updateWaterQualityInfo) !== JSON.stringify(values)) {
-          _updateWaterQuality(values, updateWaterQualityInfo.id)
+          _updateWaterQuality({ ...values, detectTime }, updateWaterQualityInfo.id)
           changeControl({
             visible: false,
             editType: controlModel?.editType
@@ -85,7 +86,7 @@ const CreateWaterQualityModel: React.FC<
         }
       } else {
         values.addTime = dayjs().format('YYYY-MM-DD')
-        _createWaterQuality(values)
+        _createWaterQuality({ ...values, detectTime })
         changeControl({
           visible: false,
           editType: controlModel?.editType
@@ -136,7 +137,13 @@ const CreateWaterQualityModel: React.FC<
               name="detectTime"
               rules={[{ required: true, message: t('Please input detect time!') }]}
             >
-              <Input />
+              <DatePicker
+                style={{ width: '100%' }}
+                format="YYYY-MM-DD"
+                onChange={(date: any, dateString: string) => {
+                  setDetectTime(dateString)
+                }}
+              />
             </Form.Item>
 
             <Form.Item<FieldType>

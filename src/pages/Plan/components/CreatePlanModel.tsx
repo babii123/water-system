@@ -37,9 +37,9 @@ const tailFormItemLayout = {
 type FieldType = {
   key?: number,
   id?: number,
-  addTime?: Date
-  startTime?: Date
-  endTime?: Date
+  addTime?: string
+  startTime?: string
+  endTime?: string
   waterSources?: string[]
   waterArea?: string
   waterPriceType?: string
@@ -92,12 +92,6 @@ const CreatePlanModel: React.FC<
       setWaterPrice(waterPriceData);
       setWater(waterData);
     }, [updatePlanInfo])
-    const handleStartDateChange = (date: any, dateString: string) => {
-      setStartTime(dateString)
-    };
-    const handleEndDateChange = (date: any, dateString: string) => {
-      setEndTime(dateString)
-    };
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
       changeControl({
@@ -116,17 +110,14 @@ const CreatePlanModel: React.FC<
     const onFinish = (values: any) => {
       if (controlModel?.editType === UPDATE_MODEL && updatePlanInfo) {
         if (JSON.stringify(updatePlanInfo) !== JSON.stringify(values)) {
-          _updatePlan(values, updatePlanInfo.id)
+          _updatePlan({ ...values, startTime, endTime, addTime: dayjs().format('YYYY-MM-DD') }, updatePlanInfo.id)
           changeControl({
             visible: false,
             editType: controlModel?.editType
           })
         }
       } else {
-        values.startTime = startTime
-        values.endTime = endTime
-        values.addTime = dayjs().format('YYYY-MM-DD')
-        _createPlan(values)
+        _createPlan({ ...values, startTime, endTime, addTime: dayjs().format('YYYY-MM-DD') })
         changeControl({
           visible: false,
           editType: controlModel?.editType
@@ -164,8 +155,10 @@ const CreatePlanModel: React.FC<
               <DatePicker
                 style={{ width: '100%' }}
                 format="YYYY-MM-DD"
-                onChange={handleStartDateChange}
-                placeholder=''
+                onChange={(date: any, dateString: string) => {
+                  console.log(dateString);
+                  setStartTime(dateString)
+                }}
               />
             </Form.Item>
 
@@ -177,8 +170,10 @@ const CreatePlanModel: React.FC<
               <DatePicker
                 style={{ width: '100%' }}
                 format="YYYY-MM-DD"
-                onChange={handleEndDateChange}
-                placeholder=''
+                onChange={(date: any, dateString: string) => {
+                  console.log(dateString);
+                  setEndTime(dateString)
+                }}
               />
             </Form.Item>
 

@@ -9,6 +9,7 @@ import { createWaterLink_API, deleteWaterLink_API, getAllWaterLink_API } from ".
 import { WaterLinkData } from "../../model/tableModel";
 import { useTranslation } from "react-i18next";
 import { exportDataExcel } from "../../services/globalRequest";
+import { UserRole } from "../../store/actions/userActions";
 
 const formItemLayout = {
   labelCol: {
@@ -77,7 +78,9 @@ function Price() {
   const _getWaterPriceListByAPI = () => {
     dispatch(getWaterPriceListByAPI())
   }
-
+  const userRole = useSelector((state: any) => {
+    return state.userInfo.roles
+  })
   const _getWaterLinkByAPI = () => {
     // 获取水资源相关链接
     getAllWaterLink_API().then(res => {
@@ -116,7 +119,7 @@ function Price() {
     <div>
       {/* 水价表 */}
       <div className="my-card margin-bottom">
-        水价表
+        <span className="price-title">水价表</span>&nbsp;&nbsp;
         <Tooltip title="上传水价信息">
           <Upload {...props}>
             <Button icon={<UploadOutlined />}></Button>
@@ -133,7 +136,9 @@ function Price() {
         <div className="mycard margin-right price-update">
           <div className="price-update-title">
             <span>水资源相关链接</span>&nbsp;
-            <PlusCircleOutlined style={{ color: '#7fa8d7' }} onClick={() => setModalVisible(true)} />
+            {
+              userRole.includes(UserRole.ADMIN) && <PlusCircleOutlined style={{ color: '#7fa8d7' }} onClick={() => setModalVisible(true)} />
+            }
           </div>
           {/* <div style={{width:'100%', height: '1px', transform: 'scale(0.5)',backgroundColor:'#ccc' }}></div> */}
           <div className="price-update-content">
@@ -142,7 +147,7 @@ function Price() {
               dataSource={waterLinkData}
               renderItem={item => (
                 <List.Item
-                  actions={[<MinusCircleOutlined style={{ color: '#7fa8d7' }} onClick={() => deleteWaterLink(item.id)} />]}
+                  actions={[userRole.includes(UserRole.ADMIN) && <MinusCircleOutlined style={{ color: '#7fa8d7' }} onClick={() => deleteWaterLink(item.id)} />]}
                 >
                   {item.title}
                 </List.Item>

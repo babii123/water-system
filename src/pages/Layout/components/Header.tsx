@@ -1,10 +1,11 @@
-import { Breadcrumb, Badge, Avatar, Space, Divider, Dropdown, Menu } from 'antd'
-import { UserOutlined, BellFilled } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Badge, Avatar, Space, Divider, Dropdown, Menu, Tooltip, Button } from 'antd'
+import { UserOutlined, BellFilled, DownloadOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import { createFromIconfontCN } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { NoticeListModel } from '../../../model/tableModel';
+import { exportDataExcel } from '../../../services/globalRequest';
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4346841_j188fjl72wf.js',
@@ -49,17 +50,6 @@ const Header: React.FC<{ noticeList: NoticeListModel[] }> = ({ noticeList }) => 
   return (
     <div className="header-box">
       <div className='header-breadcrumd'>
-        {/* 面包屑 */}
-        <Breadcrumb
-          items={[
-            {
-              title: '供水计划',
-            },
-            {
-              title: <Link to={''}>水价表</Link>,
-            },
-          ]}
-        />
       </div>
       <div className='avatar'>
         <Space align="center">
@@ -70,6 +60,10 @@ const Header: React.FC<{ noticeList: NoticeListModel[] }> = ({ noticeList }) => 
               style={{ fontSize: '25px', color: '#8a919f' }}
             />
           </Badge>
+          <Divider type="vertical" style={{ columnGap: '0' }} />
+          <Tooltip title="导出日志">
+            <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('handleLog')}></Button>
+          </Tooltip>
           <Divider type="vertical" style={{ columnGap: '0' }} />
           <IconFont
             type='icon-zhongyingwenqiehuan-yingwen'

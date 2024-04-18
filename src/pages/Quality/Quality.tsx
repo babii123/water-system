@@ -12,6 +12,7 @@ import DeleteWaterQualityModel from './components/DeleteWaterQualityModel';
 import { useTranslation } from 'react-i18next';
 import { exportDataExcel } from '../../services/globalRequest';
 import { UserRole } from '../../store/actions/userActions';
+import { checkCyanin, checkFluoride, checkPH, checkTurbidity } from '../../utils/checkQuality';
 
 function Quality() {
   const { t } = useTranslation();
@@ -94,7 +95,7 @@ function Quality() {
       title: t('PH'),
       dataIndex: 'ph',
       render: (_, record) => (
-        <span style={{ color: record.isDel ? 'red' : '' }}>{record.ph}</span>
+        <span style={{ color: record.isDel || !checkPH(record.ph)? 'red' : '' }}>{record.ph}</span>
       )
     },
     {
@@ -102,7 +103,7 @@ function Quality() {
       title: t('Turbidity'),
       dataIndex: 'turbidity',
       render: (_, record) => (
-        <span style={{ color: record.isDel ? 'red' : '' }}>{record.turbidity}</span>
+        <span style={{ color: record.isDel || !checkTurbidity(record.turbidity)? 'red' : '' }}>{record.turbidity}</span>
       )
     },
     {
@@ -110,7 +111,7 @@ function Quality() {
       title: t('Fluoride'),
       dataIndex: 'fluoride',
       render: (_, record) => (
-        <span style={{ color: record.isDel ? 'red' : '' }}>{record.fluoride}</span>
+        <span style={{ color: record.isDel || !checkFluoride(record.fluoride) ? 'red' : '' }}>{record.fluoride}</span>
       )
     },
     {
@@ -118,7 +119,7 @@ function Quality() {
       title: t('Cyanin'),
       dataIndex: 'cyanin',
       render: (_, record) => (
-        <span style={{ color: record.isDel ? 'red' : '' }}>{record.cyanin}</span>
+        <span style={{ color: record.isDel || !checkCyanin(record.cyanin) ? 'red' : '' }}>{record.cyanin}</span>
       )
     },
     {

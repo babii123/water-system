@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 function Center() {
   const { t } = useTranslation();
   const { userId } = useParams()
-  const [userInfo, setUserInfo] = useState<UserInfo>({
+  const [userInfo, setUserInfo] = useState<any>({
     "id": 0,
     "userId": "",
     "email": "",
@@ -214,7 +214,7 @@ function Center() {
                 onChange={(date: any, dateString: string) => {
                   setUserInfo({
                     ...userInfo,
-                    birthday: new Date(dateString)
+                    birthday: dateString
                   })
                 }}
               />

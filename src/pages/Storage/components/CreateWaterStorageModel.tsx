@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Button, Modal, Form, Input, Select } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
 import { useDispatch } from 'react-redux';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import { WaterStorageTableType } from '../../../model/tableModel';
@@ -55,7 +55,8 @@ const CreateWaterStorageModel: React.FC<
   }
 ) => {
     const { t } = useTranslation();
-    const [form] = Form.useForm()
+    const [form] = Form.useForm();
+    const [detectTime, setDetectTime] = useState<string>();
     useEffect(() => {
       if (updateWaterStorageInfo) {
         form.setFieldsValue(updateWaterStorageInfo)
@@ -82,7 +83,7 @@ const CreateWaterStorageModel: React.FC<
       console.log('Success:', updateWaterStorageInfo);
       if (updateWaterStorageInfo) {
         if (JSON.stringify(updateWaterStorageInfo) !== JSON.stringify(values)) {
-          _updateWaterStorage(values, updateWaterStorageInfo.id)
+          _updateWaterStorage({ ...values, detectTime }, updateWaterStorageInfo.id)
           changeControl({
             visible: false,
             editType: controlModel?.editType
@@ -90,7 +91,7 @@ const CreateWaterStorageModel: React.FC<
         }
       } else {
         values.addTime = dayjs().format('YYYY-MM-DD')
-        _createWaterStorage(values)
+        _createWaterStorage({ ...values, detectTime })
         changeControl({
           visible: false,
           editType: controlModel?.editType
@@ -132,7 +133,13 @@ const CreateWaterStorageModel: React.FC<
               name="detectTime"
               rules={[{ required: true, message: t('Please input detect time!') }]}
             >
-              <Input />
+              <DatePicker
+                style={{ width: '100%' }}
+                format="YYYY-MM-DD"
+                onChange={(date: any, dateString: string) => {
+                  setDetectTime(dateString)
+                }}
+              />
             </Form.Item>
 
             <Form.Item<FieldType>

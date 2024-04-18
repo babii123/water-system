@@ -131,7 +131,7 @@ const SendEmailModal: React.FC<
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
-                {t("Submit")}
+                发送
               </Button>
             </Form.Item>
           </Form>

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBasicInfo } from '../../services/userRequest';
 import { updateUserInfo } from '../../store/actions/userActions';
 import { UserInfo } from '../../model/userInfoModel';
+import { getNoticeListByAPI } from '../../store/actions/noticeAction';
 
 const LayOut = () => {
   const noticeList = useSelector((state: any) => {
@@ -16,6 +17,9 @@ const LayOut = () => {
   const _updateUserInfo = (userInfo: UserInfo) => {
     dispatch(updateUserInfo(userInfo))
   }
+  const _getNoticeListByAPI = () => {
+    dispatch(getNoticeListByAPI())
+  }
 
   useEffect(() => {
     // 获取用户数据
@@ -23,6 +27,8 @@ const LayOut = () => {
       getBasicInfo(localStorage.getItem('userId') || '').then(res => {
         _updateUserInfo(res.data)
       })
+      // 获取通知消息
+      _getNoticeListByAPI();
     }
   }, [])
 

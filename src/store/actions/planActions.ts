@@ -28,14 +28,14 @@ export const updatePlanList = (planList: PlanTableType[]) => {
   }
 }
 
-export const createPlan = (plan: PlanData) => {
+export const createPlan = (plan: any) => {
   return {
     type: CREATE_PLAN,
     plan
   }
 }
 
-export const updatePlan = (plan: PlanData, id: number) => {
+export const updatePlan = (plan: any, id: number) => {
   return {
     type: UPDATE_PLAN,
     plan,

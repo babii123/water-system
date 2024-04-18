@@ -110,7 +110,7 @@ function Dashboard() {
           <TimeLine items={handleLog} />
         </div>
         <div style={{ flex: 2 }} className='mycard'>
-          {/* 登录用户表格 */}
+          {/* 水质合格比例表 */}
           <QualityChart waterQuality={waterQuality} />
         </div>
       </div>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, Form, Input, Select, DatePicker } from 'antd';
+import { Button, Modal, Form, Input, Select, DatePicker, message } from 'antd';
 import { Gender } from '../../../model/userInfoModel';
 import { UserTableType } from '../../../model/userInfoModel'
 import { useDispatch } from 'react-redux';
 import { createUser, updateUser } from '../../../store/actions/userListActions';
 import { ControlModel, UPDATE_MODEL } from '../../../model/globalModel'
 import { useTranslation } from 'react-i18next';
+import { validateEmail, validatePhoneNumber } from '../../../utils/verify';
 
 const formItemLayout = {
   labelCol: {
@@ -88,9 +89,15 @@ const CreateUserModel: React.FC<{
   }
 
   const onFinish = (values: FieldType) => {
-    console.log('Success1:', updateUserInfo);
+    if (!validatePhoneNumber(values.phone)) {
+      message.error('输入手机号无效!');
+      return;
+    }
+    if (!validateEmail(values.email)) {
+      message.error('输入的邮箱地址无效!');
+      return;
+    }
     values.birthday = dateString
-    console.log('Success:', values);
     // 判断是否是更新
     if (updateUserInfo && values.roles) {
       // 判断是否需要修改了

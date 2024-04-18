@@ -45,9 +45,3 @@ export const updateUserInfoToServer = (userInfo: UserInfo) => {
     userInfo
   }
 }
-
-// export const getUserInfo = () => {
-//   return {
-//     type: GET_USER_INFO
-//   }
-// }
