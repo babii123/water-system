@@ -31,8 +31,8 @@ function* _getWaterStorageListByAPI() {
   }
 }
 
-function* _createWaterStorage(action: { type: string, waterQuality: WaterStorageData }) {
-  const { code } = yield call(createWaterStorage_API, action.waterQuality)
+function* _createWaterStorage(action: { type: string, waterStorage: any }) {
+  const { code } = yield call(createWaterStorage_API, action.waterStorage)
   if (code === 200) {
     message.success('create success')
     yield call(_getWaterStorageListByAPI)
@@ -41,8 +41,8 @@ function* _createWaterStorage(action: { type: string, waterQuality: WaterStorage
   }
 }
 
-function* _updateWaterStorage(action: { type: string, waterQuality: WaterStorageData, id: number }) {
-  const { code } = yield call(updateWaterStorage_API, action.id, action.waterQuality)
+function* _updateWaterStorage(action: { type: string, waterStorage: any, id: number }) {
+  const { code } = yield call(updateWaterStorage_API, action.id, action.waterStorage)
   if (code === 200) {
     message.success('update success')
     yield call(_getWaterStorageListByAPI)

@@ -92,23 +92,38 @@ function Quality() {
     },
     {
       key: 'ph',
-      title: t('PH'),
+      title: <>
+        {t('PH')}
+        <Tooltip title="合格PH的范围：6.5<=PH<=8.5" color='red'>
+          <QuestionCircleFilled style={{ color: '#8a919f' }} />
+        </Tooltip>
+      </>,
       dataIndex: 'ph',
       render: (_, record) => (
-        <span style={{ color: record.isDel || !checkPH(record.ph)? 'red' : '' }}>{record.ph}</span>
+        <span style={{ color: record.isDel || !checkPH(record.ph) ? 'red' : '' }}>{record.ph}</span>
       )
     },
     {
       key: 'turbidity',
-      title: t('Turbidity'),
+      title: <>
+        {t('Turbidity')}
+        <Tooltip title="合格浑浊度的范围：<=1NTU" color='red'>
+          <QuestionCircleFilled style={{ color: '#8a919f' }} />
+        </Tooltip>
+      </>,
       dataIndex: 'turbidity',
       render: (_, record) => (
-        <span style={{ color: record.isDel || !checkTurbidity(record.turbidity)? 'red' : '' }}>{record.turbidity}</span>
+        <span style={{ color: record.isDel || !checkTurbidity(record.turbidity) ? 'red' : '' }}>{record.turbidity}</span>
       )
     },
     {
       key: 'fluoride',
-      title: t('Fluoride'),
+      title: <>
+        {t('Fluoride')}
+        <Tooltip title="合格含氟量的范围：<=1mg/L" color='red'>
+          <QuestionCircleFilled style={{ color: '#8a919f' }} />
+        </Tooltip>
+      </>,
       dataIndex: 'fluoride',
       render: (_, record) => (
         <span style={{ color: record.isDel || !checkFluoride(record.fluoride) ? 'red' : '' }}>{record.fluoride}</span>
@@ -116,7 +131,12 @@ function Quality() {
     },
     {
       key: 'cyanin',
-      title: t('Cyanin'),
+      title: <>
+        {t('Cyanin')}
+        <Tooltip title="合格含氰量的范围：<=1mg/L" color='red'>
+          <QuestionCircleFilled style={{ color: '#8a919f' }} />
+        </Tooltip>
+      </>,
       dataIndex: 'cyanin',
       render: (_, record) => (
         <span style={{ color: record.isDel || !checkCyanin(record.cyanin) ? 'red' : '' }}>{record.cyanin}</span>
@@ -135,7 +155,7 @@ function Quality() {
       title: t('Action'),
       key: 'action',
       fixed: 'right',
-      width: 200,
+      width: 150,
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => openModel(record, UPDATE_MODEL)}>{t("Update")}</a>

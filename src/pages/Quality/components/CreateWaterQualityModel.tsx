@@ -61,10 +61,10 @@ const CreateWaterQualityModel: React.FC<
     const [detectTime, setDetectTime] = useState<string>();
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
-      changeControl({
-        visible: false,
-        editType: controlModel?.editType
-      })
+      // changeControl({
+      //   visible: false,
+      //   editType: controlModel?.editType
+      // })
     };
     const dispatch = useDispatch()
 
@@ -76,7 +76,7 @@ const CreateWaterQualityModel: React.FC<
     }
     const onFinish = (values: any) => {
       console.log('Success:', updateWaterQualityInfo);
-      if (updateWaterQualityInfo) {
+      if (updateWaterQualityInfo && controlModel?.editType === UPDATE_MODEL) {
         if (JSON.stringify(updateWaterQualityInfo) !== JSON.stringify(values)) {
           _updateWaterQuality({ ...values, detectTime }, updateWaterQualityInfo.id)
           changeControl({
@@ -96,7 +96,11 @@ const CreateWaterQualityModel: React.FC<
 
     useEffect(() => {
       if (updateWaterQualityInfo) {
-        form.setFieldsValue(updateWaterQualityInfo)
+        if (controlModel?.editType === UPDATE_MODEL) {
+          form.setFieldsValue({ ...updateWaterQualityInfo, detectTime: dayjs(updateWaterQualityInfo.detectTime, 'YYYY-MM-DD') })
+        }else{
+          form.setFieldsValue(updateWaterQualityInfo)
+        }
       } else {
         form.resetFields()
       }

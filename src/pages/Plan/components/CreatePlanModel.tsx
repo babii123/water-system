@@ -94,10 +94,10 @@ const CreatePlanModel: React.FC<
     }, [updatePlanInfo])
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
-      changeControl({
-        visible: false,
-        editType: controlModel?.editType
-      })
+      // changeControl({
+      //   visible: false,
+      //   editType: controlModel?.editType
+      // })
     };
     const dispatch = useDispatch()
 

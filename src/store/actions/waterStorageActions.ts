@@ -28,14 +28,14 @@ export const updateWaterStorageList = (waterStorageList: WaterStorageTableType[]
   }
 }
 
-export const createWaterStorage = (waterStorage: WaterStorageData) => {
+export const createWaterStorage = (waterStorage: any) => {
   return {
     type: CREATE_WATER_STORAGE,
     waterStorage
   }
 }
 
-export const updateWaterStorage = (waterStorage: WaterStorageData, id: number) => {
+export const updateWaterStorage = (waterStorage: any, id: number) => {
   return {
     type: UPDATE_WATER_STORAGE,
     waterStorage,

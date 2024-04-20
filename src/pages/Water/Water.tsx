@@ -216,7 +216,6 @@ const Water: React.FC = () => {
     return state.userInfo.roles
   })
   const waterTypeList = useSelector((state: any) => {
-    console.log(state.waterType.waterTypeList);
     return state.waterType.waterTypeList
   })
   const dispatch = useDispatch()

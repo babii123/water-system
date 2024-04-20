@@ -76,10 +76,10 @@ const CreateWaterModel: React.FC<
     }, [updateWaterInfo])
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
-      changeControl({
-        visible: false,
-        editType: controlModel?.editType
-      })
+      // changeControl({
+      //   visible: false,
+      //   editType: controlModel?.editType
+      // })
     };
     const dispatch = useDispatch()
 
@@ -163,14 +163,6 @@ const CreateWaterModel: React.FC<
               rules={[{ required: true, message: t('Please input description!') }]}
             >
               <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
-            </Form.Item>
-
-            <Form.Item<FieldType>
-              label={t("AddUser")}
-              name="addUser"
-              rules={[{ required: true, message: t('Please input add user!') }]}
-            >
-              <Input />
             </Form.Item>
 
             <Form.Item<FieldType>

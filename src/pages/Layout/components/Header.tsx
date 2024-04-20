@@ -64,12 +64,12 @@ const Header: React.FC<{ noticeList: NoticeListModel[] }> = ({ noticeList }) => 
           <Tooltip title="导出日志">
             <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('handleLog')}></Button>
           </Tooltip>
-          <Divider type="vertical" style={{ columnGap: '0' }} />
+          {/* <Divider type="vertical" style={{ columnGap: '0' }} />
           <IconFont
             type='icon-zhongyingwenqiehuan-yingwen'
             style={{ fontSize: '30px' }}
             onClick={() => changeLanguageFun()}
-          />
+          /> */}
           <Divider type="vertical" style={{ columnGap: '0' }} />
           <Dropdown overlay={menu} trigger={['click']}>
             <Avatar

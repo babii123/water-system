@@ -99,7 +99,7 @@ function Price() {
   }
 
   const onFinishFailed = () => {
-    setModalVisible(false);
+    // setModalVisible(false);
   }
 
   const onFinish = (values: any) => {
@@ -125,6 +125,7 @@ function Price() {
             <Button icon={<UploadOutlined />}></Button>
           </Upload>
         </Tooltip>
+        &nbsp;
         <Tooltip title="下载导入模板">
           <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('waterPrice')}></Button>
         </Tooltip>

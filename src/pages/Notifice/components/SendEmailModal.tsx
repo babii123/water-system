@@ -36,6 +36,14 @@ type FieldType = {
   receiveId: string;
 };
 
+function getTitle(type: string) {
+  if (type === 'yield' || type === 'quality') {
+    const title = type === 'yield' ? '水量警告' : '水质警告';
+    return `${title}`;
+  }
+  return `${type}`
+}
+
 const SendEmailModal: React.FC<
   {
     visible?: boolean,
@@ -54,7 +62,7 @@ const SendEmailModal: React.FC<
     useEffect(() => {
       if (notice) {
         form.setFieldsValue({
-          title: notice.type === 'yield' ? '水量警告' : '水质警告',
+          title: getTitle(notice.type),
           info: notice.info,
           sendId: notice.receiveId,
           receiveId: ''
@@ -65,7 +73,7 @@ const SendEmailModal: React.FC<
     }, [notice])
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
-      changeControl()
+      // changeControl()
     };
 
     const onFinish = (values: any) => {
@@ -126,7 +134,7 @@ const SendEmailModal: React.FC<
               name="info"
               rules={[{ required: true, message: 'Please input info!' }]}
             >
-              <TextArea />
+              <TextArea showCount maxLength={1000} style={{ height: 160, resize: 'none' }} />
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>

@@ -16,8 +16,11 @@ const IconFont = createFromIconfontCN({
 });
 
 function getLabel(type: string, time: Date) {
-  const title = type === 'yield' ? '水量警告' : '水质警告';
-  return `${title} - ${time}`;
+  if (type === 'yield' || type === 'quality') {
+    const title = type === 'yield' ? '水量警告' : '水质警告';
+    return `${title} - ${time}`;
+  }
+  return `${type} - ${time}`
 }
 
 function Notifice() {
@@ -54,7 +57,7 @@ function Notifice() {
         key: notice.id,
         label: <><Badge dot={!notice.isRead} offset={[10, 0]}>{getLabel(notice.type, notice.time)}</Badge></>,
         children: <p>{notice.info}</p>,
-        extra: userRole.includes(UserRole.ADMIN)  ? genExtra(notice) : null,
+        extra: userRole.includes(UserRole.ADMIN) ? genExtra(notice) : null,
         style: panelStyle,
       })
     }

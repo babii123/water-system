@@ -118,7 +118,7 @@ function Storage() {
       title: t('Action'),
       key: 'action',
       fixed: 'right',
-      width: 200,
+      width: 150,
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => { openModel(record, UPDATE_MODEL) }}>{t("Update")}</a>
@@ -246,7 +246,7 @@ function Storage() {
         </Space>
         <div style={{ marginBottom: 16 }}>
           <Space>
-            <Button type="primary" icon={<DeleteFilled />} danger>
+            <Button type="primary" icon={<DeleteFilled />} danger onClick={() => showDeleteModel([], MULTI)}>
               {t('BatchDelete')}
             </Button>
             <Button icon={<DownloadOutlined />} onClick={() => exportDataExcel('waterStorage')}>

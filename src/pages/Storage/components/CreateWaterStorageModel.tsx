@@ -59,17 +59,21 @@ const CreateWaterStorageModel: React.FC<
     const [detectTime, setDetectTime] = useState<string>();
     useEffect(() => {
       if (updateWaterStorageInfo) {
-        form.setFieldsValue(updateWaterStorageInfo)
+        if (controlModel?.editType === UPDATE_MODEL) {
+          form.setFieldsValue({ ...updateWaterStorageInfo, detectTime: dayjs(updateWaterStorageInfo.detectTime, 'YYYY-MM-DD') });
+        } else {
+          form.setFieldsValue(updateWaterStorageInfo);
+        }
       } else {
         form.resetFields()
       }
     }, [updateWaterStorageInfo])
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
-      changeControl({
-        visible: false,
-        editType: controlModel?.editType
-      })
+      // changeControl({
+      //   visible: false,
+      //   editType: controlModel?.editType
+      // })
     };
     const dispatch = useDispatch()
 
@@ -80,8 +84,8 @@ const CreateWaterStorageModel: React.FC<
       dispatch(updateWaterStorage(water, id))
     }
     const onFinish = (values: any) => {
-      console.log('Success:', updateWaterStorageInfo);
-      if (updateWaterStorageInfo) {
+      console.log('Success:', { ...values, detectTime }, controlModel);
+      if (updateWaterStorageInfo && controlModel?.editType === UPDATE_MODEL) {
         if (JSON.stringify(updateWaterStorageInfo) !== JSON.stringify(values)) {
           _updateWaterStorage({ ...values, detectTime }, updateWaterStorageInfo.id)
           changeControl({

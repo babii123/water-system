@@ -46,7 +46,7 @@ const UpdatePsModel: React.FC<
     const { t } = useTranslation()
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
-      changeModelVisible(false)
+      // changeModelVisible(false)
     };
     const onFinish = (values: any) => {
       const userId = localStorage.getItem('userId')

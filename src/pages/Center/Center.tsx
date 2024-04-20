@@ -46,7 +46,7 @@ function Center() {
     setCurrentKey('')
     _updateUserInfoToServer(userInfo)
   }
-  
+
   useEffect(() => {
     setUserInfo(userInfo1)
   }, [userInfo1])
@@ -210,6 +210,7 @@ function Center() {
               <DatePicker
                 onBlur={() => inputBlur()}
                 style={{ width: '100%' }}
+                defaultValue={dayjs(userInfo?.birthday, 'YYYY-MM-DD')}
                 format="YYYY-MM-DD"
                 onChange={(date: any, dateString: string) => {
                   setUserInfo({
